@@ -1,0 +1,107 @@
+@charset "UTF-8";
+/* Để xóa viền ngoài */
+.btn-group.w-100 .btn {
+	border-radius: 0;
+}
+
+.list-group-horizontal {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.list-group-item-action:hover, .list-group-item:hover {
+	color: silver;
+}
+
+.borderless .list-group-item, .borderless .dropdown-menu, .borderless .form-check-label
+	{
+	border: none !important;
+}
+
+/* Thêm CSS cho mục dropdown-item bên trong list-unstyled */
+.list-unstyled .dropdown-item:hover {
+	color: silver
+}
+
+/* Hiệu ứng hover cho các mục dropdown riêng lẻ */
+.card-product {
+	position: relative;
+}
+
+.product-btn {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translate(-50%);
+	transition: all .2s linear;
+}
+
+.product-btn button {
+	display: none;
+}
+
+.card-product:hover .product-btn {
+	bottom: 40px;
+	transition: all .2s linear;
+}
+
+.card-product:hover .product-content {
+	opacity: 0;
+}
+
+.card-product:hover .product-btn button {
+	display: block;
+}
+
+.card-product .card-img-top {
+	transition: transform 0.2s linear;
+}
+
+.card-product:hover .card-img-top {
+	transform: scale(1.1);
+	/* Scale the image on hover */
+}
+
+.product-items {
+	display: flex;
+	justify-content: center;
+}
+
+.card-product {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.image-container {
+	position: relative;
+	width: 100%;
+	padding-bottom: 70%;
+	/* Tạo tỷ lệ khung hình vuông */
+	overflow: hidden;
+}
+
+.image-container img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: opacity 0.5s ease-in-out;
+}
+
+.imagesProduct-hover {
+	opacity: 0;
+}
+
+.card-product:hover .imagesProduct-hover {
+	opacity: 1;
+}
+
+.card-product:hover .imagesProduct {
+	opacity: 0;
+}
+
+.product-btn {
+	padding: 1rem;
+}

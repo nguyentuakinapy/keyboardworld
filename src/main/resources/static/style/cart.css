@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.cart-item {
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #d3d3d3;
+}
+
+.btn-cart, .qty-cart {
+	font-size: 20px;
+	line-height: 0px;
+	border: none;
+	display: inline-block;
+	width: 30px;
+	height: 20px;
+	background: #fff;
+	color: #333;
+	text-align: center;
+	padding: 0px;
+	border-radius: 0;
+}
+
+.item-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
