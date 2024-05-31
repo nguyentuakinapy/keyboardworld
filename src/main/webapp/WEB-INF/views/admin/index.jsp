@@ -228,9 +228,9 @@ table th {
 								<span>${user.fullName}</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#"><i
+								<li><a class="dropdown-item" href="/keyboardworld/account"><i
 										class="bi bi-person me-2"></i>Profile</a></li>
-								<li><a class="dropdown-item" href="#"><i
+								<li><a class="dropdown-item" href="/keyboardworld/logout"><i
 										class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
 							</ul>
 						</li>
@@ -242,7 +242,7 @@ table th {
 
 
 	<main class="main-right">
-		<jsp:include page="productmanagement.jsp"></jsp:include>
+		<jsp:include page="${views}"></jsp:include>
 	</main>
 
 	<script>

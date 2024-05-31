@@ -42,68 +42,106 @@
 	font-size: 1.1rem;
 }
 
-.input-field input {
-	background: none;
-	outline: none;
-	border: none;
-	line-height: 1;
-	font-weight: 600;
-	font-size: 1.1rem;
-	color: #333;
+<!
+DOCTYPE html> <html lang ="en "> <head> <meta charset ="UTF-8 "> <meta name
+	 ="viewport " content ="width =device-width, initial-scale =1.0 "> <title>Document
+	 </title> <link href ="https: //cdn.jsdelivr.net /npm /bootstrap @5.3.3
+	/dist /css /bootstrap.min.css " rel ="stylesheet "> <script src ="https:
+	//cdn.jsdelivr.net /npm /bootstrap @5.3.3 /dist /js /bootstrap.bundle.min.js
+	 "> </script> <link rel ="stylesheet " href ="https: //cdn.jsdelivr.net
+	/npm /bootstrap-icons @1.11.3 /font /bootstrap-icons.css "> <link href
+	 ="https: //fonts.googleapis.com /css2 ?family =Roboto:wght @400 ;700 
+	 &display
+	 =swap " rel ="stylesheet "> <style>.page_account {
+	margin-bottom: 30px;
+	padding: 20px 0;
 }
 
-.btn-account {
-	border-radius: 49px;
-	height: 49px;
+.mt-10 {
+	margin-top: 10px !important;
+}
+
+.block-account p {
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 16px;
+	margin-bottom: 28px;
+	color: #212B25;
+	position: relative;
+}
+
+.block-account ul {
+	padding: 0;
+	margin: 0;
+	list-style: none inside;
+}
+
+.title-info {
+	font-weight: 400;
+	font-size: 14px;
+	color: #333;
+	margin-bottom: 10px;
+	display: block;
+}
+
+a {
+	line-height: 25px;
+	text-decoration: none;
+	background: transparent;
+}
+
+.title-head {
+	font-size: 19px;
+	line-height: 22px;
+	font-weight: 400;
+	color: #212B25;
+	text-transform: uppercase;
+	margin-bottom: 27px;
+}
+
+.active {
+	color: #c9d6df;
 }
 </style>
-<div class="container">
-	<div class="div-container">
-		<div class="form-container">
-			<h2 class="form-header text-uppercase">Đăng nhập</h2>
-			<form id="loginForm">
-				<div class="mb-3 input-field">
-					<i class="bi bi-person-circle"></i> <input type="text"
-						id="loginUser" placeholder="Nhập tên tài khoản" required>
-				</div>
-				<div class="mb-3 input-field">
-					<i class="bi bi-person-fill-lock"></i> <input type="password"
-						id="loginPass" placeholder="Nhập mật khẩu" required>
-				</div>
-				<button type="submit" class="btn btn-account btn-dark w-100">Đăng nhập</button>
-				<p class="text-center mt-3">
-					<strong>Chưa có tài khoản?</strong> <a href="#"
-						class="text-dark text-decoration-none"
-						onclick="showRegisterForm()">Đăng kí ngay</a>
-				</p>
-			</form>
 
-			<h2 class="form-header d-none text-uppercase">Đăng ký</h2>
-			<form id="registerForm" class="d-none">
-				<div class="mb-3 input-field">
-					<i class="bi bi-person-circle"></i> <input type="text"
-						id="registerUser" placeholder="Nhập tên tài khoản" required>
+<form action="#" class="mt-4">
+	<div class="page_account">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-xs-12 col-sm-12">
+					<div class="block-account">
+						<h1 class="title-head mt-10">Trang tài khoản</h1>
+						<p>
+							Xin chào, <span>Nguyễn Phi Hùng</span> !
+						</p>
+						<ul>
+							<li><a href="/keyboardworld/account"
+								class="title-info active">Thông tin tài khoản</a></li>
+							<li><a href="/keyboardworld/order" class="title-info">Đơn
+									hàng của bạn</a></li>
+							<li><a href="/keyboardworld/changepass" class="title-info">Đổi
+									mật khẩu</a></li>
+							<li><a href="/keyboardworld/address" class="title-info">Sổ
+									địa chỉ</a></li>
+						</ul>
+					</div>
 				</div>
-				<div class="mb-3 input-field">
-					<i class="bi bi-envelope-at-fill"></i> <input type="email"
-						id="registerEmail" placeholder="Nhập email" required>
+				<div class="col-lg-9 col-sm-12 col-xs-12">
+					<h1 class="title-head mt-10">Thông tin tài khoản</h1>
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control"
+							placeholder="Nhập tên của bạn" value="Nguyễn Phi Hùng"> <label>Họ
+							và tên <span style="color: red;">*</span>
+						</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="email" class="form-control"
+							placeholder="Nhập email của bạn" value="hungnpps30910@gmail.com">
+						<label>Email <span style="color: red;">*</span></label>
+					</div>
+					<button class="btn btn-primary">Lưu thay đổi</button>
 				</div>
-				<div class="mb-3 input-field">
-					<i class="bi bi-person-fill-lock"></i> <input type="password"
-						id="registerPass" placeholder="Nhập mật khẩu" required>
-				</div>
-				<div class="mb-3 input-field">
-					<i class="bi bi-shield-fill-check"></i> <input type="password"
-						id="registerConfirmPassw" placeholder="Nhập xác nhận mật khẩu"
-						required>
-				</div>
-				<button type="submit" class="btn btn-account btn-dark w-100">Đăng ký</button>
-				<p class="text-center mt-3">
-					<strong>Đã có tài khoản?</strong> <a href="#"
-						class="text-dark text-decoration-none" onclick="showLoginForm()">Đăng
-						nhập</a>
-				</p>
-			</form>
+			</div>
 		</div>
 	</div>
-</div>
+</form>

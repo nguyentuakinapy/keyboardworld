@@ -39,4 +39,13 @@ public class ProductController {
 		model.addAttribute("views", "/WEB-INF/views/product/detailproduct.jsp");
 		return "index";
 	}
+
+	@RequestMapping("/keyboardworld/admin/product")
+	public String test(Model model) {
+		List<Product> listProducts = productDAO.findAll();
+		model.addAttribute("products", listProducts);
+
+		model.addAttribute("views", "listproduct.jsp");
+		return "admin/index";
+	}
 }

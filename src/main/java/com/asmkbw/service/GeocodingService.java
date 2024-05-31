@@ -36,7 +36,7 @@ public class GeocodingService {
 
 //    public static void main(String[] args) {
 //        String address1 = "Quận 1, Thành Phố Hồ Chí Minh";
-//        String address2 = "310 Tô ký, Phường Trung Mỹ Tây, Quận 12, Thành phố Hồ Chí Minh";
+//        String address2 = "Đồng Nai";
 //
 //        GeoCoordinates coordinates1 = getCoordinates(address1);
 //        GeoCoordinates coordinates2 = getCoordinates(address2);

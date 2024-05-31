@@ -4,14 +4,14 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <div class="container">
 	<div class="row mt-5">
-		<div class="col-xs-12 col-sm-6 col-lg-6 col-md-6">
+		<div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
 			<c:forEach var="pd" items="${productDetails}" varStatus="status">
 				<c:if test="${status.first}">
 					<img id="product-image" src="/images/${pd.thumbNail}" width="100%">
 				</c:if>
 			</c:forEach>
 		</div>
-		<div class="col-xs-12 col-sm-6 col-lg-6 col-md-6">
+		<div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
 			<c:set var="categoryUpper"
 				value="${product.category.name.toUpperCase()}" />
 			<c:set var="nameUpper" value="${product.name.toUpperCase()}" />

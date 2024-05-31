@@ -106,7 +106,7 @@
 								class="bi bi-chevron-down"></i></a>
 							<div class="account-popup">
 								<div class="border rounded-top">
-									<a href="/keyboardworld/profile"
+									<a href="/keyboardworld/account"
 										class="nav-link hv-nav-items m-2 ms-4">Thông tin cá nhân</a>
 								</div>
 								<div class="border">

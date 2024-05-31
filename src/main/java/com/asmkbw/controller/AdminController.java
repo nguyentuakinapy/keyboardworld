@@ -12,14 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 	@RequestMapping
 	public String adminHome(Model model) {
-
-		return "admin/index";
-	}
-
-	@GetMapping("/product")
-	public String product() {
-		
-		
+		model.addAttribute("views", "listproduct.jsp");
 		return "admin/index";
 	}
 }
