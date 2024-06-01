@@ -298,12 +298,12 @@
 												</c:forEach>
 											</div>
 										</div>
-										<div class="product-btn d-grid gap-2 col-10 mx-auto">
-											<button type="button" data-bs-toggle="modal"
-												data-bs-target="#exampleModal"
+										<form class="product-btn d-grid gap-2 col-10 mx-auto">
+											<button type="submit"
+												formaction="/keyboardworld/addtocart/${p.productDetails[0].productDetailID}"
 												class="btn btn-outline-dark fw-bold">Thêm vào giỏ
 												hàng</button>
-										</div>
+										</form>
 									</div>
 									<hr class="m-0 p-0">
 								</div>

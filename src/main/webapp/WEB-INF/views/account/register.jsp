@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <style>
 @charset "UTF-8";
 
@@ -61,23 +62,27 @@
 	<div class="div-container">
 		<div class="form-container">
 			<h2 class="form-header text-uppercase">Đăng ký</h2>
-			<form id="registerForm" class="">
+			<form:form id="registerForm" action="/keyboardworld/register"
+				method="post" modelAttribute="user">
 				<div class="mb-3 input-field">
-					<i class="bi bi-person-circle"></i> <input type="text"
-						id="registerUser" placeholder="Nhập tên tài khoản" required>
+					<i class="bi bi-person-circle"></i>
+					<form:input path="fullName" type="text" id="registerFullname"
+						placeholder="Nhập họ và tên!" />
 				</div>
 				<div class="mb-3 input-field">
-					<i class="bi bi-envelope-at-fill"></i> <input type="email"
-						id="registerEmail" placeholder="Nhập email" required>
+					<i class="bi bi-envelope-at-fill"></i>
+					<form:input path="email" type="email" id="registerEmail"
+						placeholder="Nhập email" />
 				</div>
 				<div class="mb-3 input-field">
-					<i class="bi bi-person-fill-lock"></i> <input type="password"
-						id="registerPass" placeholder="Nhập mật khẩu" required>
+					<i class="bi bi-person-fill-lock"></i>
+					<form:input path="password" type="password" id="registerPass"
+						placeholder="Nhập mật khẩu" />
 				</div>
 				<div class="mb-3 input-field">
-					<i class="bi bi-shield-fill-check"></i> <input type="password"
-						id="registerConfirmPassw" placeholder="Nhập xác nhận mật khẩu"
-						required>
+					<i class="bi bi-shield-fill-check"></i> <input
+						name="confirmpassword" type="password" id="registerConfirmPassw"
+						placeholder="Nhập xác nhận mật khẩu" required>
 				</div>
 				<button type="submit" class="btn btn-account btn-dark w-100">Đăng
 					ký</button>
@@ -85,7 +90,7 @@
 					<strong>Đã có tài khoản?</strong> <a href="/keyboardworld/login"
 						class="text-dark text-decoration-none">Đăng nhập</a>
 				</p>
-			</form>
+			</form:form>
 		</div>
 	</div>
 </div>

@@ -17,12 +17,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CartID")
-	Integer cardID;
+	Integer cartID;
 
 	@Column(name = "Quantity")
 	Integer quantity;
@@ -32,6 +31,6 @@ public class Cart {
 	User user;
 
 	@ManyToOne
-	@JoinColumn(name = "ProductDetailID")
+	@JoinColumn(name = "Product_DetailID")
 	ProductDetail productDetail;
 }

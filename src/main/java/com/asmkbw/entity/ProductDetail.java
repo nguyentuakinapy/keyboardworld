@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class ProductDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ProductDetailID")
+	@Column(name = "Product_DetailID")
 	Integer productDetailID;
 
 	@Column(name = "Color")
