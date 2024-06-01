@@ -57,14 +57,14 @@
 							<c:if test="${status.first}">
 								<div class="color-button active" id="${pd.thumbNail}"
 									data-image="/images/${pd.thumbNail}" data-price="${pd.price}"
-									data-name="${pd.color}">
+									data-idproduct="${pd.productDetailID}" data-name="${pd.color}">
 									<img src="/images/${pd.thumbNail}" alt="A-Silver">${pd.color}
 								</div>
 							</c:if>
 							<c:if test="${!status.first}">
 								<div class="color-button" id="${pd.thumbNail}"
 									data-image="/images/${pd.thumbNail}" data-price="${pd.price}"
-									data-name="${pd.color}">
+									data-idproduct="${pd.productDetailID}" data-name="${pd.color}">
 									<img src="/images/${pd.thumbNail}" alt="A-Silver">${pd.color}
 								</div>
 							</c:if>
@@ -87,9 +87,10 @@
 					</div>
 				</div>
 			</div>
-			<a href="/keyboardworld/viewcart"
-				class="btn btn-dark me-2 btn-add-to-card"> Thêm vào giỏ hàng <i
-				class="bi bi-bag-fill"></i>
+			<a
+				href="/keyboardworld/addtocart/${productDetails[0].productDetailID}"
+				id="addtocart" class="btn btn-dark me-2 btn-add-to-card"> Thêm
+				vào giỏ hàng <i class="bi bi-bag-fill"></i>
 			</a>
 			<div class="module_service">
 				<i class="bi bi-shield-check fs-1 me-3"></i> <a href="#"
@@ -205,14 +206,15 @@
 		button.addEventListener('click', () => {
 			document.querySelectorAll('.color-button').forEach(btn => btn.classList.remove('active'));
 			button.classList.add('active');
-
+	
 			const newImage = button.getAttribute('data-image');
 			const newPrice = parseFloat(button.getAttribute('data-price'));
 			const newName = button.getAttribute('data-name');
-			
+			const productDetailID = button.getAttribute('data-idproduct');
 			document.getElementById('product-image').src = newImage;
 			document.getElementById('product-price').innerText = newPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
 			document.getElementById('product-name').innerText = newName;
+			document.getElementById('addtocart').setAttribute('href', '/keyboardworld/addtocart/'+productDetailID);
 		});
 	});
 	

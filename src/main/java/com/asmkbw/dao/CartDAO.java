@@ -12,4 +12,6 @@ public interface CartDAO extends JpaRepository<Cart, Integer> {
 
 	@Query("SELECT o FROM Cart o WHERE o.user = ?1")
 	List<Cart> findByIDUser(User user);
+	
+	
 }

@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <div class="container">
 	<h3 class="mt-5 text-center fw-bold">
-		GIỎ HÀNG <span>(1 sản phẩm)</span>
+		GIỎ HÀNG <span>(${listCarts.size() } sản phẩm)</span>
 	</h3>
 	<div class="row">
 		<article class="col-9">
@@ -24,16 +24,19 @@
 									${c.productDetail.product.property}</h5>
 							</div>
 							<div class="item-actions me-3 mt-3">
-								<a href="#" class="btn btn-outline-danger">Xóa</a>
+								<a href="/keyboardworld/deletecart/${c.cartID}" class="btn btn-outline-danger">Xóa</a>
 								<div class="row align-items-center mb-3">
+								<div class="col-auto">
+										<label class="col-form-label">Màu: <b>${c.productDetail.color }</b> </label>
+									</div>
 									<div class="col-auto">
-										<label class="col-form-label">Số lượng: ${c.quantity}</label>
+										<label class="col-form-label">Số lượng:</label>
 									</div>
 									<div class="col-auto">
 										<div class="form-control d-flex align-items-center">
 											<button class="btn-cart" type="button" id="button-decrement">-</button>
 											<input type="text" class="qty-cart" id="quantity-input"
-												value="1" readonly>
+												value="${c.quantity }" readonly>
 											<button class="btn-cart" type="button" id="button-increment">+</button>
 										</div>
 									</div>
@@ -45,6 +48,7 @@
 							</div>
 						</div>
 					</div>
+					 <c:set var="totalPrice" value="${totalPrice + c.productDetail.price * c.quantity}" />
 				</c:forEach>
 			</div>
 		</article>
@@ -56,12 +60,12 @@
 				<div class="d-flex m-4" style="justify-content: space-between;">
 
 					<p style="margin: 0;">Tạm tính:</p>
-					<span class="fw-bold">2.600.000₫</span>
+					<span class="fw-bold">${totalPrice }₫</span>
 				</div>
 				<hr class="w-100 m-0 p-0">
 				<div class="d-flex m-4" style="justify-content: space-between;">
 					<p style="margin: 0;">Thành tiền:</p>
-					<span>2.600.000₫</span>
+					<span>${totalPrice }₫</span>
 				</div>
 				<hr class="w-100 m-0 p-0">
 				<div class="mx-4 my-2">

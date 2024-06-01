@@ -125,7 +125,7 @@
 						href="/keyboardworld/viewcart">GIỎ HÀNG <i class="bi bi-bag"></i>
 							<span
 							class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-								0 </span>
+								${listCart.size() } </span>
 					</a>
 						<div class="shop-cart">
 							<div class="form-control">

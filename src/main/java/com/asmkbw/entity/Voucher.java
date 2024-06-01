@@ -36,7 +36,7 @@ public class Voucher {
 	@Column(name = "Date")
 	Date date = new Date();
 
-	@OneToMany(mappedBy = "voucher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "voucher")
 	List<Order> orders;
 
 }

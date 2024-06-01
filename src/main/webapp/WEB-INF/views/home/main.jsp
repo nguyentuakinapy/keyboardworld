@@ -32,8 +32,7 @@
 		</button>
 	</div>
 	<div class="container wow fadeIn">
-		<h2 class="text-center my-5" style="letter-spacing: 2px;">SẢN
-			PHẨM MỚI</h2>
+		<h2 class="text-center my-5" style="letter-spacing: 2px;">Phím cơ Custom</h2>
 		<div class="row borderless product-items">
 			<c:forEach var="p" items="${products}">
 				<div class="col-lg-3 col-md-6 col-sm-12 col">
@@ -63,11 +62,12 @@
 								</c:forEach>
 							</div>
 						</div>
-						<div class="product-btn d-grid gap-2 col-10 mx-auto">
-							<button type="button" data-bs-toggle="modal"
+						<form class="product-btn d-grid gap-2 col-10 mx-auto">
+							<button type="submit" data-bs-toggle="modal"
+								formaction="/keyboardworld/addtocartmain/${p.productDetails[0].productDetailID}"
 								data-bs-target="#exampleModal"
 								class="btn btn-outline-dark fw-bold">Thêm vào giỏ hàng</button>
-						</div>
+						</form>
 					</div>
 					<hr class="m-0 p-0">
 				</div>

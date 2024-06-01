@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.asmkbw.dao.CategoryDAO;
 import com.asmkbw.dao.ProductDAO;
 import com.asmkbw.dao.ProductDetailDAO;
+import com.asmkbw.entity.Category;
 import com.asmkbw.entity.Product;
 import com.asmkbw.entity.ProductDetail;
 
@@ -22,9 +24,12 @@ public class ProductController {
 	@Autowired
 	ProductDetailDAO productDetailDAO;
 
+	@Autowired
+	CategoryDAO categoryDAO;
 	@RequestMapping("/keyboardworld/product")
 	public String productALL(Model model) {
 		List<Product> products = productDAO.findAll();
+
 		model.addAttribute("products", products);
 		model.addAttribute("views", "/WEB-INF/views/product/product.jsp");
 		return "index";

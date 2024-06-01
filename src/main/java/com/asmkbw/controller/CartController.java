@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.asmkbw.dao.CartDAO;
 import com.asmkbw.dao.ProductDetailDAO;
 import com.asmkbw.entity.Cart;
+import com.asmkbw.entity.ProductDetail;
 import com.asmkbw.entity.User;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 
 @Controller
 public class CartController {
@@ -41,7 +43,36 @@ public class CartController {
 	}
 
 	@RequestMapping("/keyboardworld/addtocart/{x}")
+	@Transactional
 	public String addToCart(Model model, @PathVariable("x") Integer id) {
+		User user = (User) session.getAttribute("userS");
+		if (user != null) {
+			List<Cart> list = cartDAO.findByIDUser(user);
+			boolean productExistsInCart = false;
+			for (Cart c : list) {
+				if (id.equals(c.getProductDetail().getProductDetailID())) {
+					c.setQuantity(c.getQuantity() + 1);
+					cartDAO.save(c);
+					productExistsInCart = true;
+					break;
+				}
+			}
+
+			if (!productExistsInCart) {
+				Cart cart = new Cart();
+				cart.setProductDetail(productDetailDAO.findById(id).orElse(null));
+				cart.setQuantity(1);
+				cart.setUser(user);
+				cartDAO.save(cart);
+			}
+
+			return "redirect:/keyboardworld/viewcart";
+		}
+		return "redirect:/keyboardworld/login";
+	}
+	
+	@RequestMapping("/keyboardworld/addtocartmain/{x}")
+	public String addToCartMain(Model model, @PathVariable("x") Integer id) {
 		User user = (User) session.getAttribute("userS");
 		if (user != null) {
 			Cart cart = new Cart();
@@ -51,6 +82,15 @@ public class CartController {
 			cartDAO.save(cart);
 			return "redirect:/keyboardworld/viewcart";
 		}
-		return "redirect:/keyboardworld/product";
+		return "redirect:/keyboardworld";
+	}
+	
+	@RequestMapping("/keyboardworld/deletecart/{x}")
+	public String deleteCart(Model model, @PathVariable("x") Integer id) {
+		User user = (User) session.getAttribute("userS");
+		if(user != null) {
+			cartDAO.deleteById(id);
+		}
+		return "redirect:/keyboardworld/viewcart";
 	}
 }
