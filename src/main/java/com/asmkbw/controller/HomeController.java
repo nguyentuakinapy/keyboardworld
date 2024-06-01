@@ -5,22 +5,29 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.asmkbw.dao.ProductDAO;
 import com.asmkbw.dao.ProductDetailDAO;
+import com.asmkbw.dao.RoleDAO;
 import com.asmkbw.dao.UserDAO;
 import com.asmkbw.entity.Product;
 import com.asmkbw.entity.ProductDetail;
+import com.asmkbw.entity.Role;
 import com.asmkbw.entity.User;
+import com.asmkbw.service.EmailService;
+import com.asmkbw.utils.RandomUtils;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import jakarta.websocket.Session;
 
 @Controller
@@ -43,6 +50,12 @@ public class HomeController {
 
 	@Autowired
 	HttpSession session;
+
+	@Autowired
+	RoleDAO roleDAO;
+
+	@Autowired
+	EmailService emailService;
 
 	@RequestMapping
 	public String home(Model model) {
@@ -74,7 +87,7 @@ public class HomeController {
 		User user = userDAO.findByEmail(email);
 		if (user != null) {
 			if (user.getPassword().equalsIgnoreCase(password)) {
-				session.setAttribute("user", user);
+				session.setAttribute("userS", user);
 				if (user.getRole().getRoleName().equalsIgnoreCase("Admin")) {
 					return "redirect:/keyboardworld/admin";
 				} else {
@@ -98,8 +111,51 @@ public class HomeController {
 	}
 
 	@GetMapping("/register")
-	public String register(Model model) {
+	public String registerGet(Model model, @ModelAttribute User user) {
 		model.addAttribute("views", "/WEB-INF/views/account/register.jsp");
+		return "index";
+	}
+
+	String otpEmail;
+	User user;
+
+	@PostMapping("/register")
+	public String registerPost(Model model, @Valid @ModelAttribute User user,
+			@RequestParam("confirmpassword") String confirmPass, BindingResult result) {
+		if (result.hasErrors()) {
+			return "error_view"; // Trả về trang hiển thị lỗi
+		}
+		if (userDAO.findByEmail(user.getEmail()) == null) {
+			if (user.getPassword().equalsIgnoreCase(confirmPass)) {
+				otpEmail = RandomUtils.generateOTP();
+				emailService.sendEmail(user.getEmail(), "KEYBOARD WORLD",
+						"Bạn vừa đâng ký tài khoản mới bên Keyboard World" + "\n" + "Mã xác nhận của bạn là: "
+								+ otpEmail);
+				user.setRole(roleDAO.findById(1).orElse(null));
+				this.user = user;
+				return "redirect:/keyboardworld/otp";
+			}
+		}
+		model.addAttribute("views", "/WEB-INF/views/account/register.jsp");
+		return "index";
+	}
+
+	@GetMapping("/otp")
+	public String otpGet(Model model) {
+		model.addAttribute("views", "/WEB-INF/views/account/acceptEmail.jsp");
+		return "index";
+	}
+
+	@PostMapping("/otp")
+	public String otpPost(Model model, @RequestParam("otp") String otp) {
+		if (otpEmail.equalsIgnoreCase(otp)) {
+			if (user != null) {
+				userDAO.save(user);
+				session.setAttribute("userS", user);
+				return "redirect:/keyboardworld";
+			}
+		}
+		model.addAttribute("views", "/WEB-INF/views/account/acceptEmail.jsp");
 		return "index";
 	}
 }

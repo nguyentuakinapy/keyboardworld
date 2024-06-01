@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <div class="container">
 	<h3 class="mt-5 text-center fw-bold">
 		GIỎ HÀNG <span>(1 sản phẩm)</span>
@@ -7,142 +8,44 @@
 	<div class="row">
 		<article class="col-9">
 			<div class="card" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
-				<div class="cart-item">
-					<div class="m-3" style="border-radius: 2px;">
-						<img src="/images/keyboardDetail.jpg"
-							alt="CRUSH80 - Bàn phím cơ TKL khung nhôm CNC cao cấp - Silver no led"
-							style="max-width: 100px; border-radius: 10px;">
-					</div>
-					<div class="item-details"
-						style="display: flex; flex-direction: column; flex: 1;">
-						<div class="item-info"
-							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-							<h5 style="margin: 0;">CRUSH80 - Bàn phím cơ TKL khung nhôm
-								CNC cao cấp</h5>
+				<c:forEach var="c" items="${listCarts}">
+					<div class="cart-item">
+						<div class="m-3" style="border-radius: 2px;">
+							<img src="/images/${c.productDetail.thumbNail}"
+								alt="CRUSH80 - Bàn phím cơ TKL khung nhôm CNC cao cấp - Silver no led"
+								style="max-width: 100px; border-radius: 10px;">
 						</div>
-						<div class="item-actions me-3 mt-3">
-							<a href="#" class="btn btn-outline-danger">Xóa</a>
-							<div class="row align-items-center mb-3">
-								<div class="col-auto">
-									<label class="col-form-label">Số lượng:</label>
-								</div>
-								<div class="col-auto">
-									<div class="form-control d-flex align-items-center">
-										<button class="btn-cart" type="button" id="button-decrement">-</button>
-										<input type="text" class="qty-cart" id="quantity-input"
-											value="1" readonly>
-										<button class="btn-cart" type="button" id="button-increment">+</button>
+						<div class="item-details"
+							style="display: flex; flex-direction: column; flex: 1;">
+							<div class="item-info"
+								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+								<h5 style="margin: 0;">${c.productDetail.product.category.name}
+									${c.productDetail.product.name}
+									${c.productDetail.product.property}</h5>
+							</div>
+							<div class="item-actions me-3 mt-3">
+								<a href="#" class="btn btn-outline-danger">Xóa</a>
+								<div class="row align-items-center mb-3">
+									<div class="col-auto">
+										<label class="col-form-label">Số lượng: ${c.quantity}</label>
 									</div>
-								</div>
-								<div class="col-auto">
-									<label class="col-form-label">Giá: 2.600.000₫</label>
+									<div class="col-auto">
+										<div class="form-control d-flex align-items-center">
+											<button class="btn-cart" type="button" id="button-decrement">-</button>
+											<input type="text" class="qty-cart" id="quantity-input"
+												value="1" readonly>
+											<button class="btn-cart" type="button" id="button-increment">+</button>
+										</div>
+									</div>
+									<div class="col-auto">
+										<label class="col-form-label">Giá:
+											${c.productDetail.price * c.quantity} </label>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="cart-item">
-					<div class="m-3" style="border-radius: 2px;">
-						<img src="/images/keyboardDetail.jpg"
-							alt="CRUSH80 - Bàn phím cơ TKL khung nhôm CNC cao cấp - Silver no led"
-							style="max-width: 100px; border-radius: 10px;">
-					</div>
-					<div class="item-details"
-						style="display: flex; flex-direction: column; flex: 1;">
-						<div class="item-info"
-							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-							<h5 style="margin: 0;">CRUSH80 - Bàn phím cơ TKL khung nhôm
-								CNC cao cấp</h5>
-						</div>
-						<div class="item-actions me-3 mt-3">
-							<a href="#" class="btn btn-outline-danger">Xóa</a>
-							<div class="row align-items-center mb-3">
-								<div class="col-auto">
-									<label class="col-form-label">Số lượng:</label>
-								</div>
-								<div class="col-auto">
-									<div class="form-control d-flex align-items-center">
-										<button class="btn-cart" type="button" id="button-decrement">-</button>
-										<input type="text" class="qty-cart" id="quantity-input"
-											value="1" readonly>
-										<button class="btn-cart" type="button" id="button-increment">+</button>
-									</div>
-								</div>
-								<div class="col-auto">
-									<label class="col-form-label">Giá: 2.600.000₫</label>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="cart-item">
-					<div class="m-3" style="border-radius: 2px;">
-						<img src="/images/keyboardDetail.jpg"
-							alt="CRUSH80 - Bàn phím cơ TKL khung nhôm CNC cao cấp - Silver no led"
-							style="max-width: 100px; border-radius: 10px;">
-					</div>
-					<div class="item-details"
-						style="display: flex; flex-direction: column; flex: 1;">
-						<div class="item-info"
-							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-							<h5 style="margin: 0;">CRUSH80 - Bàn phím cơ TKL khung nhôm
-								CNC cao cấp</h5>
-						</div>
-						<div class="item-actions me-3 mt-3">
-							<a href="#" class="btn btn-outline-danger">Xóa</a>
-							<div class="row align-items-center mb-3">
-								<div class="col-auto">
-									<label class="col-form-label">Số lượng:</label>
-								</div>
-								<div class="col-auto">
-									<div class="form-control d-flex align-items-center">
-										<button class="btn-cart" type="button" id="button-decrement">-</button>
-										<input type="text" class="qty-cart" id="quantity-input"
-											value="1" readonly>
-										<button class="btn-cart" type="button" id="button-increment">+</button>
-									</div>
-								</div>
-								<div class="col-auto">
-									<label class="col-form-label">Giá: 2.600.000₫</label>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="cart-item">
-					<div class="m-3" style="border-radius: 2px;">
-						<img src="/images/keyboardDetail.jpg"
-							alt="CRUSH80 - Bàn phím cơ TKL khung nhôm CNC cao cấp - Silver no led"
-							style="max-width: 100px; border-radius: 10px;">
-					</div>
-					<div class="item-details"
-						style="display: flex; flex-direction: column; flex: 1;">
-						<div class="item-info"
-							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-							<h5 style="margin: 0;">CRUSH80 - Bàn phím cơ TKL khung nhôm
-								CNC cao cấp</h5>
-						</div>
-						<div class="item-actions me-3 mt-3">
-							<a href="#" class="btn btn-outline-danger">Xóa</a>
-							<div class="row align-items-center mb-3">
-								<div class="col-auto">
-									<label class="col-form-label">Số lượng:</label>
-								</div>
-								<div class="col-auto">
-									<div class="form-control d-flex align-items-center">
-										<button class="btn-cart" type="button" id="button-decrement">-</button>
-										<input type="text" class="qty-cart" id="quantity-input"
-											value="1" readonly>
-										<button class="btn-cart" type="button" id="button-increment">+</button>
-									</div>
-								</div>
-								<div class="col-auto">
-									<label class="col-form-label">Giá: 2.600.000₫</label>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</article>
 
@@ -168,8 +71,8 @@
 				</div>
 				<div class="mx-4 my-2">
 					<a href="/keyboardworld/product" class="btn btn-white"
-						style="width: 100%; padding: 10px 0; border: none;">TIẾP
-						TỤC MUA HÀNG</a>
+						style="width: 100%; padding: 10px 0; border: none;">TIẾP TỤC
+						MUA HÀNG</a>
 				</div>
 			</div>
 		</aside>

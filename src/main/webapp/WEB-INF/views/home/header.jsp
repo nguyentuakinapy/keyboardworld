@@ -80,7 +80,7 @@
 			<div class="contact col acount-none navbar-menu"
 				style="font-size: 14px;">
 				<ul class="menu d-flex accout-cart mx-auto mb-0">
-					<c:if test="${user == null}">
+					<c:if test="${userS == null}">
 						<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink"
 							href="#">TÀI KHOẢN<i class="bi bi-chevron-down"></i></a>
 							<div class="account-popup">
@@ -99,8 +99,8 @@
 							</div></li>
 					</c:if>
 
-					<c:if test="${user != null}">
-						<c:set var="fullnameUp" value="${user.fullName.toUpperCase()}" />
+					<c:if test="${userS != null}">
+						<c:set var="fullnameUp" value="${userS.fullName.toUpperCase()}" />
 						<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink"
 							href="#"><c:out value="${fullnameUp}" /><i
 								class="bi bi-chevron-down"></i></a>
@@ -113,7 +113,7 @@
 									<a href="/keyboardworld/logout"
 										class="nav-link hv-nav-items m-2 ms-4">Đăng xuất</a>
 								</div>
-								<c:if test="${user.role.roleName == 'Admin'}">
+								<c:if test="${userS.role.roleName == 'Admin'}">
 									<div class="border">
 										<a href="/keyboardworld/admin"
 											class="nav-link hv-nav-items m-2 ms-4">ADMIN</a>
