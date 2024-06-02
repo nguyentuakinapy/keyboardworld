@@ -71,19 +71,7 @@ public class CartController {
 		return "redirect:/keyboardworld/login";
 	}
 	
-	@RequestMapping("/keyboardworld/addtocartmain/{x}")
-	public String addToCartMain(Model model, @PathVariable("x") Integer id) {
-		User user = (User) session.getAttribute("userS");
-		if (user != null) {
-			Cart cart = new Cart();
-			cart.setProductDetail(productDetailDAO.findById(id).orElse(null));
-			cart.setQuantity(1);
-			cart.setUser(user);
-			cartDAO.save(cart);
-			return "redirect:/keyboardworld/viewcart";
-		}
-		return "redirect:/keyboardworld";
-	}
+
 	
 	@RequestMapping("/keyboardworld/deletecart/{x}")
 	public String deleteCart(Model model, @PathVariable("x") Integer id) {

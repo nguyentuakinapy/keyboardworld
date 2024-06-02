@@ -64,7 +64,7 @@
 						</div>
 						<form class="product-btn d-grid gap-2 col-10 mx-auto">
 							<button type="submit" data-bs-toggle="modal"
-								formaction="/keyboardworld/addtocartmain/${p.productDetails[0].productDetailID}"
+								formaction="/keyboardworld/addtocart/${p.productDetails[0].productDetailID}"
 								data-bs-target="#exampleModal"
 								class="btn btn-outline-dark fw-bold">Thêm vào giỏ hàng</button>
 						</form>
