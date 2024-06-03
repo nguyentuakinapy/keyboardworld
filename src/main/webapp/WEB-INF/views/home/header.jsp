@@ -102,12 +102,12 @@
 					<c:if test="${userS != null}">
 						<c:set var="fullnameUp" value="${userS.fullName.toUpperCase()}" />
 						<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink"
-							href="#"><c:out value="${fullnameUp}" /><i
-								class="bi bi-chevron-down"></i></a>
+							href="#">TÀI KHOẢN<i class="bi bi-chevron-down"></i></a>
 							<div class="account-popup">
 								<div class="border rounded-top">
 									<a href="/keyboardworld/account"
-										class="nav-link hv-nav-items m-2 ms-4">Thông tin cá nhân</a>
+										class="nav-link hv-nav-items m-2 ms-4"><c:out
+											value="${fullnameUp}" /></a>
 								</div>
 								<div class="border">
 									<a href="/keyboardworld/logout"

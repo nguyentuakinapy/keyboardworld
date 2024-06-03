@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.asmkbw.dao.CartDAO;
 import com.asmkbw.dao.ProductDetailDAO;
@@ -44,24 +45,36 @@ public class CartController {
 
 	@RequestMapping("/keyboardworld/addtocart/{x}")
 	@Transactional
-	public String addToCart(Model model, @PathVariable("x") Integer id) {
+	public String addToCart(Model model, @PathVariable("x") Integer id, @RequestParam("quantity") Integer qty) {
 		User user = (User) session.getAttribute("userS");
 		if (user != null) {
 			List<Cart> list = cartDAO.findByIDUser(user);
 			boolean productExistsInCart = false;
 			for (Cart c : list) {
 				if (id.equals(c.getProductDetail().getProductDetailID())) {
-					c.setQuantity(c.getQuantity() + 1);
-					cartDAO.save(c);
-					productExistsInCart = true;
-					break;
+					if (qty != 1) {
+						c.setQuantity(c.getQuantity() + qty);
+						cartDAO.save(c);
+						productExistsInCart = true;
+						break;
+					} else if (qty == 1) {
+						c.setQuantity(c.getQuantity() + 1);
+						cartDAO.save(c);
+						productExistsInCart = true;
+						break;
+					}
+
 				}
 			}
 
 			if (!productExistsInCart) {
 				Cart cart = new Cart();
 				cart.setProductDetail(productDetailDAO.findById(id).orElse(null));
-				cart.setQuantity(1);
+				if (qty != 1) {
+					cart.setQuantity(qty);
+				} else if (qty == 1) {
+					cart.setQuantity(1);
+				}
 				cart.setUser(user);
 				cartDAO.save(cart);
 			}
@@ -70,13 +83,11 @@ public class CartController {
 		}
 		return "redirect:/keyboardworld/login";
 	}
-	
 
-	
 	@RequestMapping("/keyboardworld/deletecart/{x}")
 	public String deleteCart(Model model, @PathVariable("x") Integer id) {
 		User user = (User) session.getAttribute("userS");
-		if(user != null) {
+		if (user != null) {
 			cartDAO.deleteById(id);
 		}
 		return "redirect:/keyboardworld/viewcart";

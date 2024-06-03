@@ -35,6 +35,6 @@ public class Brand {
 	@Column(name = "Email")
 	String email;
 
-	@OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "brand")
 	List<Product> products;
 }

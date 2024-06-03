@@ -87,11 +87,14 @@
 					</div>
 				</div>
 			</div>
-			<a
-				href="/keyboardworld/addtocart/${productDetails[0].productDetailID}"
-				id="addtocart" class="btn btn-dark me-2 btn-add-to-card"> Thêm
-				vào giỏ hàng <i class="bi bi-bag-fill"></i>
-			</a>
+			<form id="addtocart-form"
+				action="/keyboardworld/addtocart/${productDetails[0].productDetailID}"
+				method="POST">
+				<input type="hidden" name="quantity" id="quantity" value="1">
+				<button type="submit" class="btn btn-dark me-2 btn-add-to-card">
+					Thêm vào giỏ hàng <i class="bi bi-bag-fill"></i>
+				</button>
+			</form>
 			<div class="module_service">
 				<i class="bi bi-shield-check fs-1 me-3"></i> <a href="#"
 					class="text-decoration-none text-dark">Chính sách bảo hành</a>
@@ -202,34 +205,40 @@
 	</div>
 </div>
 <script>
-	document.querySelectorAll('.color-button').forEach(button => {
-		button.addEventListener('click', () => {
-			document.querySelectorAll('.color-button').forEach(btn => btn.classList.remove('active'));
-			button.classList.add('active');
-	
-			const newImage = button.getAttribute('data-image');
-			const newPrice = parseFloat(button.getAttribute('data-price'));
-			const newName = button.getAttribute('data-name');
-			const productDetailID = button.getAttribute('data-idproduct');
-			document.getElementById('product-image').src = newImage;
-			document.getElementById('product-price').innerText = newPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-			document.getElementById('product-name').innerText = newName;
-			document.getElementById('addtocart').setAttribute('href', '/keyboardworld/addtocart/'+productDetailID);
-		});
-	});
-	
-	document.getElementById('button-decrement-detailproduct').addEventListener('click', function() {
-		var quantityInput = document.getElementById('quantity-input-detailproduct');
-		var currentValue = parseInt(quantityInput.value);
-		if (currentValue > 1) {
-			quantityInput.value = currentValue - 1;
-		}
-	});
+document.querySelectorAll('.color-button').forEach(button => {
+    button.addEventListener('click', () => {
+        document.querySelectorAll('.color-button').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
 
-	document.getElementById('button-increment-detailproduct').addEventListener('click', function() {
-		var quantityInput = document.getElementById('quantity-input-detailproduct');
-		var currentValue = parseInt(quantityInput.value);
-		quantityInput.value = currentValue + 1;
-	});
+        const newImage = button.getAttribute('data-image');
+        const newPrice = parseFloat(button.getAttribute('data-price'));
+        const newName = button.getAttribute('data-name');
+        const productDetailID = button.getAttribute('data-idproduct');
+        document.getElementById('product-image').src = newImage;
+        document.getElementById('product-price').innerText = newPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        document.getElementById('product-name').innerText = newName;
+
+        // Update form action
+        document.getElementById('addtocart-form').action = '/keyboardworld/addtocart/' + productDetailID;
+    });
+});
+
+document.getElementById('button-decrement-detailproduct').addEventListener('click', function() {
+    var quantityInput = document.getElementById('quantity-input-detailproduct');
+    var currentValue = parseInt(quantityInput.value);
+    if (currentValue > 1) {
+        quantityInput.value = currentValue - 1;
+        document.getElementById('quantity').value = quantityInput.value; // Update hidden input
+    }
+});
+
+document.getElementById('button-increment-detailproduct').addEventListener('click', function() {
+    var quantityInput = document.getElementById('quantity-input-detailproduct');
+    var currentValue = parseInt(quantityInput.value);
+    quantityInput.value = currentValue + 1;
+    document.getElementById('quantity').value = quantityInput.value; // Update hidden input
+});
+
+
 
 </script>
