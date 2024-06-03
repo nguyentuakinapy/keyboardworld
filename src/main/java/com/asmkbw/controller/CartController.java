@@ -92,4 +92,14 @@ public class CartController {
 		}
 		return "redirect:/keyboardworld/viewcart";
 	}
+	
+	 @RequestMapping("/keyboardworld/updatecart")
+	    public String updateCart(@RequestParam("cartID") Integer cartID, @RequestParam("quantity") Integer quantity) {
+	        Cart cart = cartDAO.findById(cartID).orElse(null);
+	        if (cart != null && quantity > 0) {
+	            cart.setQuantity(quantity);
+	            cartDAO.save(cart);
+	        }
+	        return "redirect:/keyboardworld/viewcart";
+	    }
 }

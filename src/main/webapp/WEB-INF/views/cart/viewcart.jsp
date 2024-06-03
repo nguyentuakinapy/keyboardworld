@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <div class="container">
 	<h3 class="mt-5 text-center fw-bold">
 		GIỎ HÀNG <span>(${listCarts.size() } sản phẩm)</span>
@@ -34,15 +35,22 @@
 									</div>
 									<div class="col-auto">
 										<div class="form-control d-flex align-items-center">
-											<button class="btn-cart" type="button" id="button-decrement">-</button>
-											<input type="text" class="qty-cart" id="quantity-input"
-												value="${c.quantity }" readonly>
-											<button class="btn-cart" type="button" id="button-increment">+</button>
+											  <form action="/keyboardworld/updatecart" method="post">
+                                                <input type="hidden" name="cartID" value="${c.cartID}">
+                                                <input type="hidden" name="quantity" value="${c.quantity - 1}">
+                                                <button type="submit" class="btn-cart">-</button>
+                                            </form>
+                                            <input type="text" class="qty-cart" value="${c.quantity}" readonly>
+                                            <form action="/keyboardworld/updatecart" method="post">
+                                                <input type="hidden" name="cartID" value="${c.cartID}">
+                                                <input type="hidden" name="quantity" value="${c.quantity + 1}">
+                                                <button type="submit" class="btn-cart">+</button>
+                                            </form>
 										</div>
 									</div>
 									<div class="col-auto">
-										<label class="col-form-label">Giá:
-											${c.productDetail.price * c.quantity} </label>
+										<label class="col-form-label">Giá: <fmt:formatNumber value="${c.productDetail.price * c.quantity}"></fmt:formatNumber>
+											₫ </label>
 									</div>
 								</div>
 							</div>
@@ -64,12 +72,12 @@
 				<div class="d-flex m-4" style="justify-content: space-between;">
 
 					<p style="margin: 0;">Tạm tính:</p>
-					<span class="fw-bold">${totalPrice }₫</span>
+					<span class="fw-bold"> <fmt:formatNumber value="${totalPrice }"></fmt:formatNumber> ₫</span>
 				</div>
 				<hr class="w-100 m-0 p-0">
 				<div class="d-flex m-4" style="justify-content: space-between;">
 					<p style="margin: 0;">Thành tiền:</p>
-					<span>${totalPrice }₫</span>
+					<span><fmt:formatNumber value="${totalPrice }"></fmt:formatNumber> ₫</span>
 				</div>
 				<hr class="w-100 m-0 p-0">
 				<div class="mx-4 my-2">
