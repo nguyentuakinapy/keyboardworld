@@ -56,6 +56,7 @@ header {
 
 .main-body {
 	margin: 20px;
+	min-height: 580px;
 	background-color: white;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
 	border-radius: 10px;
@@ -223,9 +224,7 @@ table th {
 							<a href="#"
 							class="nav-link dropdown-toggle d-flex align-items-center"
 							role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								<div class="img"
-									style="background-image: url('/images/bridge75bac.png');"></div>
-								<span>${user.fullName}</span>
+								<div class="img" style="background-image: url('');"></div> <span>${userS.fullName}</span>
 						</a>
 							<ul class="dropdown-menu">
 								<li><a class="dropdown-item" href="/keyboardworld/account"><i
@@ -278,16 +277,6 @@ table th {
 
 		setInterval(updateTime, 1000); // Cập nhật thời gian mỗi giây
 		updateTime();
-
-		function showFormEdit() {
-			document.querySelector('#form1').classList.add('d-none');
-			document.querySelector('#form2').classList.remove('d-none');
-		}
-
-		function showForm() {
-			document.querySelector('#form2').classList.add('d-none');
-			document.querySelector('#form1').classList.remove('d-none');
-		}
 
 		function toggleActions(icon) {
 			var actionIcons = icon.closest('.actions');

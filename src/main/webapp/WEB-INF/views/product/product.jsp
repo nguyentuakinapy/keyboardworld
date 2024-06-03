@@ -299,10 +299,11 @@
 											</div>
 										</div>
 										<form class="product-btn d-grid gap-2 col-10 mx-auto">
+											<input type="hidden" name="quantity" id="quantity" value="1">
 											<button type="submit"
 												formaction="/keyboardworld/addtocart/${p.productDetails[0].productDetailID}"
-												class="btn btn-outline-dark fw-bold">Thêm vào giỏ
-												hàng</button>
+												formmethod="post" class="btn btn-outline-dark fw-bold">Thêm
+												vào giỏ hàng</button>
 										</form>
 									</div>
 									<hr class="m-0 p-0">

@@ -26,6 +26,7 @@ public class ProductController {
 
 	@Autowired
 	CategoryDAO categoryDAO;
+
 	@RequestMapping("/keyboardworld/product")
 	public String productALL(Model model) {
 		List<Product> products = productDAO.findAll();
@@ -45,12 +46,4 @@ public class ProductController {
 		return "index";
 	}
 
-	@RequestMapping("/keyboardworld/admin/product")
-	public String test(Model model) {
-		List<Product> listProducts = productDAO.findAll();
-		model.addAttribute("products", listProducts);
-
-		model.addAttribute("views", "listproduct.jsp");
-		return "admin/index";
-	}
 }

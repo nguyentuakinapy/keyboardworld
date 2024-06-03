@@ -24,10 +24,10 @@
 									${c.productDetail.product.property}</h5>
 							</div>
 							<div class="item-actions me-3 mt-3">
-								<a href="/keyboardworld/deletecart/${c.cartID}" class="btn btn-outline-danger">Xóa</a>
 								<div class="row align-items-center mb-3">
-								<div class="col-auto">
-										<label class="col-form-label">Màu: <b>${c.productDetail.color }</b> </label>
+									<div class="col-auto">
+										<label class="col-form-label">Màu: <b>${c.productDetail.color }</b>
+										</label>
 									</div>
 									<div class="col-auto">
 										<label class="col-form-label">Số lượng:</label>
@@ -46,9 +46,13 @@
 									</div>
 								</div>
 							</div>
+
 						</div>
+						<a href="/keyboardworld/deletecart/${c.cartID}"
+							class="btn btn-outline-danger me-5 mt-4">Xóa</a>
 					</div>
-					 <c:set var="totalPrice" value="${totalPrice + c.productDetail.price * c.quantity}" />
+					<c:set var="totalPrice"
+						value="${totalPrice + c.productDetail.price * c.quantity}" />
 				</c:forEach>
 			</div>
 		</article>
