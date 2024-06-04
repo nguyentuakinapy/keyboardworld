@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <style>
 @charset "UTF-8";
 
@@ -102,46 +103,50 @@ a {
 .active {
 	color: #c9d6df;
 }
+
+.dis {
+	cursor: not-allowed;
+}
 </style>
 
-<form action="#" class="mt-4">
-	<div class="page_account">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-xs-12 col-sm-12">
-					<div class="block-account">
-						<h1 class="title-head mt-10">Trang tài khoản</h1>
-						<p>
-							Xin chào, <span>Nguyễn Phi Hùng</span> !
-						</p>
-						<ul>
-							<li><a href="/keyboardworld/account"
-								class="title-info active">Thông tin tài khoản</a></li>
-							<li><a href="/keyboardworld/order" class="title-info">Đơn
-									hàng của bạn</a></li>
-							<li><a href="/keyboardworld/changepass" class="title-info">Đổi
-									mật khẩu</a></li>
-							<li><a href="/keyboardworld/address" class="title-info">Sổ
-									địa chỉ</a></li>
-						</ul>
-					</div>
+<div class="page_account mt-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-xs-12 col-sm-12">
+				<div class="block-account">
+					<h1 class="title-head mt-10">Trang tài khoản</h1>
+					<p>
+						Xin chào, <span>${userS.fullName}</span> !
+					</p>
+					<ul>
+						<li><a href="/keyboardworld/account"
+							class="title-info active">Thông tin tài khoản</a></li>
+						<li><a href="/keyboardworld/order" class="title-info">Đơn
+								hàng của bạn</a></li>
+						<li><a href="/keyboardworld/changepass" class="title-info">Đổi
+								mật khẩu</a></li>
+						<li><a href="/keyboardworld/address/index" class="title-info">Sổ
+								địa chỉ</a></li>
+					</ul>
 				</div>
-				<div class="col-lg-9 col-sm-12 col-xs-12">
-					<h1 class="title-head mt-10">Thông tin tài khoản</h1>
+			</div>
+			<div class="col-lg-9 col-sm-12 col-xs-12">
+				<h1 class="title-head mt-10">Thông tin tài khoản</h1>
+				<h3 class="title-info text-danger">${message}</h3>
+				<form action="/keyboardworld/account" method="post">
 					<div class="form-floating mb-3">
-						<input type="text" class="form-control"
-							placeholder="Nhập tên của bạn" value="Nguyễn Phi Hùng"> <label>Họ
-							và tên <span style="color: red;">*</span>
+						<input type="text" class="form-control" name="fullName"
+							value="${userS.fullName}" required/> <label>Họ và tên <span
+							style="color: red;">*</span>
 						</label>
 					</div>
 					<div class="form-floating mb-3">
-						<input type="email" class="form-control"
-							placeholder="Nhập email của bạn" value="hungnpps30910@gmail.com">
+						<input type="email" class="form-control dis" name="email" value="${userS.email}" disabled />
 						<label>Email <span style="color: red;">*</span></label>
 					</div>
-					<button class="btn btn-primary">Lưu thay đổi</button>
-				</div>
+					<button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+				</form>
 			</div>
 		</div>
 	</div>
-</form>
+</div>

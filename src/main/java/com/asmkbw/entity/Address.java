@@ -25,7 +25,7 @@ public class Address {
 	@Column(name = "AddressID")
 	Integer addRessID;
 
-	@Column(name = "AddressDetail")
+	@Column(name = "Addressdetail")
 	String addRessDetail;
 
 	@Column(name = "Phone")

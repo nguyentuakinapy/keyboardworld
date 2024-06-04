@@ -17,7 +17,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Order")
+@Table(name = "[Order]")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,7 +27,7 @@ public class Order {
 	@Column(name = "OrderID")
 	Integer orderID;
 
-	@Column(name = "TotalPrice")
+	@Column(name = "Totalprice")
 	Double totalPrice;
 
 	@Column(name = "Date")
