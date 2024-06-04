@@ -3,6 +3,9 @@ package com.asmkbw.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,18 +63,19 @@ public class HomeController {
 	@RequestMapping
 	public String home(Model model) {
 		model.addAttribute("views", "/WEB-INF/views/home/main.jsp");
-		List<Product> products = productDao.findAll();
-		model.addAttribute("products", products);
-//		System.out.println(products.get(1).getCategory().getName());
-//		List<ProductDetail> details = products.get(0).getProductDetails();
-//		System.out.println();
-//		products.forEach(p -> {
-//			System.out.println(p.getName());
-//		});
-//		List<ProductDetail> productDetails = productDetailDAO.findAll();
-//		productDetails.forEach(p -> {
-//			System.out.println(p.getColor());
-//		});
+		Pageable pageable = PageRequest.of(0, 4);
+		Page<Product> keyboards = productDao.findByCategoryID(2, pageable);
+		model.addAttribute("keyboards", keyboards.getContent());
+
+		Page<Product> mouses = productDao.findByCategoryID(1, pageable);
+		model.addAttribute("mouses", mouses.getContent());
+	
+		Page<Product> keycap = productDao.findByCategoryID(4, pageable);
+		model.addAttribute("keycap", keycap.getContent());
+		
+		Page<Product> headphone = productDao.findByCategoryID(3, pageable);
+		model.addAttribute("headphone", headphone.getContent());
+		
 		return "index";
 	}
 
