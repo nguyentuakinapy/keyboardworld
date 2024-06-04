@@ -4,8 +4,9 @@
 <section class="header-area" style="position: sticky; z-index: 1001">
 	<!-- Search -->
 	<div class="collapse container" id="collapseExampleSearch">
-		<form class="d-flex m-auto search" role="search">
-			<input class="form-control me-2 mt-2" type="search"
+		<form class="d-flex m-auto search"
+			action="/keyboardworld/searchproduct" role="search" method="post">
+			<input class="form-control me-2 mt-2" name="keywords" type="search"
 				placeholder="Search" aria-label="Search">
 			<button class="btn btn-outline-success mt-2" type="submit">Search</button>
 		</form>
