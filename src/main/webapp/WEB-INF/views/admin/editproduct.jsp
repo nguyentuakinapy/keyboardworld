@@ -67,12 +67,12 @@
 		<div class="mb-3">
 			<div class="row g-3 align-items-center">
 				<label class="col-sm-2 text-xs">Hình ảnh: </label>
-				<div class="col-sm-9">
+				<div class="col-sm-5">
 					<input name="gallery" type="file" class="form-control" />
 				</div>
-				<div class="col-sm-1">
-					<img alt="" style="width: 50%"
-						src="/images/bridge75trangdacbiet.png">
+				<div class="col-sm-5">
+					<input value="${nameGallery}" readonly type="text"
+						class="form-control" />
 				</div>
 			</div>
 		</div>
@@ -167,7 +167,9 @@
 						</td>
 						<td>${pd.quantity}</td>
 						<td>${pd.price}</td>
-						<td><a href=""><i class="bi bi-trash text-danger"></i></a></td>
+						<td><a
+							href="/keyboardworld/admin/removelistproductdetail/${status.index}"><i
+								class="bi bi-trash text-danger"></i></a></td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -183,7 +185,9 @@
 						</td>
 						<td>${pd.quantity}</td>
 						<td>${pd.price}</td>
-						<td><a href=""><i class="bi bi-trash text-danger"></i></a></td>
+						<td><a
+							href="/keyboardworld/admin/removeproductdetail/${pd.productDetailID}"><i
+								class="bi bi-trash text-danger"></i></a></td>
 					</tr>
 				</c:forEach>
 			</c:if>
