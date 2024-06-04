@@ -123,6 +123,7 @@ public class ProductManagementController {
 			productDetails.clear();
 			nameImages.clear();
 			model.addAttribute("product", product);
+			nameGallery = "";
 		}
 		model.addAttribute("productDetails", productDetails);
 
@@ -159,9 +160,11 @@ public class ProductManagementController {
 				gly.setThumbnail(gallery.getOriginalFilename());
 				paramService.save(gallery, app.getRealPath("/images/"));
 				daoGalleryDAO.save(gly);
+				nameGallery = "";
 			} else {
 				gly.setThumbnail(nameGallery);
 				daoGalleryDAO.save(gly);
+				nameGallery = "";
 			}
 			if (productDetails != null) {
 				for (ProductDetail pd : productDetails) {
@@ -188,6 +191,7 @@ public class ProductManagementController {
 				gly.setThumbnail(gallery.getOriginalFilename());
 				paramService.save(gallery, app.getRealPath("/images/"));
 				daoGalleryDAO.save(gly);
+				nameGallery = "";
 			}
 			System.out.println("Update thành công");
 		}
