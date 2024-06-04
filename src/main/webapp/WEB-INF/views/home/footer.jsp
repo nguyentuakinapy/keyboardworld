@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <footer class="mt-5" style="font-family: 'Montserrat', sans-serif; padding-top: 500px;">
+ <footer class="mt-5" style="font-family: 'Montserrat', sans-serif; padding-top: 50px;">
         <div class="container">
             <div class="row">
                 <div class="col-md-3 footer-section">
