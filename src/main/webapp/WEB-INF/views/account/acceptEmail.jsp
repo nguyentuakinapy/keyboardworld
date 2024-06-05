@@ -68,7 +68,7 @@
 					<i class="bi bi-envelope-paper"></i> <input name="otp" type="text"
 						id="registerFullname" placeholder="Vui lòng nhập OTP" />
 				</div>
-				<button type="submit" class="btn btn-account btn-dark w-100">Xác
+				<button type="submit" class="btn btn-account btn-dark w-100 loadButton">Xác
 					nhận</button>
 			</form>
 		</div>

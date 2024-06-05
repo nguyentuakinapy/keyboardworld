@@ -41,9 +41,37 @@ html, body {
 	text-overflow: ellipsis;
 	/* Hiển thị dấu ba chấm (...) khi văn bản vượt quá */
 }
+
+
+/* styles.css */
+.loading-overlay {
+	display: none;
+	/* Ẩn loading ban đầu */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.2);
+	/* Màu nền mờ */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+	/* Đảm bảo nó ở trên cùng */
+}
+
+.loading {
+	color: white;
+}
 </style>
 </head>
 <body>
+	<div id="loadingOverlay" class="loading-overlay">
+		<div class="spinner-border text-danger fw-bold loading" role="status">
+			<span class="visually-hidden">Loading...</span>
+		</div>
+	</div>
 	<jsp:include page="/WEB-INF/views/home/header.jsp"></jsp:include>
 	<jsp:include page="${views}"></jsp:include>
 	<jsp:include page="/WEB-INF/views/home/footer.jsp"></jsp:include>
@@ -66,5 +94,44 @@ html, body {
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 	new WOW().init();
+</script>
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		hideLoading(); // Ẩn loading khi trang được tải xong
+	});
+
+	// Lấy tất cả các button có class là "loadButton" và gán sự kiện click cho mỗi button
+	var loadButtons = document.querySelectorAll('.loadButton');
+	loadButtons.forEach(function(button) {
+		button.addEventListener('click', function() {
+			showLoading();
+			setTimeout(hideLoading, 500);
+		});
+	});
+
+	// Lấy tất cả các thẻ a có class là "loadLink" và gán sự kiện click cho mỗi thẻ a
+	var loadLinks = document.querySelectorAll('.loadLink');
+	loadLinks.forEach(function(link) {
+		link.addEventListener('click', function(event) {
+			event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ a
+			showLoading();
+
+			var href = this.getAttribute('href');
+
+			// Giả lập xử lý công việc (sau 1 giây thì chuyển hướng và ẩn loading)
+			setTimeout(function() {
+				window.location.href = href;
+				hideLoading();
+			}, 500);
+		});
+	});
+
+	function showLoading() {
+		document.getElementById('loadingOverlay').style.display = 'flex';
+	}
+
+	function hideLoading() {
+		document.getElementById('loadingOverlay').style.display = 'none';
+	}
 </script>
 </html>
