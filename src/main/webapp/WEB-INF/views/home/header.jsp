@@ -20,7 +20,7 @@
 			</div>
 			<!-- Logo -->
 			<div class="brand col mb-1">
-				<a href="/keyboardworld" class="nav-link"> <img alt=""
+				<a href="/keyboardworld" class="nav-link loadLink"> <img alt=""
 					style="width: 140px" src="/images/AkinaKB.png">
 				</a>
 			</div>
@@ -82,19 +82,19 @@
 				style="font-size: 14px;">
 				<ul class="menu d-flex accout-cart mx-auto mb-0">
 					<c:if test="${userS == null}">
-						<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink"
-							href="#">TÀI KHOẢN<i class="bi bi-chevron-down"></i></a>
+						<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink loadLink"
+							href="/keyboardworld/login">TÀI KHOẢN<i class="bi bi-chevron-down"></i></a>
 							<div class="account-popup">
 								<div class="border rounded-top">
 									<a href="/keyboardworld/login"
-										class="nav-link hv-nav-items m-2 ms-4">Đăng nhập</a>
+										class="nav-link hv-nav-items m-2 ms-4 loadLink">Đăng nhập</a>
 								</div>
 								<div class="border">
 									<a href="/keyboardworld/register"
-										class="nav-link hv-nav-items m-2 ms-4">Đăng ký</a>
+										class="nav-link hv-nav-items m-2 ms-4 loadLink">Đăng ký</a>
 								</div>
 								<div class="border rounded-bottom">
-									<a href="#" class="nav-link hv-nav-items m-2 ms-4">Quên mật
+									<a href="#" class="nav-link hv-nav-items m-2 ms-4 loadLink">Quên mật
 										khẩu</a>
 								</div>
 							</div></li>
@@ -102,27 +102,27 @@
 
 					<c:if test="${userS != null}">
 						<c:set var="fullnameUp" value="${userS.fullName.toUpperCase()}" />
-						<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink"
-							href="#">TÀI KHOẢN<i class="bi bi-chevron-down"></i></a>
+						<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink loadLink"
+							href="/keyboardworld/account">TÀI KHOẢN<i class="bi bi-chevron-down"></i></a>
 							<div class="account-popup">
 								<div class="border rounded-top">
 									<a href="/keyboardworld/account"
-										class="nav-link hv-nav-items m-2 ms-4"><c:out
+										class="nav-link hv-nav-items m-2 ms-4 loadLink"><c:out
 											value="${fullnameUp}" /></a>
 								</div>
 								<div class="border">
 									<a href="/keyboardworld/logout"
-										class="nav-link hv-nav-items m-2 ms-4">Đăng xuất</a>
+										class="nav-link hv-nav-items m-2 ms-4 loadLink">Đăng xuất</a>
 								</div>
 								<c:if test="${userS.role.roleName == 'Admin'}">
 									<div class="border">
 										<a href="/keyboardworld/admin"
-											class="nav-link hv-nav-items m-2 ms-4">ADMIN</a>
+											class="nav-link hv-nav-items m-2 ms-4 loadLink">ADMIN</a>
 									</div>
 								</c:if>
 							</div></li>
 					</c:if>
-					<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink"
+					<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink loadLink" 
 						href="/keyboardworld/viewcart">GIỎ HÀNG <i class="bi bi-bag"></i>
 							<span
 							class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -313,40 +313,40 @@
 		style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); font-size: 14px;">
 		<ul class="menu d-flex mx-auto mb-0">
 			<li class="list-unstyled p-1"><a href="/keyboardworld"
-				class="nav-link mx-2 hvlink nav-head">TRANG CHỦ</a></li>
+				class="nav-link mx-2 hvlink nav-head loadLink">TRANG CHỦ</a></li>
 			<li class="list-unstyled p-1"><a href="#"
-				class="nav-link mx-2 hvlink nav-head">KEYCAP BỘ <i
+				class="nav-link mx-2 hvlink nav-head loadLink">KEYCAP BỘ <i
 					class="bi bi-chevron-down"></i></a>
 				<div class="category-keycap">
 					<div class="border rounded-top">
-						<a href="#" class="nav-link hv-nav-items m-2 ms-4">Keycap
+						<a href="#" class="nav-link hv-nav-items m-2 ms-4 loadLink">Keycap
 							Cherry</a>
 					</div>
 					<div class="border">
-						<a href="#" class="nav-link hv-nav-items m-2 ms-4">Keycap MOA</a>
+						<a href="#" class="nav-link hv-nav-items m-2 ms-4 loadLink">Keycap MOA</a>
 					</div>
 					<div class="border">
-						<a href="#" class="nav-link hv-nav-items m-2 ms-4">Keycap
+						<a href="#" class="nav-link hv-nav-items m-2 ms-4 loadLink">Keycap
 							xuyên led</a>
 					</div>
 					<div class="border">
-						<a href="#" class="nav-link hv-nav-items m-2 ms-4">Keycap SA</a>
+						<a href="#" class="nav-link hv-nav-items m-2 ms-4 loadLink">Keycap SA</a>
 					</div>
 					<div class="border">
-						<a href="#" class="nav-link hv-nav-items m-2 ms-4">Keycap XDA</a>
+						<a href="#" class="nav-link hv-nav-items m-2 ms-4 loadLink">Keycap XDA</a>
 					</div>
 					<div class="border rounded-bottom">
-						<a href="#" class="nav-link hv-nav-items m-2 ms-4">Keycap OEM</a>
+						<a href="#" class="nav-link hv-nav-items m-2 ms-4 loadLink">Keycap OEM</a>
 					</div>
 				</div></li>
 			<li class="list-unstyled p-1"><a href="#"
-				class="nav-link mx-2 hvlink nav-head">BÀN PHÍM CƠ</a></li>
+				class="nav-link mx-2 hvlink nav-head loadLink">BÀN PHÍM CƠ</a></li>
 			<li class="list-unstyled p-1"><a href="#"
-				class="nav-link mx-2 hvlink nav-head">TAI NGHE</a></li>
+				class="nav-link mx-2 hvlink nav-head loadLink">TAI NGHE</a></li>
 			<li class="list-unstyled p-1"><a href="#"
-				class="nav-link mx-2 hvlink nav-head">CHUỘT</a></li>
+				class="nav-link mx-2 hvlink nav-head loadLink">CHUỘT</a></li>
 			<li class="list-unstyled p-1"><a href="/keyboardworld/product"
-				class="nav-link mx-2 hvlink nav-head">SẢN PHẨM <i
+				class="nav-link mx-2 hvlink nav-head loadLink">SẢN PHẨM <i
 					class="bi bi-chevron-down"></i></a>
 				<div class="category-products p-4">
 					<div class="row mt-3">
@@ -413,9 +413,9 @@
 					</div>
 				</div></li>
 			<li class="list-unstyled p-1"><a href="#"
-				class="nav-link mx-3 hvlink nav-head">BÀI VIẾT</a></li>
+				class="nav-link mx-3 hvlink nav-head loadLink">BÀI VIẾT</a></li>
 			<li class="list-unstyled p-1"><a href="#"
-				class="nav-link mx-3 hvlink nav-head">VỀ KICAP <i
+				class="nav-link mx-3 hvlink nav-head loadLink">VỀ KICAP <i
 					class="bi bi-chevron-down"></i></a>
 				<div class="kicap">asdasd</div></li>
 		</ul>

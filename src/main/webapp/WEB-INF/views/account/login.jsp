@@ -74,12 +74,12 @@
 						required>
 				</div>
 				<em>${message}</em>
-				<button type="submit" class="btn btn-account btn-dark w-100">Đăng
+				<button type="submit" class="btn btn-account btn-dark w-100 loadButton">Đăng
 					nhập</button>
 				<p class="text-center mt-3">
 					<strong>Chưa có tài khoản?</strong> <a
 						href="/keyboardworld/register"
-						class="text-dark text-decoration-none">Đăng kí ngay</a>
+						class="text-dark text-decoration-none loadLink">Đăng kí ngay</a>
 				</p>
 			</form>
 		</div>
