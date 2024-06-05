@@ -16,7 +16,8 @@
 						<ul class="list-group borderless">
 							<c:forEach var="category" items="${categories}">
 								<li class="list-group-item"><input
-									class="form-check-input me-1" type="checkbox" value=""
+									name="category-selection" class="form-check-input me-1"
+									type="checkbox" value="${category.categoryID}"
 									id="firstCheckbox"> <label class="form-check-label"
 									for="firstCheckbox">${category.name}</label>
 							</c:forEach>
@@ -42,21 +43,23 @@
 
 								<ul class="p-0">
 									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox" value=""
-										id="firstCheckbox"> <label class="form-check-label"
-										for="firstCheckbox">Bàn phím cơ</label></li>
+										name="category-selection" class="form-check-input me-1"
+										type="checkbox" value="cơ" id="firstCheckbox"> <label
+										class="form-check-label" for="firstCheckbox">Bàn phím
+											cơ</label></li>
 									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox" value=""
-										id="secondCheckbox"> <label class="form-check-label"
-										for="secondCheckbox">Gaming</label></li>
+										name="category-selection" class="form-check-input me-1"
+										type="checkbox" value="gaming" id="secondCheckbox"> <label
+										class="form-check-label" for="secondCheckbox">Gaming</label></li>
 									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox" value=""
-										id="thirdCheckbox"> <label class="form-check-label"
-										for="thirdCheckbox">Có dây</label></li>
+										name="category-selection" class="form-check-input me-1"
+										type="checkbox" value="có dây" id="thirdCheckbox"> <label
+										class="form-check-label" for="thirdCheckbox">Có dây</label></li>
 									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox" value=""
-										id="thirdCheckbox"> <label class="form-check-label"
-										for="thirdCheckbox">Không dây</label></li>
+										name="category-selection" class="form-check-input me-1"
+										type="checkbox" value="không dây" id="thirdCheckbox">
+										<label class="form-check-label" for="thirdCheckbox">Không
+											dây</label></li>
 								</ul>
 
 							</div>
@@ -78,37 +81,39 @@
 
 								<ul class="p-0">
 									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox" value=""
-										id="firstCheckbox"> <label class="form-check-label"
-										for="firstCheckbox">Đỏ</label></li>
+										name="category-selection" class="form-check-input me-1"
+										type="checkbox" value="đỏ" id="firstCheckbox"> <label
+										class="form-check-label" for="firstCheckbox">Đỏ</label></li>
 									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox" value=""
-										id="secondCheckbox"> <label class="form-check-label"
-										for="secondCheckbox">Cam</label></li>
+										name="category-selection" class="form-check-input me-1"
+										type="checkbox" value="cam" id="secondCheckbox"> <label
+										class="form-check-label" for="secondCheckbox">Cam</label></li>
 									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox" value=""
-										id="thirdCheckbox"> <label class="form-check-label"
-										for="thirdCheckbox">Vàng</label></li>
+										name="category-selection" class="form-check-input me-1"
+										type="checkbox" value="vàng" id="thirdCheckbox"> <label
+										class="form-check-label" for="thirdCheckbox">Vàng</label></li>
 									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox" value=""
-										id="thirdCheckbox"> <label class="form-check-label"
-										for="thirdCheckbox">Xanh lá cây</label></li>
+										name="category-selection" class="form-check-input me-1"
+										type="checkbox" value="xanh lá" id="thirdCheckbox"> <label
+										class="form-check-label" for="thirdCheckbox">Xanh lá
+											cây</label></li>
 									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox" value=""
-										id="thirdCheckbox"> <label class="form-check-label"
-										for="thirdCheckbox">Xanh nước biển</label></li>
+										name="category-selection" class="form-check-input me-1"
+										type="checkbox" value="xanh biển" id="thirdCheckbox">
+										<label class="form-check-label" for="thirdCheckbox">Xanh
+											nước biển</label></li>
 									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox" value=""
-										id="thirdCheckbox"> <label class="form-check-label"
-										for="thirdCheckbox">Tím</label></li>
+										name="category-selection" class="form-check-input me-1"
+										type="checkbox" value="tím" id="thirdCheckbox"> <label
+										class="form-check-label" for="thirdCheckbox">Tím</label></li>
 									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox" value=""
-										id="thirdCheckbox"> <label class="form-check-label"
-										for="thirdCheckbox">Đen</label></li>
+										name="category-selection" class="form-check-input me-1"
+										type="checkbox" value="đen" id="thirdCheckbox"> <label
+										class="form-check-label" for="thirdCheckbox">Đen</label></li>
 									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox" value=""
-										id="thirdCheckbox"> <label class="form-check-label"
-										for="thirdCheckbox">Trắng</label></li>
+										name="category-selection" class="form-check-input me-1"
+										type="checkbox" value="trắng" id="thirdCheckbox"> <label
+										class="form-check-label" for="thirdCheckbox">Trắng</label></li>
 								</ul>
 
 							</div>
@@ -120,9 +125,9 @@
 						<ul class="list-group borderless">
 							<c:forEach var="brand" items="${brands}">
 								<li class="list-group-item"><input
-									class="form-check-input me-1" type="checkbox" value=""
-									id="firstCheckbox"> <label class="form-check-label"
-									for="firstCheckbox">${brand.name}</label>
+									name="category-selection" class="form-check-input me-1"
+									type="checkbox" value="" id="firstCheckbox"> <label
+									class="form-check-label" for="firstCheckbox">${brand.name}</label>
 							</c:forEach>
 						</ul>
 						<hr>
@@ -190,9 +195,11 @@
 					</ul>
 				</div>
 
+
+
 				<div class="mt-3">
 					<div class="container wow bounceInUp">
-						<div class="row borderless">
+						<div class="row borderless" id="product-list">
 							<c:forEach var="p" items="${products.content}">
 								<div class="col-lg-4 col-md-6 col-sm-12 col mt-2">
 									<div class="card card-product border-0 overflow-hidden">
@@ -233,31 +240,56 @@
 									<hr class="m-0 p-0">
 								</div>
 							</c:forEach>
+							<div class="justify-content-center d-flex mt-3">
+								<nav aria-label="Page navigation example">
+									<ul class="pagination">
+										<li class="page-item"><a class="page-link"
+											href="/keyboardworld/product?p=0" aria-label="Previous">
+												<span aria-hidden="true">&laquo;</span>
+										</a></li>
+										<c:forEach var="i" begin="0" end="${products.totalPages-1}">
+											<li class="page-item ${products.number == i ? 'active' : ''}"><a
+												class="page-link" href="/keyboardworld/product?p=${i}">${i + 1}</a></li>
+										</c:forEach>
+										<li class="page-item"><a class="page-link"
+											href="/keyboardworld/product?p=${products.totalPages-1}"
+											aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+										</a></li>
+									</ul>
+								</nav>
+							</div>
 						</div>
 					</div>
-				</div>
-
-				<br>
-				<div class="justify-content-center d-flex">
-					<nav aria-label="Page navigation example">
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link"
-								href="/keyboardworld/product?p=0" aria-label="Previous"> <span
-									aria-hidden="true">&laquo;</span>
-							</a></li>
-							<c:forEach var="i" begin="0" end="${products.totalPages-1}">
-								<li class="page-item ${products.number == i ? 'active' : ''}"><a
-									class="page-link" href="/keyboardworld/product?p=${i}">${i + 1}</a></li>
-							</c:forEach>
-							<li class="page-item"><a class="page-link"
-								href="/keyboardworld/product?p=${products.totalPages-1}"
-								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-							</a></li>
-						</ul>
-					</nav>
 				</div>
 			</aside>
 		</div>
 	</div>
-
 </div>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('input[name="category-selection"]').click(filterProducts);
+	});
+
+	function filterProducts() {
+		var selectedCategories = [];
+		$('input[name="category-selection"]:checked').each(function() {
+			selectedCategories.push($(this).val());
+		});
+		$
+				.ajax({
+					type : 'POST',
+					contentType : 'application/json',
+					url : '${pageContext.request.contextPath}/keyboardworld/filterProducts',
+					data : JSON.stringify(selectedCategories),
+					success : function(data) {
+						console.log(data); // Log dữ liệu phản hồi
+						$('#product-list').html(data);
+					},
+					error : function(xhr, status, error) {
+						console.error("Lỗi xảy ra: " + status + " " + error);
+					}
+				});
+	}
+</script>
