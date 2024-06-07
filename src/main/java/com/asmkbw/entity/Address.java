@@ -40,7 +40,11 @@ public class Address {
 	@Column(name = "Ward")
 	String ward;
 
+	@Column(name = "Distance")
+	Double distance;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "UserID")
 	User user;
+
 }

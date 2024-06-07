@@ -11,9 +11,6 @@ import com.asmkbw.entity.User;
 
 public interface AddressDAO extends JpaRepository<Address, Integer> {
 
-	@Query("SELECT a FROM Address a, User u WHERE u.email = ?1")
-	List<Address> findAddressByEmail(String email);
-
 	@Query("SELECT o FROM Address o WHERE o.user = ?1")
 	List<Address> findByIDUser(User user);
 }

@@ -32,6 +32,9 @@ public class User {
 
 	@Column(name = "Email")
 	String email;
+	
+	@Column(name = "Image")
+	String image;
 
 	@NotBlank(message = "Vui lòng nhập mật khẩu")
 	@Column(name = "Password")

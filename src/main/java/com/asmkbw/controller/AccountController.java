@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.asmkbw.dao.AddressDAO;
 import com.asmkbw.dao.OrderDAO;
+import com.asmkbw.dao.OrderDetailDAO;
 import com.asmkbw.dao.UserDAO;
 import com.asmkbw.entity.Address;
-import com.asmkbw.entity.NewOD;
 import com.asmkbw.entity.Order;
+import com.asmkbw.entity.OrderDetail;
 import com.asmkbw.entity.User;
+import com.asmkbw.service.GeocodingService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -66,12 +68,23 @@ public class AccountController {
 		model.addAttribute("views", "/WEB-INF/views/account/orders.jsp");
 		return "index";
 	}
-	
+
+	@Autowired
+	OrderDetailDAO detailDAO;
+
 	@RequestMapping("/order/detail/{orderID}")
 	public String orderDetail(Model model, @PathVariable("orderID") Integer orderID) {
 		User user = (User) req.getSession().getAttribute("userS");
-		List<NewOD> list = odao.findOrderDetail(user.getEmail(), orderID);
-		model.addAttribute("list", list);
+		Order order = odao.findByUserAndOrderID(user, orderID);
+		List<OrderDetail> details = order.getOrderDetails();
+		for (int i = 0; i < details.size(); i++) {
+			System.out.println(details.get(i).getOrder().getAddRess() + details.get(i).getOrderDetailID()
+					+ details.get(i).getQuantity() * details.get(i).getProductDetail().getPrice());
+
+		}
+
+		model.addAttribute("order", order);
+		model.addAttribute("list", details);
 		model.addAttribute("views", "/WEB-INF/views/account/orders_detail.jsp");
 		return "index";
 	}
@@ -110,7 +123,7 @@ public class AccountController {
 	@RequestMapping("/address/index")
 	public String address(Model model) {
 		User user = (User) req.getSession().getAttribute("userS");
-		List<Address> items = adao.findAddressByEmail(user.getEmail());
+		List<Address> items = adao.findByIDUser(user);
 		model.addAttribute("items", items);
 		model.addAttribute("views", "/WEB-INF/views/account/address.jsp");
 		return "index";
@@ -121,19 +134,20 @@ public class AccountController {
 		User user = (User) req.getSession().getAttribute("userS");
 		Address address = adao.findById(addRessID).get();
 		model.addAttribute("address", address);
-		List<Address> items = adao.findAddressByEmail(user.getEmail());
+		List<Address> items = adao.findByIDUser(user);
 		model.addAttribute("items", items);
 		model.addAttribute("views", "/WEB-INF/views/account/address.jsp");
 		return "index";
 	}
-	
+
 	@RequestMapping("/address/create")
 	public String addressCreate(Model model, Address address, @RequestParam("addRessDetail") String addRessDetail) {
 		User user = (User) req.getSession().getAttribute("userS");
 		address.setUser(user);
 		address.setAddRessDetail(addRessDetail);
+		address.setDistance(GeocodingService.getDistance(address.getDistrict() + ", " + address.getCity()));
 		adao.save(address);
-		List<Address> items = adao.findAddressByEmail(user.getEmail());
+		List<Address> items = adao.findByIDUser(user);
 		model.addAttribute("items", items);
 		model.addAttribute("views", "/WEB-INF/views/account/address.jsp");
 		return "index";
@@ -143,7 +157,7 @@ public class AccountController {
 	public String addressDelete(Model model, @PathVariable("addRessID") Integer addRessID) {
 		User user = (User) req.getSession().getAttribute("userS");
 		adao.deleteById(addRessID);
-		List<Address> items = adao.findAddressByEmail(user.getEmail());
+		List<Address> items = adao.findByIDUser(user);
 		model.addAttribute("items", items);
 		model.addAttribute("message", "Đã xóa địa chỉ thành công!");
 		model.addAttribute("views", "/WEB-INF/views/account/address.jsp");

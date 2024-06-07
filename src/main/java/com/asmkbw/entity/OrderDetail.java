@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class OrderDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "OrderDetailID")
+	@Column(name = "OrderdetailID")
 	Integer orderDetailID;
 
 	@Column(name = "Quantity")
