@@ -12,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +32,9 @@ public class Order {
 	@Column(name = "Totalprice")
 	Double totalPrice;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name = "Date")
-	Date date;
+	Date date = new Date();
 
 	@Column(name = "Address")
 	String addRess;

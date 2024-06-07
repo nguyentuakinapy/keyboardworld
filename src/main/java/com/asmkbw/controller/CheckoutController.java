@@ -1,5 +1,7 @@
 package com.asmkbw.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -28,6 +30,7 @@ import com.asmkbw.entity.OrderDetail;
 import com.asmkbw.entity.ProductDetail;
 import com.asmkbw.entity.User;
 import com.asmkbw.entity.Voucher;
+import com.asmkbw.service.GeocodingService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -137,23 +140,70 @@ public class CheckoutController {
 		return "redirect:/keyboardworld/viewcart";
 	}
 
+	List<Integer> cartID = new ArrayList<Integer>();
+
 	@RequestMapping("/keyboardworld/checkout")
 	public String checkout(Model model, @RequestParam("selectedItems") List<Integer> cartID) {
 		User user = (User) session.getAttribute("userS");
 		if (user == null) {
 			return "redirect:/keyboardworld/login";
 		}
-		List<Address> addresses = addressDAO.findAddressByEmail(user.getEmail());
+		List<Address> addresses = addressDAO.findByIDUser(user);
 		model.addAttribute("addresses", addresses);
 		List<Cart> carts = cartDAO.findByCartIDAndUser(cartID, user);
 		model.addAttribute("carts", carts);
 		List<Voucher> vouchers = voucherDAO.findAll();
 		model.addAttribute("vouchers", vouchers);
-
-	
-
+		this.cartID = cartID;
 		model.addAttribute("views", "/WEB-INF/views/checkout/checkout.jsp");
 		return "index";
+	}
+
+	@RequestMapping("/keyboardworld/newcheckout")
+	public String newcheckout(Model model, @RequestParam("phone") String phone, @RequestParam("city") String city,
+			@RequestParam("district") String district, @RequestParam("ward") String ward,
+			@RequestParam("detailaddress") String detailaddress,
+			@RequestParam("category-selection") String categorySelection) {
+		User user = (User) session.getAttribute("userS");
+		if (user == null) {
+			return "redirect:/keyboardworld/login";
+		}
+		List<Cart> carts = cartDAO.findByCartIDAndUser(cartID, user);
+		model.addAttribute("carts", carts);
+
+		double sumPrice = 0;
+		double distance = 0;
+		for (Cart p : carts) {
+			sumPrice += p.getQuantity() * p.getProductDetail().getPrice();
+		}
+		if (categorySelection.equalsIgnoreCase("none")) {
+			distance = GeocodingService.getDistance(district + ", " + city);
+		}
+		Order order = new Order();
+		order.setTotalPrice(sumPrice);
+		order.setAddRess(detailaddress + ", " + ward + ", " + district + ", " + city);
+		order.setStatus(0);
+		order.setPhone(phone);
+		order.setUser(user);
+		order.setVoucher(voucherDAO.findById(1).orElse(null));
+		orderDAO.save(order);
+			System.out.println("Lưu thành công!");
+		for (int i = 0; i < carts.size(); i++) {
+			OrderDetail detail = new OrderDetail();
+			detail.setOrder(order);
+			detail.setQuantity(carts.get(i).getQuantity());
+			detail.setProductDetail(carts.get(i).getProductDetail());
+			System.out.println("Lưu detail thành công!");
+			orderDetailDAO.save(detail);
+		}
+		for (Cart cart : carts) {
+			cartDAO.delete(cart);
+		}
+		
+		System.out.println(phone + city + district + ward + detailaddress);
+
+		model.addAttribute("views", "/WEB-INF/views/checkout/checkout.jsp");
+		return "redirect:/keyboardworld/order";
 	}
 
 	@PostMapping("/keyboardworld/getaddress")

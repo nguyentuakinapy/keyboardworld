@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <style>
 html, body {
 	font-family: Arial, sans-serif;
@@ -54,14 +54,14 @@ html, body {
 	color: #0275d8;
 }
 </style>
-<div class="container mt-2">
+<form class="container mt-2">
 	<div class="row">
 		<div class="col">
 			<h5 class="fw-bold mt-2">Thông tin nhận hàng</h5>
 			<div class="form-floating mb-2">
 				<select class="form-select" id="category-selection"
 					name="category-selection">
-					<option value="" selected>Địa chỉ khác</option>
+					<option value="none" selected>Địa chỉ khác</option>
 					<c:forEach var="address" items="${addresses}">
 						<option value="${address.addRessID}">${address.addRessDetail}</option>
 					</c:forEach>
@@ -99,11 +99,6 @@ html, body {
 				<label for="detailaddress" style="color: gray">Địa chỉ cụ
 					thể</label>
 			</div>
-			<div class="form-floating mb-2">
-				<textarea class="form-control" id="note" name="note"
-					placeholder="Ghi chú (tùy chọn)" style="height: 100px;"></textarea>
-				<label for="note" style="color: gray">Ghi chú (tùy chọn)</label>
-			</div>
 		</div>
 		<div class="col">
 			<h5 class="fw-bold mt-2">Vận chuyển</h5>
@@ -133,7 +128,7 @@ html, body {
 				<div class="form-check mb-2">
 					<input class="form-check-input" type="radio" name="thanhtoan"
 						id="flexRadioDefault4"> <label class="form-check-label"
-						for="flexRadioDefault4">Chuyển khoảng</label>
+						for="flexRadioDefault4">Chuyển khoản</label>
 				</div>
 			</div>
 		</div>
@@ -156,7 +151,10 @@ html, body {
 							<div class="d-flex justify-content-between me-3">
 								<em class="product-details">Số lượng: <b>${c.quantity}</b>
 								</em>
-								<div class="product-price">${c.productDetail.price * c.quantity}</div>
+								<div class="product-price">
+									<fmt:formatNumber value="${c.productDetail.price * c.quantity}"></fmt:formatNumber>
+									₫
+								</div>
 							</div>
 						</div>
 					</div>
@@ -178,26 +176,30 @@ html, body {
 			</c:forEach>
 			<div class="d-flex justify-content-between">
 				<h6 class="ms-2">Tạm tính</h6>
-				<h6 class="">${totalPrice}</h6>
+				<h6 class="">
+					<fmt:formatNumber value="${totalPrice}"></fmt:formatNumber>
+					₫
+				</h6>
+				<input type="hidden" value="${totalPrice}" id="priceCart">
 			</div>
-			<div class="d-flex justify-content-between">
+			<div class="d-flex justify-content-between d-none" id="pdt">
 				<h6 class="ms-2">Phí vận chuyển</h6>
-				<h6 class="">123</h6>
+				<h6 class="" id="pricedistance">123</h6>
 			</div>
 			<hr>
 			<div class="d-flex justify-content-between">
 				<h6 class="fw-bold ms-2">Tổng cộng</h6>
-				<h6 class="">123</h6>
+				<h6 class="" id="totalPrice">123</h6>
 			</div>
 			<div class="d-flex justify-content-between">
 				<button class="btn btn-outline-success p-2">Quay về giỏ
 					hàng</button>
-				<button class="btn btn-primary p-2">Đặt hàng</button>
+				<button formaction="/keyboardworld/newcheckout"
+					class="btn btn-primary p-2">Đặt hàng</button>
 			</div>
-
 		</div>
 	</div>
-</div>
+</form>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script
@@ -205,44 +207,46 @@ html, body {
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-        var citis = document.getElementById("city");
-        var districts = document.getElementById("district");
-        var wards = document.getElementById("ward");
-        var Parameter = {
-            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-            method: "GET",
-            responseType: "application/json",
-        };
-        var promise = axios(Parameter);
-        promise.then(function (result) {
-            renderCity(result.data);
-        });
-
-        function renderCity(data) {
-            for (const x of data) {
-                citis.options[citis.options.length] = new Option(x.Name, x.Id);
-            }
-            citis.onchange = function () {
-                districts.length = 1;
-                wards.length = 1;
-                if (this.value != "") {
-                    const result = data.filter(n => n.Id === this.value);
-                    for (const k of result[0].Districts) {
-                        districts.options[districts.options.length] = new Option(k.Name, k.Id);
-                    }
-                }
-            };
-            districts.onchange = function () {
-                wards.length = 1;
-                const dataCity = data.filter((n) => n.Id === citis.value);
-                if (this.value != "") {
-                    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-                    for (const w of dataWards) {
-                        wards.options[wards.options.length] = new Option(w.Name, w.Id);
-                    }
-                }
-            };
-        }
+	var citis = document.getElementById("city");
+	var districts = document.getElementById("district");
+	var wards = document.getElementById("ward");
+	var Parameter = {
+	    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+	    method: "GET",
+	    responseType: "application/json",
+	};
+	var promise = axios(Parameter);
+	promise.then(function (result) {
+	    renderCity(result.data);
+	});
+	
+	function renderCity(data) {
+	    for (const x of data) {
+	        citis.options[citis.options.length] = new Option(x.Name, x.Name); // Sử dụng x.Name cho cả text và value
+	    }
+	    citis.onchange = function () {
+	        districts.length = 1;
+	        wards.length = 1;
+	        if (this.value != "") {
+	            const result = data.filter(n => n.Name === this.value); // So sánh với Name thay vì Id
+	
+	            for (const k of result[0].Districts) {
+	                districts.options[districts.options.length] = new Option(k.Name, k.Name); // Sử dụng k.Name cho cả text và value
+	            }
+	        }
+	    };
+	    districts.onchange = function () {
+	        wards.length = 1;
+	        const dataCity = data.filter((n) => n.Name === citis.value); // So sánh với Name thay vì Id
+	        if (this.value != "") {
+	            const dataWards = dataCity[0].Districts.filter(n => n.Name === this.value)[0].Wards; // So sánh với Name thay vì Id
+	
+	            for (const w of dataWards) {
+	                wards.options[wards.options.length] = new Option(w.Name, w.Name); // Sử dụng w.Name cho cả text và value
+	            }
+	        }
+	    };
+	}
         $('#category-selection').change(function() {
             var selectedValue = $(this).val();
             if (selectedValue) {
@@ -274,6 +278,26 @@ html, body {
                         
                         // Đặt giá trị cho detail address
                         $('#detailaddress').val(data.addRessDetail);
+                        var distance = 80 * data.distance;
+                        var priceCart = parseFloat($('#priceCart').val());
+
+                        var totalPrice;
+                        if (distance <= 10000) {
+                            $('#pricedistance').text(formatVND(10000));
+                            totalPrice = priceCart + 10000;
+                        } else {
+                            $('#pricedistance').text(formatVND(80 * data.distance));
+                            totalPrice = priceCart + (80 * data.distance);
+                        }
+                        var pdt = document.getElementById('pdt');
+
+	                     // Loại bỏ lớp 'd-none' từ phần tử pdt (nếu có)
+	                     pdt.classList.remove('d-none');
+	
+	                     // Thêm lớp 'd-block' cho phần tử pdt
+	                     pdt.classList.add('d-block');
+
+                        $('#totalPrice').text(formatVND(totalPrice));
                     },
                     error: function(xhr, status, error) {
                         console.error("Lỗi xảy ra: " + status + " " + error);
@@ -284,8 +308,14 @@ html, body {
             }
         });
 
-
-        
+        function formatVND(amount) {
+            const roundedAmount = Math.round(amount / 1000) * 1000;
+            return roundedAmount.toLocaleString('vi-VN') + ' ₫';
+        }
+        function format(amount) {
+            const roundedAmount = Math.round(amount / 1000) * 1000;
+            return roundedAmount.toLocaleString('vi-VN');
+        }
         
     </script>
 

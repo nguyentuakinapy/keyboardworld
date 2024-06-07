@@ -92,28 +92,32 @@ a {
 				<c:forEach var="item" items="${list}">
 					<div class="card mb-5">
 						<div class="card-header UDaMW3">
-							<a href="/keyboardworld/detailproduct/${item.productId}"
-								class="text-dark">${item.productName}</a>
+							<a
+								href="/keyboardworld/detailproduct/${item.productDetail.productDetailID}"
+								class="text-dark">${item.productDetail.product.name}</a>
 						</div>
 						<div class="card-body row">
 							<div class="col-xs-12 col-sm-6 col-lg-6 col-md-6">
-								<a href="/keyboardworld/detailproduct/${item.productId}"><img
-									src="/images/${item.thumbNail}" alt="${item.productName}"
-									width="40%"></a>
+								<a
+									href="/keyboardworld/detailproduct/${item.productDetail.productDetailID}"><img
+									src="/images/${item.productDetail.thumbNail}"
+									alt="${item.productDetail.color}" width="40%"></a>
 							</div>
 							<div class="col-xs-12 col-sm-6 col-lg-6 col-md-6 m-auto">
-								<p class="card-text fw-bold">Màu: ${item.color}</p>
+								<p class="card-text fw-bold">Màu:
+									${item.productDetail.color}</p>
 								<p class="card-text fw-bold">Số lượng: X${item.quantity}</p>
 								<p class="card-text fw-bold">
 									Đơn giá:
-									<fmt:formatNumber value="${item.price}" type="number"
-										pattern="###,###,###đ"></fmt:formatNumber>
+									<fmt:formatNumber value="${item.productDetail.price}"
+										type="number" pattern="###,###,###đ"></fmt:formatNumber>
 								</p>
 							</div>
 						</div>
 						<div class="card-footer d-flex justify-content-end fw-bold">
 							Thành tiền:
-							<fmt:formatNumber value="${item.price * item.quantity}"
+							<fmt:formatNumber
+								value="${item.productDetail.price * item.quantity}"
 								type="number" pattern="###,###,###đ"></fmt:formatNumber>
 						</div>
 					</div>
@@ -121,15 +125,10 @@ a {
 				<div class="block-account">
 					<h2 class="title-head">Địa chỉ thanh toán</h2>
 					<ul>
-						<li>
-							<c:out value="${list[0].addressId}" />,
-							<c:out value="${list[0].ward}" />,
-							<c:out value="${list[0].district}" />,
-							<c:out value="${list[0].city}" />
-						</li>
-						<li><b>Họ và tên:</b> ${userS.fullName}</li>
-						<li><b>Email:</b> ${userS.email}</li>
-						<li><b>Số điện thoại:</b> ${list[0].phone}</li>
+						<li>${order.addRess}</li>
+						<li><b>Họ và tên:</b> ${order.user.fullName}</li>
+						<li><b>Email:</b> ${order.user.email}</li>
+						<li><b>Số điện thoại:</b> ${order.phone}</li>
 					</ul>
 				</div>
 				<!-- </table> -->
