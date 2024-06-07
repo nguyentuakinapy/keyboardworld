@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<div class="container">
+<form class="container" method="get">
 	<h3 class="mt-5 text-center fw-bold">
 		GIỎ HÀNG <span>(${listCarts.size() } sản phẩm)</span>
 	</h3>
@@ -11,6 +11,10 @@
 			<div class="card" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
 				<c:forEach var="c" items="${listCarts}">
 					<div class="cart-item">
+						<div class="form-check ms-4">
+							<input type="checkbox" name="selectedItems" value="${c.cartID}" 
+								class="form-check-input checkcart" id="cart-${c.cartID}">
+						</div>
 						<div class="m-3" style="border-radius: 2px;">
 							<img src="/images/${c.productDetail.thumbNail}"
 								alt="CRUSH80 - Bàn phím cơ TKL khung nhôm CNC cao cấp - Silver no led"
@@ -35,22 +39,27 @@
 									</div>
 									<div class="col-auto">
 										<div class="form-control d-flex align-items-center">
-											  <form action="/keyboardworld/updatecart" method="post">
-                                                <input type="hidden" name="cartID" value="${c.cartID}">
-                                                <input type="hidden" name="quantity" value="${c.quantity - 1}">
-                                                <button type="submit" class="btn-cart">-</button>
-                                            </form>
-                                            <input type="text" class="qty-cart" value="${c.quantity}" readonly>
-                                            <form action="/keyboardworld/updatecart" method="post">
-                                                <input type="hidden" name="cartID" value="${c.cartID}">
-                                                <input type="hidden" name="quantity" value="${c.quantity + 1}">
-                                                <button type="submit" class="btn-cart">+</button>
-                                            </form>
+											<form action="/keyboardworld/updatecart" method="post">
+												<input type="hidden" name="cartID" value="${c.cartID}">
+												<input type="hidden" name="quantity"
+													value="${c.quantity - 1}">
+												<button type="submit" class="btn-cart">-</button>
+											</form>
+											<input type="text" class="qty-cart" value="${c.quantity}"
+												readonly>
+											<form action="/keyboardworld/updatecart" method="post">
+												<input type="hidden" name="cartID" value="${c.cartID}">
+												<input type="hidden" name="quantity"
+													value="${c.quantity + 1}">
+												<button type="submit" class="btn-cart">+</button>
+											</form>
 										</div>
 									</div>
 									<div class="col-auto">
-										<label class="col-form-label">Giá: <fmt:formatNumber value="${c.productDetail.price * c.quantity}"></fmt:formatNumber>
-											₫ </label>
+										<label class="col-form-label">Giá: <fmt:formatNumber
+												value="${c.productDetail.price * c.quantity}"></fmt:formatNumber>
+											₫
+										</label>
 									</div>
 								</div>
 							</div>
@@ -72,18 +81,22 @@
 				<div class="d-flex m-4" style="justify-content: space-between;">
 
 					<p style="margin: 0;">Tạm tính:</p>
-					<span class="fw-bold"> <fmt:formatNumber value="${totalPrice }"></fmt:formatNumber> ₫</span>
+					<span class="fw-bold"> <fmt:formatNumber
+							value="${totalPrice }"></fmt:formatNumber> ₫
+					</span>
 				</div>
 				<hr class="w-100 m-0 p-0">
 				<div class="d-flex m-4" style="justify-content: space-between;">
 					<p style="margin: 0;">Thành tiền:</p>
-					<span><fmt:formatNumber value="${totalPrice }"></fmt:formatNumber> ₫</span>
+					<span><fmt:formatNumber value="${totalPrice }"></fmt:formatNumber>
+						₫</span>
 				</div>
 				<hr class="w-100 m-0 p-0">
 				<div class="mx-4 my-2">
-					<button class="checkout-btn"
-						style="background-color: black; color: white; width: 100%; padding: 10px 0; border: none;">THANH
-						TOÁN NGAY</button>
+					<button class="checkout-btn loadButton"
+						formaction="/keyboardworld/checkout" formmethod="get" id="myButton"
+						style="background-color: black; color: white; width: 100%; padding: 10px 0; border: none;"
+						disabled>THANH TOÁN NGAY</button>
 				</div>
 				<div class="mx-4 my-2">
 					<a href="/keyboardworld/product" class="btn btn-white"
@@ -93,4 +106,24 @@
 			</div>
 		</aside>
 	</div>
-</div>
+</form>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const checkboxes = document.getElementsByClassName('checkcart');
+    const button = document.getElementById('myButton');
+
+    const updateButtonState = () => {
+        for (let checkbox of checkboxes) {
+            if (checkbox.checked) {
+                button.disabled = false;
+                return;
+            }
+        }
+        button.disabled = true;
+    };
+
+    for (let checkbox of checkboxes) {
+        checkbox.addEventListener('change', updateButtonState);
+    }
+});
+</script>

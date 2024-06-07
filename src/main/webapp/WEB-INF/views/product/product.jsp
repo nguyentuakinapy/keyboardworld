@@ -277,6 +277,9 @@
 		$('input[name="category-selection"]:checked').each(function() {
 			selectedCategories.push($(this).val());
 		});
+		if (selectedCategories.length === 0) {
+			window.location.href = '${pageContext.request.contextPath}/keyboardworld/product';
+		}
 		$
 				.ajax({
 					type : 'POST',
