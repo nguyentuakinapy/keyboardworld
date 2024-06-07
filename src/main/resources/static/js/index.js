@@ -8,9 +8,7 @@ window.addEventListener('scroll', function() {
 
 	if (scrollPosition > 250) {
 		header.classList.add('sticky-header');
-		main.style.marginTop = '20px';
 	} else {
 		header.classList.remove('sticky-header');
-		main.style.marginTop = '15px';
 	}
 });
