@@ -2,170 +2,185 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KEYBOARD WORLD</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-	crossorigin="anonymous">
+	rel="stylesheet">
 <script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-	crossorigin="anonymous"></script>
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-<link
-	href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-	rel="stylesheet">
 <style>
-html, body {
-	font-family: Arial, sans-serif;
-	margin: 0;
+body {
+	overflow-x: hidden;
+}
+
+#wrapper {
+	height: 100%;
+	overflow: hidden;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.navbar-custom {
+	padding: 0 10px 0 0;
+	height: 70px;
+	background: #f5f5f5;
+	margin-top: -16px;
+}
+
+.navbar-custom .topnav-menu li {
+	float: left;
+}
+
+.navbar-custom .topnav-menu .nav-link {
+	color: rgba(98, 103, 115, .7);
+	min-width: 32px;
+	display: block;
+	line-height: 70px;
+	text-align: center;
+	max-height: 70px;
+}
+
+.nav-user {
+	padding: 0 12px !important;
+}
+
+.profile-dropdown {
+	min-width: 170px;
+}
+
+.notification-list .noti-title {
+	padding: 15px 20px;
+}
+
+.profile-dropdown i {
+	margin-right: 5px;
+}
+
+.navbar-custom .button-menu-mobile {
+	border: none;
+	color: rgba(98, 103, 115, .7);
+	display: inline-block;
+	height: 70px;
+	line-height: 70x;
+	width: 60px;
+	background-color: transparent;
+	font-size: 24px;
+}
+
+.left-side-menu {
+	width: 181px;
+	background: #fff;
+	bottom: 166px;
+	position: absolute;
+	-webkit-transition: all .2s ease-out;
+	transition: all .2s ease-out;
+	top: 70px;
+}
+
+.metismenu {
 	padding: 0;
 }
 
-.nav-left {
-	position: fixed;
-	width: 250px;
-	height: 100%;
-	background-color: white;
-	box-shadow: 4px 0 4px rgba(0, 0, 0, 0.1);
-	z-index: 1000;
+#sidebar-menu .menu-title {
+	padding: 10px 20px;
+	letter-spacing: .05em;
+	pointer-events: none;
+	font-size: .6875rem;
+	text-transform: uppercase;
+	color: #6e768e;
+	font-weight: 600;
 }
 
-header {
-	position: fixed;
-	background-color: white;
-	width: calc(100% - 250px);
-	height: 75px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	z-index: 999;
-	right: 0;
-}
-
-.main-right {
-	margin-left: 250px;
-	padding-top: 75px;
-	background-color: aliceblue;
-	min-height: 100vh;
-}
-
-.main-body {
-	margin: 20px;
-	min-height: 580px;
-	background-color: white;
-	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
-	border-radius: 10px;
-	padding: 20px;
-	box-sizing: border-box;
-}
-
-.search input {
-	border-radius: 20px 0 0 20px;
-	border-right: none;
-}
-
-.search button {
-	border-radius: 0 20px 20px 0;
-}
-
-nav ul {
+.metismenu li {
 	list-style: none;
 }
 
-nav ul li {
-	margin: 15px 0;
-}
-
-nav ul li .link {
-	text-decoration: none;
-	color: rgb(95, 92, 92);
-	font-weight: bold;
+#sidebar-menu ul li a {
+	color: #6e768e;
 	display: block;
-	padding: 10px;
-	transition: background-color 0.3s ease;
+	padding: 12px 20px;
+	margin: 2px 0;
+	position: relative;
+	-webkit-transition: all .4s;
+	transition: all .4s;
+	font-size: 16px;
+	text-decoration: none;
 }
 
-nav ul li .link:hover, nav ul li .link.active {
-	color: rgb(219, 215, 215);
-	background-color: #535353;
-	border-radius: 5px;
+#sidebar-menu ul li a i {
+	display: inline-block;
+	line-height: 1.0625rem;
+	margin: 0 10px 0 3px;
+	text-align: center;
+	width: 20px;
+	font-size: 18px;
+}
+
+#sidebar-menu ul li a.active {
+	color: #458bc4;
+}
+
+.content-page {
+	margin-left: 181px;
+	border-left: 7px solid #f5f5f5;
+}
+
+.content-page .content {
+	padding: 20px 15px 80px 15px;
+	position: relative;
+}
+
+.header-title {
+	font-size: 16px;
+	transform: translateY(20%);
+	color: #6e768e;
+}
+
+.table-responsive {
+	overflow-x: hidden;
 }
 
 table {
+	table-layout: fixed;
 	width: 100%;
 }
 
-table th, table td {
-	text-align: center;
-	vertical-align: middle;
+td.text-truncate {
+	max-width: 240px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
-table th {
-	background-color: #f8f9fa;
-}
-
-.img {
-	display: inline-block;
-	width: 30px;
-	height: 30px;
-	line-height: 30px;
-	border-radius: 4px;
-	background-color: #8b9cb1;
-	color: #ffffff;
-	text-align: center;
-	margin-right: 10px;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
-	vertical-align: middle;
-}
-
-.drop-menu {
-	position: absolute;
-	will-change: transform;
-	top: 0px;
-	left: 0px;
-	transform: translate3d(-2px, 30px, 0px);
-	min-width: 180px;
-}
-
-.form-group {
-	margin-bottom: 1rem;
-}
-
-.text-xs {
-	font-weight: 600;
-	font-family: sans-serif;
-	color: #4f5f6f;
+table td, table th {
+	color: #6e768e !important;
 }
 
 .action-icon {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	padding-right: 30px;
+	font-size: 13px;
+	width: 120px;
 }
 
 .action-icon i {
 	cursor: pointer;
 	font-size: 1.2rem;
-	margin-right: 10px;
 }
 
 .action-icon i:last-child {
-	margin-right: 0;
+	margin-right: 5px;
 }
 
 .action-icon .second-actions {
 	display: none;
-}
-
-.table img {
-	width: 50px;
 }
 
 .right-arrow {
@@ -173,106 +188,134 @@ table th {
 	font-size: 1.5rem;
 	cursor: pointer;
 }
+
+.navbar-custom .currentDateTime {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-top: 25px;
+}
+
+#sidebar-menu>ul>li>a:active, #sidebar-menu>ul>li>a:focus, #sidebar-menu>ul>li>a:hover
+	{
+	color: #458bc4;
+	text-decoration: none;
+	background-color: #f5f5f5
+}
+
+.left-side-menu.collapsed {
+	width: 60px;
+	overflow: hidden;
+	transition: all .2s ease-out;
+}
+
+.content-page.collapsed {
+	margin-left: 60px;
+	transition: all .2s ease-out;
+}
+
+.left-side-menu.collapsed .menu-title, .left-side-menu.collapsed .metismenu li a span
+	{
+	display: none;
+}
 </style>
 </head>
-
 <body>
-	<div class="nav-left">
-		<div class="logo text-center p-2">
-			<img src="/images/AkinaKB.png" style="width: 60%;" alt="Logo">
-		</div>
-		<div class="mt-5">
-			<nav class="navbar">
-				<ul>
-					<li><a class="link" href="/keyboardworld"><i
-							class="bi bi-house me-2"></i>TRANG CHỦ</a></li>
-					<li><a class="link" href="/keyboardworld/admin/product"><i
-							class="bi bi-box-seam me-2"></i>SẢN PHẨM</a></li>
-					<li><a class="link" href="khachhang.html"><i
-							class="bi bi-people me-2"></i>KHÁCH HÀNG</a></li>
-					<li><a class="link" href="hoadon.html"><i
-							class="bi bi-receipt me-2"></i>HÓA ĐƠN</a></li>
-					<li><a class="link" href="loaisanpham.html"><i
-							class="bi bi-tags me-2"></i>LOẠI SẢN PHẨM</a></li>
-					<li><a class="link" href="AdminKeyboardWorld.html"><i
-							class="bi bi-bar-chart me-2"></i>THỐNG KÊ</a></li>
-				</ul>
-			</nav>
-		</div>
-	</div>
-
-	<header>
-		<div class="row m-0 justify-content-between align-items-center">
-			<div class="col-4 d-flex justify-content-center align-items-center">
-				<form class="d-flex search" role="search">
-					<input class="form-control" type="search" placeholder="Search"
-						aria-label="Search">
-					<button class="btn btn-outline-success" type="submit">
-						<i class="bi bi-search"></i>
-					</button>
-				</form>
-			</div>
-			<div class="col-4 d-flex justify-content-center align-items-center">
-				<div id="currentDateTime"></div>
-			</div>
-			<div class="col-4 d-flex justify-content-center align-items-center">
-				<nav class="navbar navbar-expand-lg p-0">
-					<ul class="navbar-nav d-flex align-items-center">
-						<li class="nav-item me-2 "><a href="" class="nav-link"><i
-								class="bi bi-bell" style="font-size: large;"></i></a></li>
-						<li class="nav-item dropdown" style="border-left: 1px solid;">
-							<a href="#"
-							class="nav-link dropdown-toggle d-flex align-items-center"
-							role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								<div class="img" style="background-image: url('');"></div> <span>${userS.fullName}</span>
+	<div id="wrapper">
+		<div class="navbar-custom">
+			<ul class="list-unstyled topnav-menu float-end mb-0">
+				<li class="dropdown notification-list"><a href="#"
+					type="button" class="nav-link dropdown-toggle nav-user"
+					data-bs-toggle="dropdown" aria-expanded="false"> <span
+						class="pro-user-name ms-1">${userS.fullName}</span>
+				</a>
+					<div class="dropdown-menu dropdown-menu-end profile-dropdown">
+						<div class="dropdown-header noti-title">
+							<h6 class="m-0">Xin chào!</h6>
+						</div>
+						<a href="/keyboardworld/account" class="dropdown-item notify-item">
+							<i class="bi bi-person"></i> <span>Tài khoản</span>
 						</a>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="/keyboardworld/account"><i
-										class="bi bi-person me-2"></i>Profile</a></li>
-								<li><a class="dropdown-item" href="/keyboardworld/logout"><i
-										class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
-							</ul>
-						</li>
-					</ul>
-				</nav>
-			</div>
+						<div class="dropdown-divider"></div>
+						<a href="/keyboardworld/logout" class="dropdown-item notify-item">
+							<i class="bi bi-box-arrow-right"></i> <span>Đăng xuất</span>
+						</a>
+					</div></li>
+			</ul>
+			<div class="currentDateTime" id="currentDateTime"
+				style="color: #6e768e;"></div>
+			<ul class="list-unstyled topnav-menu topnav-menu-start">
+				<li><button class="button-menu-mobile">
+						<i class="bi bi-list"></i>
+					</button></li>
+			</ul>
 		</div>
-	</header>
-
-
-	<main class="main-right">
-		<jsp:include page="${views}"></jsp:include>
-	</main>
-
+		<!--End TopBar-->
+		<!-- =========Left Sidebar Start======== -->
+		<div class="left-side-menu">
+			<div class="text-center p-2">
+				<img src="/images/AkinaKB.png" alt="Logo" width="60%">
+			</div>
+			<div id="sidebar-menu">
+				<ul class="metismenu" id="side-menu">
+					<li class="menu-title">Điều hướng</li>
+					<li><a href="/keyboardworld"> <i class="bi bi-house"></i>
+							<span>Trang Chủ</span>
+					</a></li>
+					<li><a href="/keyboardworld/admin/product" class="active">
+							<i class="bi bi-boxes"></i> <span>Sản Phẩm</span>
+					</a></li>
+					<li><a href="#"> <i class="bi bi-people"></i> <span>Khách
+								Hàng</span>
+					</a></li>
+					<li><a href="#"> <i class="bi bi-receipt"></i> <span>Hóa
+								Đơn</span>
+					</a></li>
+					<li><a href="#"> <i class="bi bi-tags"></i> <span>Loại
+								Sản Phẩm</span>
+					</a></li>
+					<li><a href="#"> <i class="bi bi-graph-up-arrow"></i> <span>Thống
+								Kê</span>
+					</a></li>
+				</ul>
+			</div>
+			<!--End Sidebar-->
+			<div class="clearfix"></div>
+		</div>
+		<!-- Left Sidebar End -->
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
+		<div class="content-page">
+			<div class="content">
+				<main>
+					<jsp:include page="${views}"></jsp:include>
+				</main>
+				<!-- End Content -->
+			</div>
+			<!-- End Container -->
+		</div>
+		<!-- End Content Page -->
+	</div>
 	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			var navLinks = document.querySelectorAll('.nav-left a');
-			var currentPath = window.location.pathname.split('/').pop();
-
-			navLinks.forEach(function(link) {
-				if (link.getAttribute('href') === currentPath) {
-					link.classList.add('active');
-				}
-			});
-		});
 		function updateTime() {
 			var now = new Date();
 			var days = [ 'Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm',
 					'Thứ Sáu', 'Thứ Bảy' ];
-			var months = [ 'Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư',
-					'Tháng Năm', 'Tháng Sáu', 'Tháng Bảy', 'Tháng Tám',
-					'Tháng Chín', 'Tháng Mười', 'Tháng Mười Một',
-					'Tháng Mười Hai' ];
+			var months = [ 'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4',
+					'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8',
+					'Tháng 9', 'Tháng 10', 'Tháng 11',
+					'Tháng 12' ];
 			var dayOfWeek = days[now.getDay()];
 			var month = months[now.getMonth()];
 			var day = now.getDate();
 			var year = now.getFullYear();
-			var hours = now.getHours();
-			var minutes = now.getMinutes();
-			var seconds = now.getSeconds();
+			var hours = now.getHours().toString().padStart(2, '0');
+			var minutes = now.getMinutes().toString().padStart(2, '0');
+			var seconds = now.getSeconds().toString().padStart(2, '0');
 			document.getElementById('currentDateTime').innerHTML = dayOfWeek
-					+ ", " + day + " " + month + " " + year + " - " + hours
-					+ ":" + minutes + ":" + seconds;
+					+ ", Ngày " + day + " " + month + " " + year + " - " + hours
+					+ " Giờ " + minutes + " Phút " + seconds + " Giây ";
 		}
 
 		setInterval(updateTime, 1000); // Cập nhật thời gian mỗi giây
@@ -291,6 +334,15 @@ table th {
 				secondaryActions.style.display = 'flex';
 			}
 		}
+
+		document.querySelector('.button-menu-mobile').addEventListener(
+				'click',
+				function() {
+					document.querySelector('.left-side-menu').classList
+							.toggle('collapsed');
+					document.querySelector('.content-page').classList
+							.toggle('collapsed');
+				});
 	</script>
 </body>
 
