@@ -50,95 +50,10 @@ public class CheckoutController {
 	private OrderDetailDAO orderDetailDAO;
 
 	@Autowired
-	private ProductDetailDAO productDetailDAO;
-
-	@Autowired
 	private VoucherDAO voucherDAO;
 
 	@Autowired
 	private HttpSession session;
-
-	@RequestMapping("/keyboardworld/checkout1")
-	public String checkout(@RequestParam MultiValueMap<String, String> params, Model model) {
-		// ktra user login chưa
-		User user = (User) session.getAttribute("userS");
-		if (user == null) {
-			return "redirect:/keyboardworld/login";
-		}
-
-		// tìm địa chỉ và giỏ hàng của user
-		List<Address> addresses = addressDAO.findByIDUser(user);
-		List<Cart> listCarts = cartDAO.findByIDUser(user);
-		// cart trống về viewcart
-		if (listCarts.isEmpty()) {
-			return "redirect:/keyboardworld/viewcart";
-		}
-
-		if (!params.containsKey("selectedAddressId")) {
-			model.addAttribute("addresses", addresses);
-			model.addAttribute("listCarts", listCarts);
-			return "/keyboardworld/checkout";
-		}
-
-		Integer selectedAddressId = Integer.parseInt(params.getFirst("selectedAddressId"));
-		String voucherCode = params.getFirst("voucherCode");
-
-		// đoạn này hỏi chatgpt chỗ sổ địa chỉ nên ko rõ lắm
-		Optional<Address> addressOpt = addressDAO.findById(selectedAddressId);
-		if (!addressOpt.isPresent()) {
-			model.addAttribute("addresses", addresses);
-			model.addAttribute("listCarts", listCarts);
-			return "/keyboardworld/checkout";
-		}
-		Address address = addressOpt.get();
-
-		Order order = new Order();
-		order.setUser(user);
-		order.setAddRess(address.getAddRessDetail());
-		order.setPhone(address.getPhone());
-		order.setDate(new java.util.Date());
-		order.setStatus(0); // này ko biết để j nên để 0
-
-		double totalPrice = 0.0;
-		for (Cart cartItem : listCarts) {
-			totalPrice += cartItem.getQuantity() * cartItem.getProductDetail().getPrice();
-		}
-
-		if (voucherCode != null && !voucherCode.isEmpty()) {
-			Optional<Voucher> voucherOpt = voucherDAO.findByName(voucherCode);
-			if (voucherOpt.isPresent()) {
-				Voucher voucher = voucherOpt.get();
-				order.setVoucher(voucher);
-
-				// nếu có giảm giá thì trừ tiền
-				double discount = totalPrice * voucher.getPercentDecrease() / 100;
-				totalPrice -= discount;
-				order.setTotalPrice(totalPrice);
-			}
-		} else {
-			order.setTotalPrice(totalPrice);
-		}
-
-		orderDAO.save(order);
-
-		for (Cart listCart : listCarts) {
-			OrderDetail orderDetail = new OrderDetail();
-			orderDetail.setOrder(order);
-			orderDetail.setProductDetail(listCart.getProductDetail());
-			orderDetail.setQuantity(listCart.getQuantity());
-
-			orderDetailDAO.save(orderDetail);
-
-			// update số lượng của sản phẩm sau khi thằng khách thanh toán
-			ProductDetail productDetail = listCart.getProductDetail();
-			productDetail.setQuantity(productDetail.getQuantity() - listCart.getQuantity());
-			productDetailDAO.save(productDetail);
-		}
-
-		cartDAO.deleteAll(listCarts);
-
-		return "redirect:/keyboardworld/viewcart";
-	}
 
 	List<Integer> cartID = new ArrayList<Integer>();
 
@@ -179,6 +94,11 @@ public class CheckoutController {
 		if (categorySelection.equalsIgnoreCase("none")) {
 			distance = GeocodingService.getDistance(district + ", " + city);
 		}
+		if (distance <= 15) {
+			sumPrice += 10000;
+		} else {
+			sumPrice += 80 * distance;
+		}
 		Order order = new Order();
 		order.setTotalPrice(sumPrice);
 		order.setAddRess(detailaddress + ", " + ward + ", " + district + ", " + city);
@@ -187,7 +107,7 @@ public class CheckoutController {
 		order.setUser(user);
 		order.setVoucher(voucherDAO.findById(1).orElse(null));
 		orderDAO.save(order);
-			System.out.println("Lưu thành công!");
+		System.out.println("Lưu thành công!");
 		for (int i = 0; i < carts.size(); i++) {
 			OrderDetail detail = new OrderDetail();
 			detail.setOrder(order);
@@ -199,7 +119,7 @@ public class CheckoutController {
 		for (Cart cart : carts) {
 			cartDAO.delete(cart);
 		}
-		
+
 		System.out.println(phone + city + district + ward + detailaddress);
 
 		model.addAttribute("views", "/WEB-INF/views/checkout/checkout.jsp");
@@ -213,4 +133,10 @@ public class CheckoutController {
 //		System.out.println(address);
 		return new ResponseEntity<Address>(address, HttpStatus.OK);
 	}
+	
+	@PostMapping("/keyboardworld/getdistance")
+    public ResponseEntity<Double> getDistance(@RequestBody String address) {
+        double distance = GeocodingService.getDistance(address);
+        return new ResponseEntity<>(distance, HttpStatus.OK);
+    }
 }

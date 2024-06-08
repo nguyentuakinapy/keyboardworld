@@ -189,7 +189,10 @@ html, body {
 			<hr>
 			<div class="d-flex justify-content-between">
 				<h6 class="fw-bold ms-2">Tổng cộng</h6>
-				<h6 class="" id="totalPrice">123</h6>
+				<h6 class="" id="totalPrice">
+					<fmt:formatNumber value="${totalPrice}"></fmt:formatNumber>
+					₫
+				</h6>
 			</div>
 			<div class="d-flex justify-content-between">
 				<button class="btn btn-outline-success p-2">Quay về giỏ
@@ -207,107 +210,177 @@ html, body {
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-	var citis = document.getElementById("city");
-	var districts = document.getElementById("district");
-	var wards = document.getElementById("ward");
-	var Parameter = {
-	    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-	    method: "GET",
-	    responseType: "application/json",
-	};
-	var promise = axios(Parameter);
-	promise.then(function (result) {
-	    renderCity(result.data);
-	});
-	
-	function renderCity(data) {
-	    for (const x of data) {
-	        citis.options[citis.options.length] = new Option(x.Name, x.Name); // Sử dụng x.Name cho cả text và value
-	    }
-	    citis.onchange = function () {
-	        districts.length = 1;
-	        wards.length = 1;
-	        if (this.value != "") {
-	            const result = data.filter(n => n.Name === this.value); // So sánh với Name thay vì Id
-	
-	            for (const k of result[0].Districts) {
-	                districts.options[districts.options.length] = new Option(k.Name, k.Name); // Sử dụng k.Name cho cả text và value
-	            }
-	        }
-	    };
-	    districts.onchange = function () {
-	        wards.length = 1;
-	        const dataCity = data.filter((n) => n.Name === citis.value); // So sánh với Name thay vì Id
-	        if (this.value != "") {
-	            const dataWards = dataCity[0].Districts.filter(n => n.Name === this.value)[0].Wards; // So sánh với Name thay vì Id
-	
-	            for (const w of dataWards) {
-	                wards.options[wards.options.length] = new Option(w.Name, w.Name); // Sử dụng w.Name cho cả text và value
-	            }
-	        }
-	    };
-	}
-        $('#category-selection').change(function() {
-            var selectedValue = $(this).val();
-            if (selectedValue) {
+		var citis = document.getElementById("city");
+		var districts = document.getElementById("district");
+		var wards = document.getElementById("ward");
+		var Parameter = {
+		    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+		    method: "GET",
+		    responseType: "application/json",
+		};
+		var promise = axios(Parameter);
+		promise.then(function (result) {
+		    renderCity(result.data);
+		});
+		
+		function renderCity(data) {
+		    for (const x of data) {
+		        citis.options[citis.options.length] = new Option(x.Name, x.Name); // Sử dụng x.Name cho cả text và value
+		    }
+		    citis.onchange = function () {
+		        districts.length = 1;
+		        wards.length = 1;
+		        if (this.value != "") {
+		            const result = data.filter(n => n.Name === this.value); // So sánh với Name thay vì Id
+		
+		            for (const k of result[0].Districts) {
+		                districts.options[districts.options.length] = new Option(k.Name, k.Name); // Sử dụng k.Name cho cả text và value
+		            }
+		        }
+		    };
+		    districts.onchange = function () {
+		        wards.length = 1;
+		        const dataCity = data.filter((n) => n.Name === citis.value); // So sánh với Name thay vì Id
+		        if (this.value != "") {
+		            const dataWards = dataCity[0].Districts.filter(n => n.Name === this.value)[0].Wards; // So sánh với Name thay vì Id
+		
+		            for (const w of dataWards) {
+		                wards.options[wards.options.length] = new Option(w.Name, w.Name); // Sử dụng w.Name cho cả text và value
+		            }
+		        }
+		    };
+		}
+		$(document).ready(function() {
+		    $('#category-selection').change(function() {
+		        var selectedValue = $(this).val();
+		        sltv = selectedValue;
+		        if (selectedValue === 'none') {
+		            location.reload();
+		        } else {
+		            $.ajax({
+		                type: 'POST',
+		                contentType: 'application/json',
+		                url: '${pageContext.request.contextPath}/keyboardworld/getaddress',
+		                data: JSON.stringify({ id: selectedValue }), // Gửi đối tượng JSON
+		                success: function(data) {
+		                    console.log(data); // Log dữ liệu phản hồi
+		                    $('#phone').val(data.phone); // Hiển thị dữ liệu nhận được lên input
+		                    
+		                    // Xóa tất cả các tùy chọn hiện có trong select city, district và ward
+		                    $('#city').empty();
+		                    $('#district').empty();
+		                    $('#ward').empty();
+		                    
+		                    // Thêm các tùy chọn cho select city
+		                    var cityOption = $('<option>').text(data.city).attr('value', data.city);
+		                    $('#city').append(cityOption);
+		                    
+		                    // Thêm các tùy chọn cho select district
+		                    var districtOption = $('<option>').text(data.district).attr('value', data.district);
+		                    $('#district').append(districtOption);
+		                    
+		                    // Thêm các tùy chọn cho select ward
+		                    var wardOption = $('<option>').text(data.ward).attr('value', data.ward);
+		                    $('#ward').append(wardOption);
+		                    
+		                    // Đặt giá trị cho detail address
+		                    $('#detailaddress').val(data.addRessDetail);
+		                    var distance = 80 * data.distance;
+		                    var priceCart = parseFloat($('#priceCart').val());
+
+		                    var totalPrice;
+		                    if (distance <= 15) {
+		                        $('#pricedistance').text(formatVND(10000));
+		                        totalPrice = priceCart + 10000;
+		                    } else {
+		                        $('#pricedistance').text(formatVND(80 * data.distance));
+		                        totalPrice = priceCart + (80 * data.distance);
+		                    }
+		                    var pdt = document.getElementById('pdt');
+
+		                     // Loại bỏ lớp 'd-none' từ phần tử pdt (nếu có)
+		                     pdt.classList.remove('d-none');
+
+		                     // Thêm lớp 'd-block' cho phần tử pdt
+		                     pdt.classList.add('d-block');
+							
+		                     
+		                     $('#phone').prop('disabled', true);
+		                     $('#city').prop('disabled', true);
+		                     $('#district').prop('disabled', true);
+		                     $('#ward').prop('disabled', true);
+		                     $('#detailaddress').prop('disabled', true);
+
+		                    $('#totalPrice').text(formatVND(totalPrice));
+		                },
+		                error: function(xhr, status, error) {
+		                    console.error("Lỗi xảy ra: " + status + " " + error);
+		                }
+		            });
+		        }
+		    });
+		});
+
+       
+        
+        function validateForm() {
+            const city = document.getElementById('city').value;
+            const district = document.getElementById('district').value;
+            const ward = document.getElementById('ward').value;
+            const detailaddress = document.getElementById('detailaddress').value;
+            const phone = document.getElementById('phone').value;
+            
+            
+            if (city && district && ward && detailaddress && phone) {
+                showLoading();
+                setTimeout(function() {
+    				hideLoading();
+    			}, 1000);
+                var districtCity = district + ", " + city;
                 $.ajax({
                     type: 'POST',
                     contentType: 'application/json',
-                    url: '${pageContext.request.contextPath}/keyboardworld/getaddress',
-                    data: JSON.stringify({ id: selectedValue }), // Gửi đối tượng JSON
+                    url: '${pageContext.request.contextPath}/keyboardworld/getdistance',
+                    data: districtCity, 
                     success: function(data) {
-                        console.log(data); // Log dữ liệu phản hồi
-                        $('#phone').val(data.phone); // Hiển thị dữ liệu nhận được lên input
-                        
-                        // Xóa tất cả các tùy chọn hiện có trong select city, district và ward
-                        $('#city').empty();
-                        $('#district').empty();
-                        $('#ward').empty();
-                        
-                        // Thêm các tùy chọn cho select city
-                        var cityOption = $('<option>').text(data.city).attr('value', data.city);
-                        $('#city').append(cityOption);
-                        
-                        // Thêm các tùy chọn cho select district
-                        var districtOption = $('<option>').text(data.district).attr('value', data.district);
-                        $('#district').append(districtOption);
-                        
-                        // Thêm các tùy chọn cho select ward
-                        var wardOption = $('<option>').text(data.ward).attr('value', data.ward);
-                        $('#ward').append(wardOption);
-                        
-                        // Đặt giá trị cho detail address
-                        $('#detailaddress').val(data.addRessDetail);
-                        var distance = 80 * data.distance;
+                        console.log(data); 
                         var priceCart = parseFloat($('#priceCart').val());
-
-                        var totalPrice;
-                        if (distance <= 10000) {
-                            $('#pricedistance').text(formatVND(10000));
-                            totalPrice = priceCart + 10000;
-                        } else {
-                            $('#pricedistance').text(formatVND(80 * data.distance));
-                            totalPrice = priceCart + (80 * data.distance);
-                        }
-                        var pdt = document.getElementById('pdt');
-
+                       
+                        var price;
+                        
+	                    if (data <= 30) {
+	                    	 $('#pricedistance').text(formatVND(16000));
+	                    	 price = priceCart + 16000;
+	                    } else {
+	                        $('#pricedistance').text(formatVND(80 * data));
+	                        price = priceCart + (80 * data);
+	                    }
+	                    var pdt = document.getElementById('pdt');
+	                    $('#totalPrice').text(formatVND(totalPrice));
 	                     // Loại bỏ lớp 'd-none' từ phần tử pdt (nếu có)
 	                     pdt.classList.remove('d-none');
-	
+
 	                     // Thêm lớp 'd-block' cho phần tử pdt
 	                     pdt.classList.add('d-block');
+		                 $('#totalPrice').text(formatVND(price));
 
-                        $('#totalPrice').text(formatVND(totalPrice));
                     },
                     error: function(xhr, status, error) {
                         console.error("Lỗi xảy ra: " + status + " " + error);
                     }
                 });
-            } else {
-            	window.location.href = window.location.href;
             }
-        });
 
+
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('detailaddress').addEventListener('input', validateForm);
+            document.getElementById('phone').addEventListener('input', validateForm);
+            document.getElementById('city').addEventListener('change', validateForm);
+            document.getElementById('district').addEventListener('change', validateForm);
+            document.getElementById('ward').addEventListener('change', validateForm);
+        });
         function formatVND(amount) {
             const roundedAmount = Math.round(amount / 1000) * 1000;
             return roundedAmount.toLocaleString('vi-VN') + ' ₫';
@@ -316,7 +389,6 @@ html, body {
             const roundedAmount = Math.round(amount / 1000) * 1000;
             return roundedAmount.toLocaleString('vi-VN');
         }
-        
     </script>
 
 
