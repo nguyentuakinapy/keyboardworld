@@ -81,7 +81,7 @@ public class ProductController {
 	@RequestMapping("/searchproduct")
 	public String searchProduct(Model model, @RequestParam("keywords") Optional<String> kw,
 			@RequestParam("p") Optional<Integer> p) {
-		String kwords = kw.orElse(session.get("keywords"));
+		String kwords = kw.orElse(session.get("keywords", ""));
 		session.set("keywords", kwords);
 		Pageable pageable = PageRequest.of(p.orElse(0), 6);
 		Page<Product> page = productDAO.searchByMultipleCriteria("%" + kwords + "%", pageable);

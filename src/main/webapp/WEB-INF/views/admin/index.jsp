@@ -37,7 +37,6 @@ body {
 }
 
 .navbar-custom .topnav-menu .nav-link {
-	color: rgba(98, 103, 115, .7);
 	min-width: 32px;
 	display: block;
 	line-height: 70px;
@@ -92,7 +91,6 @@ body {
 	pointer-events: none;
 	font-size: .6875rem;
 	text-transform: uppercase;
-	color: #6e768e;
 	font-weight: 600;
 }
 
@@ -101,7 +99,7 @@ body {
 }
 
 #sidebar-menu ul li a {
-	color: #6e768e;
+	color: black;
 	display: block;
 	padding: 12px 20px;
 	margin: 2px 0;
@@ -121,10 +119,6 @@ body {
 	font-size: 18px;
 }
 
-#sidebar-menu ul li a.active {
-	color: #458bc4;
-}
-
 .content-page {
 	margin-left: 181px;
 	border-left: 7px solid #f5f5f5;
@@ -138,7 +132,6 @@ body {
 .header-title {
 	font-size: 16px;
 	transform: translateY(20%);
-	color: #6e768e;
 }
 
 .table-responsive {
@@ -155,10 +148,6 @@ td.text-truncate {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-}
-
-table td, table th {
-	color: #6e768e !important;
 }
 
 .action-icon {
@@ -196,7 +185,7 @@ table td, table th {
 	margin-top: 25px;
 }
 
-#sidebar-menu>ul>li>a:active, #sidebar-menu>ul>li>a:focus, #sidebar-menu>ul>li>a:hover
+#sidebar-menu>ul>li>a:hover
 	{
 	color: #458bc4;
 	text-decoration: none;
@@ -242,8 +231,7 @@ table td, table th {
 						</a>
 					</div></li>
 			</ul>
-			<div class="currentDateTime" id="currentDateTime"
-				style="color: #6e768e;"></div>
+			<div class="currentDateTime" id="currentDateTime"></div>
 			<ul class="list-unstyled topnav-menu topnav-menu-start">
 				<li><button class="button-menu-mobile">
 						<i class="bi bi-list"></i>
@@ -262,7 +250,7 @@ table td, table th {
 					<li><a href="/keyboardworld"> <i class="bi bi-house"></i>
 							<span>Trang Chủ</span>
 					</a></li>
-					<li><a href="/keyboardworld/admin/product" class="active">
+					<li><a href="/keyboardworld/admin/product">
 							<i class="bi bi-boxes"></i> <span>Sản Phẩm</span>
 					</a></li>
 					<li><a href="#"> <i class="bi bi-people"></i> <span>Khách
@@ -303,9 +291,8 @@ table td, table th {
 			var days = [ 'Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm',
 					'Thứ Sáu', 'Thứ Bảy' ];
 			var months = [ 'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4',
-					'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8',
-					'Tháng 9', 'Tháng 10', 'Tháng 11',
-					'Tháng 12' ];
+					'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9',
+					'Tháng 10', 'Tháng 11', 'Tháng 12' ];
 			var dayOfWeek = days[now.getDay()];
 			var month = months[now.getMonth()];
 			var day = now.getDate();
@@ -314,8 +301,8 @@ table td, table th {
 			var minutes = now.getMinutes().toString().padStart(2, '0');
 			var seconds = now.getSeconds().toString().padStart(2, '0');
 			document.getElementById('currentDateTime').innerHTML = dayOfWeek
-					+ ", Ngày " + day + " " + month + " " + year + " - " + hours
-					+ " Giờ " + minutes + " Phút " + seconds + " Giây ";
+					+ ", Ngày " + day + " " + month + " " + year + " - "
+					+ hours + " Giờ " + minutes + " Phút " + seconds + " Giây ";
 		}
 
 		setInterval(updateTime, 1000); // Cập nhật thời gian mỗi giây

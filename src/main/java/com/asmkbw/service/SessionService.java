@@ -16,8 +16,9 @@ public class SessionService {
 	 * @param name tên attribute
 	 * @return giá trị đọc được hoặc null nếu không tồn tại
 	 */
-	public <T> T get(String name) {
-		return session.getAttribute(name) == null ? null : (T) session.getAttribute(name);
+	public <T> T get(String name, T defaultValue) {
+		T value = (T) session.getAttribute(name);
+		return (value != null) ? value : defaultValue;
 	}
 
 	/**
