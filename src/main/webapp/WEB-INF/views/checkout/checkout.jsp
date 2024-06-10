@@ -74,9 +74,9 @@ html, body {
 					và tên</label>
 			</div>
 			<div class="form-floating mb-2">
-				<input type="tel" class="form-control" id="phone" name="phone"
-					value="" placeholder="Số điện thoại" required> <label
-					for="phone" style="color: gray">Số điện thoại</label>
+				<input type="text" class="form-control" id="phone" name="phone"
+					placeholder="Số điện thoại" required> <label for="phone"
+					style="color: gray">Số điện thoại</label>
 			</div>
 			<div class="form-floating mb-2">
 				<select class="form-control" id="city" name="city" required>
@@ -305,11 +305,11 @@ html, body {
 		                     pdt.classList.add('d-block');
 							
 		                     
-		                     $('#phone').prop('disabled', true);
-		                     $('#city').prop('disabled', true);
-		                     $('#district').prop('disabled', true);
-		                     $('#ward').prop('disabled', true);
-		                     $('#detailaddress').prop('disabled', true);
+		                     $('#phone').prop('readonly', true);
+		                     $('#city').prop('readonly', true);
+		                     $('#district').prop('readonly', true);
+		                     $('#ward').prop('readonly', true);
+		                     $('#detailaddress').prop('readonly', true);
 
 		                    $('#totalPrice').text(formatVND(totalPrice));
 		                },

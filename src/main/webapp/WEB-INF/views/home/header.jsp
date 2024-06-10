@@ -13,7 +13,7 @@
 	</div>
 	<!-- Header -->
 	<header class="navbar head-shadow pb-0">
-		<div class="container row m-auto">
+		<div class="container-fluid  row m-auto">
 			<!-- Hotline -->
 			<div class="contact hotline col text-center" style="font-size: 14px;">
 				<span>HOTLINE TƯ VẤN: 0369161095</span>
@@ -103,13 +103,9 @@
 					<c:if test="${userS != null}">
 						<c:set var="fullnameUp" value="${userS.fullName.toUpperCase()}" />
 						<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink loadLink"
-							href="/keyboardworld/account">TÀI KHOẢN<i class="bi bi-chevron-down"></i></a>
+							href="/keyboardworld/account"><c:out
+											value="${fullnameUp}" /><i class="bi bi-chevron-down"></i></a>
 							<div class="account-popup">
-								<div class="border rounded-top">
-									<a href="/keyboardworld/account"
-										class="nav-link hv-nav-items m-2 ms-4 loadLink"><c:out
-											value="${fullnameUp}" /></a>
-								</div>
 								<div class="border">
 									<a href="/keyboardworld/logout"
 										class="nav-link hv-nav-items m-2 ms-4 loadLink">Đăng xuất</a>
@@ -126,7 +122,7 @@
 						href="/keyboardworld/viewcart">GIỎ HÀNG <i class="bi bi-bag"></i>
 							<span
 							class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-								${listCart.size() } </span>
+								${listCart.size()} </span>
 					</a>
 						<div class="shop-cart">
 							<div class="form-control">
