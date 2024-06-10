@@ -15,15 +15,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.asmkbw.dao.CartDAO;
 import com.asmkbw.dao.ProductDAO;
 import com.asmkbw.dao.ProductDetailDAO;
 import com.asmkbw.dao.RoleDAO;
 import com.asmkbw.dao.UserDAO;
+import com.asmkbw.entity.Cart;
 import com.asmkbw.entity.Product;
 import com.asmkbw.entity.ProductDetail;
 import com.asmkbw.entity.Role;
 import com.asmkbw.entity.User;
 import com.asmkbw.service.EmailService;
+import com.asmkbw.utils.PasswordUtils;
 import com.asmkbw.utils.RandomUtils;
 
 import jakarta.annotation.PostConstruct;
@@ -47,6 +50,9 @@ public class HomeController {
 
 	@Autowired
 	ProductDetailDAO productDetailDAO;
+	
+	@Autowired
+	CartDAO cartDAO;
 
 	@Autowired
 	UserDAO userDAO;
@@ -75,7 +81,7 @@ public class HomeController {
 		
 		Page<Product> headphone = productDao.findByCategoryID(3, pageable);
 		model.addAttribute("headphone", headphone.getContent());
-		
+	
 		return "index";
 	}
 
@@ -87,25 +93,26 @@ public class HomeController {
 
 	@PostMapping("/login")
 	public String loginPost(Model model, @RequestParam("email") String email,
-			@RequestParam("password") String password) {
-		User user = userDAO.findByEmail(email);
-		if (user != null) {
-			if (user.getPassword().equalsIgnoreCase(password)) {
-				session.setAttribute("userS", user);
-				if (user.getRole().getRoleName().equalsIgnoreCase("Admin")) {
-					return "redirect:/keyboardworld/admin";
-				} else {
-					return "redirect:/keyboardworld";
-				}
-
-			} else {
-				model.addAttribute("message", "Thông tin bạn nhập không đúng!");
-			}
-		} else {
-			model.addAttribute("message", "Thông tin bạn nhập không đúng!");
-		}
-		model.addAttribute("views", "/WEB-INF/views/account/login.jsp");
-		return "index";
+	                        @RequestParam("password") String password) {
+	    User user = userDAO.findByEmail(email);
+	    if (user != null) {
+	        String hashedInputPassword = PasswordUtils.hashPassword(password);
+	        if (hashedInputPassword != null && user.getPassword().equals(hashedInputPassword)) {
+	            session.setAttribute("userS", user);
+	            if (user.getRole().getRoleName().equalsIgnoreCase("Admin")) {
+	                return "redirect:/keyboardworld/admin";
+	            } else {
+	                return "redirect:/keyboardworld";
+	            }
+	        } else {
+	            model.addAttribute("message", "Thông tin bạn nhập không đúng!");
+	        }
+	    } else {
+	        model.addAttribute("message", "Thông tin bạn nhập không đúng!");
+	    }
+	    
+	    model.addAttribute("views", "/WEB-INF/views/account/login.jsp");
+	    return "index";
 	}
 
 	@GetMapping("/logout")
