@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -33,6 +34,7 @@ import com.asmkbw.entity.Gallery;
 import com.asmkbw.entity.Product;
 import com.asmkbw.entity.ProductDetail;
 import com.asmkbw.service.ParamService;
+import com.asmkbw.service.SessionService;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServlet;
@@ -58,15 +60,19 @@ public class ProductManagementController {
 
 	@Autowired
 	ServletContext app;
+	@Autowired
+	SessionService service;
 
 	List<ProductDetail> productDetails = new ArrayList<ProductDetail>();
 
 	@RequestMapping("/product")
-	public String product(Model model) throws IllegalStateException, IOException {
-//		Pageable pageable = PageRequest.of(0, 5, Sort.by("productID"));
-//		List<Product> listProducts = productDAO.findAll(pageable).getContent();
-		List<Product> listProducts = productDAO.findAll();
-		model.addAttribute("products", listProducts);
+	public String product(Model model, @RequestParam("page") Optional<Integer> p,
+			@RequestParam("keywords") Optional<String> keyword) throws IllegalStateException, IOException {
+		String kwords = keyword.orElse(service.get("keywords", ""));
+		service.set("keywords", kwords);
+		Pageable pageable = PageRequest.of(p.orElse(0), 5, Sort.by("productID"));
+		Page<Product> page = productDAO.findAllByNameLike("%" + kwords + "%", pageable);
+		model.addAttribute("page", page);
 
 		if (!nameImages.isEmpty()) {
 			for (String name : nameImages) {
@@ -216,6 +222,29 @@ public class ProductManagementController {
 		this.product.setBrand(brandDAO.findById(selectedBrandID).orElse(null));
 		this.product.setCategory(categoryDAO.findById(selectedCategoryID).orElse(null));
 		return "redirect:/keyboardworld/admin/newproduct";
+	}
+
+	@PostMapping("/addcategory")
+	public String addCategory(Model model, @RequestParam("name") String name) {
+		name = name.replaceAll("^,+|,+$", "");
+		Category newCategory = new Category();
+		newCategory.setName(name);
+		categoryDAO.save(newCategory);
+		return "redirect:/keyboardworld/admin/editproduct/" + idProduct;
+	}
+
+	@PostMapping("/addbrand")
+	public String addBrand(Model model, @RequestParam("name") String name, @RequestParam("city") String city,
+			@RequestParam("district") String district, @RequestParam("ward") String ward,
+			@RequestParam("addRessDetail") String addRessDetail, @RequestParam("phone") String phone,
+			@RequestParam("email") String email) {
+		Brand newBrand = new Brand();
+		newBrand.setName(name);
+		newBrand.setAddRess(addRessDetail + ", " + ward + ", " + district + ", " + city);
+		newBrand.setEmail(email);
+		newBrand.setPhone(phone);
+		brandDAO.save(newBrand);
+		return "redirect:/keyboardworld/admin/editproduct/" + idProduct;
 	}
 
 	@RequestMapping("/detailproduct/{x}")
