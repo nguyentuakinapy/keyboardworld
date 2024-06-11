@@ -91,10 +91,29 @@
 				action="/keyboardworld/addtocart/${productDetails[0].productDetailID}"
 				method="POST">
 				<input type="hidden" name="quantity" id="quantity" value="1">
-				<button type="submit" class="btn btn-dark me-2 btn-add-to-card">
+				<button type="submit" class="btn btn-dark me-2 btn-add-to-card"
+					id="btnAddToCart">
 					Thêm vào giỏ hàng <i class="bi bi-bag-fill"></i>
 				</button>
 			</form>
+
+			<div class="modal fade" id="confirmAddtoCartModal" tabindex="-1"
+				aria-labelledby="confirmAddtoCartModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="confirmAddtoCartModalLabel">THÔNG BÁO </h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">THÊM VÀO GIỎ HÀNG THÀNH CÔNG!</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">Đóng</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="module_service">
 				<i class="bi bi-shield-check fs-1 me-3"></i> <a href="#"
 					class="text-decoration-none text-dark">Chính sách bảo hành</a>
@@ -204,12 +223,16 @@
 		</div>
 	</div>
 </div>
+
 <script>
 document.querySelectorAll('.color-button').forEach(button => {
     button.addEventListener('click', () => {
         document.querySelectorAll('.color-button').forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
-
+        showLoading();
+		setTimeout(function() {
+			hideLoading();
+		}, 200);
         const newImage = button.getAttribute('data-image');
         const newPrice = parseFloat(button.getAttribute('data-price'));
         const newName = button.getAttribute('data-name');
@@ -239,6 +262,39 @@ document.getElementById('button-increment-detailproduct').addEventListener('clic
     document.getElementById('quantity').value = quantityInput.value; // Update hidden input
 });
 
+document.getElementById("btnAddToCart").addEventListener("click", function (event) {
+	$.ajax({
+	    type: 'POST',
+	    contentType: 'application/json',
+	    url: '${pageContext.request.contextPath}/keyboardworld/checkUser',
+	    dataType: 'json',
+	    data: JSON.stringify({}), // Dữ liệu gửi đi, trong trường hợp này không cần gửi bất kỳ dữ liệu nào
+	    success: function(response) {
+	        console.log("Phản hồi từ máy chủ:", response);
+	        if (response === true) {
+	            console.log("Người dùng tồn tại.");
+	        } else {
+	            // Xử lý khi bên máy chủ trả về false
+	            console.log("Người dùng không tồn tại.");
+	            window.location.href = '/keyboardworld/login';
+	        }
+	    },
+	    error: function(xhr, status, error) {
+	        console.error("Lỗi xảy ra: " + status + " " + error);
+	    }
+	});
 
 
+	
+    var form = document.getElementById("addtocart-form");
+    var quantity = document.getElementById('quantity');
+    $('#confirmAddtoCartModal').modal('show'); // Hiển thị modal
+    event.preventDefault(); // Ngăn chặn hành vi mặc định của sự kiện click
+
+    $('#confirmAddtoCartModal').on('hidden.bs.modal', function (e) {
+       window.location.href = form.action + '?quantity=' +quantity.value;
+    });
+});
+
+  
 </script>

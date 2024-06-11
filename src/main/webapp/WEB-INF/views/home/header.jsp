@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <section class="header-area" style="position: sticky; z-index: 1001">
 	<!-- Search -->
 	<div class="collapse container" id="collapseExampleSearch">
@@ -16,7 +17,10 @@
 		<div class="container-fluid  row m-auto">
 			<!-- Hotline -->
 			<div class="contact hotline col text-center" style="font-size: 14px;">
-				<span>HOTLINE TƯ VẤN: 0369161095</span>
+				<span><a href="?lang=vi"
+					class="text-decoration-none text-dark">VIETNAMEXE</a></span> <i
+					class="bi bi-align-center"></i> <span><a href="?lang=en"
+					class="text-decoration-none text-dark">ENGLISH</a></span>
 			</div>
 			<!-- Logo -->
 			<div class="brand col mb-1">
@@ -78,53 +82,70 @@
 				</a>
 			</div>
 			<!-- Account Cart -->
-			<div class="contact col acount-none navbar-menu"
+			<div class="contact col acount-none navbar-menu d-flex"
 				style="font-size: 14px;">
 				<ul class="menu d-flex accout-cart mx-auto mb-0">
 					<c:if test="${userS == null}">
-						<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink loadLink"
-							href="/keyboardworld/login">TÀI KHOẢN<i class="bi bi-chevron-down"></i></a>
+						<li class="list-unstyled p-1"><a
+							class="nav-link mx-2 hvlink loadLink" href="/keyboardworld/login">
+								<s:message code="head.account"></s:message> <i
+								class="bi bi-chevron-down"></i>
+						</a>
 							<div class="account-popup">
 								<div class="border rounded-top">
 									<a href="/keyboardworld/login"
-										class="nav-link hv-nav-items m-2 ms-4 loadLink">Đăng nhập</a>
+										class="nav-link hv-nav-items m-2 ms-4 loadLink"><s:message
+											code="head.login"></s:message></a>
 								</div>
 								<div class="border">
 									<a href="/keyboardworld/register"
-										class="nav-link hv-nav-items m-2 ms-4 loadLink">Đăng ký</a>
+										class="nav-link hv-nav-items m-2 ms-4 loadLink"><s:message
+											code="head.register"></s:message></a>
 								</div>
 								<div class="border rounded-bottom">
-									<a href="#" class="nav-link hv-nav-items m-2 ms-4 loadLink">Quên mật
-										khẩu</a>
+									<a href="#" class="nav-link hv-nav-items m-2 ms-4 loadLink"><s:message
+											code="head.forgotpassword"></s:message></a>
 								</div>
 							</div></li>
 					</c:if>
 
 					<c:if test="${userS != null}">
 						<c:set var="fullnameUp" value="${userS.fullName.toUpperCase()}" />
-						<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink loadLink"
-							href="/keyboardworld/account"><c:out
-											value="${fullnameUp}" /><i class="bi bi-chevron-down"></i></a>
+						<li class="list-unstyled p-1"><a
+							class="nav-link mx-2 hvlink loadLink"
+							href="/keyboardworld/account"><c:out value="${fullnameUp}" /><i
+								class="bi bi-chevron-down"></i></a>
 							<div class="account-popup">
 								<div class="border">
+									<a href="/keyboardworld/account"
+										class="nav-link hv-nav-items m-2 ms-4 loadLink"><s:message
+											code="head.profile"></s:message></a>
+								</div>
+								<div class="border">
+									<a href="/keyboardworld/changepass"
+										class="nav-link hv-nav-items m-2 ms-4 loadLink"><s:message
+											code="head.changepass"></s:message></a>
+								</div>
+								<div class="border">
 									<a href="/keyboardworld/logout"
-										class="nav-link hv-nav-items m-2 ms-4 loadLink">Đăng xuất</a>
+										class="nav-link hv-nav-items m-2 ms-4 loadLink"><s:message
+											code="head.logout"></s:message></a>
 								</div>
 								<c:if test="${userS.role.roleName == 'Admin'}">
 									<div class="border">
 										<a href="/keyboardworld/admin"
-											class="nav-link hv-nav-items m-2 ms-4 loadLink">ADMIN</a>
+											class="nav-link hv-nav-items m-2 ms-4 loadLink"><s:message
+												code="head.role"></s:message></a>
 									</div>
 								</c:if>
 							</div></li>
 					</c:if>
-					<li class="list-unstyled p-1"><a class="nav-link mx-2 hvlink loadLink" 
-						href="/keyboardworld/viewcart">GIỎ HÀNG <i class="bi bi-bag"></i>
-							<span
+					<li class="list-unstyled p-1"><a
+						class="nav-link mx-2 hvlink loadLink"
+						href="/keyboardworld/viewcart"><s:message code="head.cart"></s:message>
+							<i class="bi bi-bag"></i> <span
 							class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-								${listCart.size()} </span>
-					</a>
-						<div class="shop-cart">
+								${listCart.size()} </span> </a> <%-- <div class="shop-cart">
 							<div class="form-control">
 								<div class="row">
 									<div class="col-4">
@@ -182,7 +203,7 @@
 										hàng</a>
 								</div>
 							</div>
-						</div></li>
+						</div> --%></li>
 					<li class="list-unstyled p-1"><a href="#collapseExampleSearch"
 						aria-expanded="false" aria-controls="collapseExample"
 						class="nav-link ms-2 hvlink" data-bs-toggle="collapse"><i
@@ -309,11 +330,13 @@
 		style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); font-size: 14px;">
 		<ul class="menu d-flex mx-auto mb-0">
 			<li class="list-unstyled p-1"><a href="/keyboardworld"
-				class="nav-link mx-2 hvlink nav-head loadLink">TRANG CHỦ</a></li>
-			<li class="list-unstyled p-1"><a href="#"
-				class="nav-link mx-2 hvlink nav-head loadLink">KEYCAP BỘ <i
-					class="bi bi-chevron-down"></i></a>
-				<div class="category-keycap">
+				class="nav-link mx-2 hvlink nav-head loadLink"><s:message
+						code="head.home"></s:message> </a></li>
+			<li class="list-unstyled p-1"><a
+				href="/keyboardworld/product/keycap"
+				class="nav-link mx-2 hvlink nav-head loadLink"><s:message
+						code="head.keycap"></s:message> <!-- <i
+					class="bi bi-chevron-down"></i> --></a> <!-- <div class="category-keycap">
 					<div class="border rounded-top">
 						<a href="#" class="nav-link hv-nav-items m-2 ms-4 loadLink">Keycap
 							Cherry</a>
@@ -334,16 +357,22 @@
 					<div class="border rounded-bottom">
 						<a href="#" class="nav-link hv-nav-items m-2 ms-4 loadLink">Keycap OEM</a>
 					</div>
-				</div></li>
-			<li class="list-unstyled p-1"><a href="#"
-				class="nav-link mx-2 hvlink nav-head loadLink">BÀN PHÍM CƠ</a></li>
-			<li class="list-unstyled p-1"><a href="#"
-				class="nav-link mx-2 hvlink nav-head loadLink">TAI NGHE</a></li>
-			<li class="list-unstyled p-1"><a href="#"
-				class="nav-link mx-2 hvlink nav-head loadLink">CHUỘT</a></li>
+				</div> --></li>
+			<li class="list-unstyled p-1"><a
+				href="/keyboardworld/product/keyboard"
+				class="nav-link mx-2 hvlink nav-head loadLink"><s:message
+						code="head.keyboard"></s:message></a></li>
+			<li class="list-unstyled p-1"><a
+				href="/keyboardworld/product/headphone"
+				class="nav-link mx-2 hvlink nav-head loadLink"><s:message
+						code="head.headphone"></s:message></a></li>
+			<li class="list-unstyled p-1"><a
+				href="/keyboardworld/product/mouse"
+				class="nav-link mx-2 hvlink nav-head loadLink"><s:message
+						code="head.mouse"></s:message></a></li>
 			<li class="list-unstyled p-1"><a href="/keyboardworld/product"
-				class="nav-link mx-2 hvlink nav-head loadLink">SẢN PHẨM <i
-					class="bi bi-chevron-down"></i></a>
+				class="nav-link mx-2 hvlink nav-head loadLink"><s:message
+						code="head.product"></s:message><i class="bi bi-chevron-down"></i></a>
 				<div class="category-products p-4">
 					<div class="row mt-3">
 						<div class="col">
@@ -409,11 +438,29 @@
 					</div>
 				</div></li>
 			<li class="list-unstyled p-1"><a href="#"
-				class="nav-link mx-3 hvlink nav-head loadLink">BÀI VIẾT</a></li>
+				class="nav-link mx-3 hvlink nav-head loadLink"><s:message
+						code="head.post"></s:message></a></li>
 			<li class="list-unstyled p-1"><a href="#"
-				class="nav-link mx-3 hvlink nav-head loadLink">VỀ KICAP <i
-					class="bi bi-chevron-down"></i></a>
+				class="nav-link mx-3 hvlink nav-head loadLink"><s:message
+						code="head.abouts"></s:message><i class="bi bi-chevron-down"></i></a>
 				<div class="kicap">asdasd</div></li>
 		</ul>
 	</nav>
 </section>
+<script>
+	$(document).ready(function() {
+		$("a[href*=lang]").on("click", function() {
+			var param = $(this).attr("href");
+			$.ajax({
+				url : "/home/index" + param,
+				success : function() {
+					alert("ádasd")
+					location.reload();
+				}
+			});
+			return false;
+		})
+	})
+
+	
+</script>

@@ -189,9 +189,10 @@
 }
 
 .account-popup {
+	
 	position: absolute;
-	left: 8%;
-	width: 45%;
+	left: 0%;	
+	width: 80%;
 	background-color: aliceblue;
 	display: none;
 	top: 85%;
@@ -200,7 +201,7 @@
 	animation-name: product-sub-animation;
 	animation-fill-mode: forwards;
 	transition: width 0.3s ease;
-	font-size: 16px;
+	font-size: 14px;
 	z-index: 1000;
 	/* Đảm bảo giỏ hàng không bị che */
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), /* Shadow đậm hơn */

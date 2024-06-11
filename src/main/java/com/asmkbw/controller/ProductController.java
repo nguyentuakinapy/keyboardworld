@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,10 +31,12 @@ import com.asmkbw.entity.Brand;
 import com.asmkbw.entity.Category;
 import com.asmkbw.entity.Product;
 import com.asmkbw.entity.ProductDetail;
+import com.asmkbw.entity.User;
 import com.asmkbw.service.SessionService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/keyboardworld")
@@ -59,6 +64,82 @@ public class ProductController {
 
 		Pageable pageable = PageRequest.of(p.orElse(0), 9);
 		Page<Product> products = productDAO.findAll(pageable);
+
+		model.addAttribute("products", products);
+		model.addAttribute("categories", categories);
+		model.addAttribute("brands", brands);
+
+		model.addAttribute("views", "/WEB-INF/views/product/product.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/product/mouse")
+	public String productMouse(Model model, @RequestParam("p") Optional<Integer> p) {
+//		List<Product> products = productDAO.findAll();
+		List<Category> categories = categoryDAO.findAll();
+		List<Brand> brands = brandDAO.findAll();
+
+		Pageable pageable = PageRequest.of(p.orElse(0), 9);
+		Category category = categoryDAO.findById(1).orElse(null);
+		System.out.println(category.getName());
+		Page<Product> products = productDAO.findByCategory(category, pageable);
+
+		model.addAttribute("products", products);
+		model.addAttribute("categories", categories);
+		model.addAttribute("brands", brands);
+
+		model.addAttribute("views", "/WEB-INF/views/product/product.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/product/keyboard")
+	public String productKeyboard(Model model, @RequestParam("p") Optional<Integer> p) {
+//		List<Product> products = productDAO.findAll();
+		List<Category> categories = categoryDAO.findAll();
+		List<Brand> brands = brandDAO.findAll();
+
+		Pageable pageable = PageRequest.of(p.orElse(0), 9);
+		Category category = categoryDAO.findById(2).orElse(null);
+		System.out.println(category.getName());
+		Page<Product> products = productDAO.findByCategory(category, pageable);
+
+		model.addAttribute("products", products);
+		model.addAttribute("categories", categories);
+		model.addAttribute("brands", brands);
+
+		model.addAttribute("views", "/WEB-INF/views/product/product.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/product/headphone")
+	public String productHeadphone(Model model, @RequestParam("p") Optional<Integer> p) {
+//		List<Product> products = productDAO.findAll();
+		List<Category> categories = categoryDAO.findAll();
+		List<Brand> brands = brandDAO.findAll();
+
+		Pageable pageable = PageRequest.of(p.orElse(0), 9);
+		Category category = categoryDAO.findById(3).orElse(null);
+		System.out.println(category.getName());
+		Page<Product> products = productDAO.findByCategory(category, pageable);
+
+		model.addAttribute("products", products);
+		model.addAttribute("categories", categories);
+		model.addAttribute("brands", brands);
+
+		model.addAttribute("views", "/WEB-INF/views/product/product.jsp");
+		return "index";
+	}
+
+	@RequestMapping("/product/keycap")
+	public String productKeycap(Model model, @RequestParam("p") Optional<Integer> p) {
+//		List<Product> products = productDAO.findAll();
+		List<Category> categories = categoryDAO.findAll();
+		List<Brand> brands = brandDAO.findAll();
+
+		Pageable pageable = PageRequest.of(p.orElse(0), 9);
+		Category category = categoryDAO.findById(4).orElse(null);
+		System.out.println(category.getName());
+		Page<Product> products = productDAO.findByCategory(category, pageable);
 
 		model.addAttribute("products", products);
 		model.addAttribute("categories", categories);
@@ -130,6 +211,13 @@ public class ProductController {
 					+ "        </form>\r\n" + "    </div>\r\n" + "    <hr class=\"m-0 p-0\">\r\n" + "</div>");
 		});
 
+	}
+
+	@PostMapping("/checkUser")
+	@ResponseBody
+	public boolean checkUser(HttpSession session) {
+		User user = (User) session.getAttribute("userS");
+		return user != null; // Trả về true nếu người dùng tồn tại, ngược lại trả về false
 	}
 
 }

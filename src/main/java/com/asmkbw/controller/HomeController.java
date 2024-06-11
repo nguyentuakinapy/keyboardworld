@@ -50,7 +50,7 @@ public class HomeController {
 
 	@Autowired
 	ProductDetailDAO productDetailDAO;
-	
+
 	@Autowired
 	CartDAO cartDAO;
 
@@ -75,13 +75,15 @@ public class HomeController {
 
 		Page<Product> mouses = productDao.findByCategoryID(1, pageable);
 		model.addAttribute("mouses", mouses.getContent());
-	
+
 		Page<Product> keycap = productDao.findByCategoryID(4, pageable);
 		model.addAttribute("keycap", keycap.getContent());
-		
+
 		Page<Product> headphone = productDao.findByCategoryID(3, pageable);
 		model.addAttribute("headphone", headphone.getContent());
-	
+
+		Page<Product> products = productDao.findTopProductByCategory(pageable);
+		model.addAttribute("products", products.getContent());
 		return "index";
 	}
 
@@ -93,26 +95,26 @@ public class HomeController {
 
 	@PostMapping("/login")
 	public String loginPost(Model model, @RequestParam("email") String email,
-	                        @RequestParam("password") String password) {
-	    User user = userDAO.findByEmail(email);
-	    if (user != null) {
-	        String hashedInputPassword = PasswordUtils.hashPassword(password);
-	        if (hashedInputPassword != null && user.getPassword().equals(hashedInputPassword)) {
-	            session.setAttribute("userS", user);
-	            if (user.getRole().getRoleName().equalsIgnoreCase("Admin")) {
-	                return "redirect:/keyboardworld/admin";
-	            } else {
-	                return "redirect:/keyboardworld";
-	            }
-	        } else {
-	            model.addAttribute("message", "Thông tin bạn nhập không đúng!");
-	        }
-	    } else {
-	        model.addAttribute("message", "Thông tin bạn nhập không đúng!");
-	    }
-	    
-	    model.addAttribute("views", "/WEB-INF/views/account/login.jsp");
-	    return "index";
+			@RequestParam("password") String password) {
+		User user = userDAO.findByEmail(email);
+		if (user != null) {
+			String hashedInputPassword = PasswordUtils.hashPassword(password);
+			if (hashedInputPassword != null && user.getPassword().equals(hashedInputPassword)) {
+				session.setAttribute("userS", user);
+				if (user.getRole().getRoleName().equalsIgnoreCase("Admin")) {
+					return "redirect:/keyboardworld/admin";
+				} else {
+					return "redirect:/keyboardworld";
+				}
+			} else {
+				model.addAttribute("message", "Thông tin bạn nhập không đúng!");
+			}
+		} else {
+			model.addAttribute("message", "Thông tin bạn nhập không đúng!");
+		}
+
+		model.addAttribute("views", "/WEB-INF/views/account/login.jsp");
+		return "index";
 	}
 
 	@GetMapping("/logout")
@@ -130,6 +132,27 @@ public class HomeController {
 	String otpEmail;
 	User user;
 
+//	@PostMapping("/register")
+//	public String registerPost(Model model, @Valid @ModelAttribute User user,
+//			@RequestParam("confirmpassword") String confirmPass, BindingResult result) {
+//		if (result.hasErrors()) {
+//			return "error_view"; // Trả về trang hiển thị lỗi
+//		}
+//		if (userDAO.findByEmail(user.getEmail()) == null) {
+//			if (user.getPassword().equalsIgnoreCase(confirmPass)) {
+//				otpEmail = RandomUtils.generateOTP();
+//				emailService.sendEmail(user.getEmail(), "KEYBOARD WORLD",
+//						"Bạn vừa đâng ký tài khoản mới bên Keyboard World" + "\n" + "Mã xác nhận của bạn là: "
+//								+ otpEmail);
+//				user.setRole(roleDAO.findById(1).orElse(null));
+//				this.user = user;
+//				return "redirect:/keyboardworld/otp";
+//			}
+//		}
+//		model.addAttribute("views", "/WEB-INF/views/account/register.jsp");
+//		return "index";
+//	}
+
 	@PostMapping("/register")
 	public String registerPost(Model model, @Valid @ModelAttribute User user,
 			@RequestParam("confirmpassword") String confirmPass, BindingResult result) {
@@ -137,15 +160,27 @@ public class HomeController {
 			return "error_view"; // Trả về trang hiển thị lỗi
 		}
 		if (userDAO.findByEmail(user.getEmail()) == null) {
-			if (user.getPassword().equalsIgnoreCase(confirmPass)) {
+			// sửa equalIgnoreCase thành equals để tránh lỗi confirm
+			if (user.getPassword().equals(confirmPass)) {
+				String hashedPassword = PasswordUtils.hashPassword(user.getPassword());
+				if (hashedPassword == null) {
+					model.addAttribute("error", "Error occurred while hashing the password.");
+					return "error_view"; // Trả về trang hiển thị lỗi
+				}
+				user.setPassword(hashedPassword); // Set mật khẩu mã hoá cho user
+
 				otpEmail = RandomUtils.generateOTP();
 				emailService.sendEmail(user.getEmail(), "KEYBOARD WORLD",
-						"Bạn vừa đâng ký tài khoản mới bên Keyboard World" + "\n" + "Mã xác nhận của bạn là: "
+						"Bạn vừa đăng ký tài khoản mới bên Keyboard World" + "\n" + "Mã xác nhận của bạn là: "
 								+ otpEmail);
 				user.setRole(roleDAO.findById(1).orElse(null));
 				this.user = user;
 				return "redirect:/keyboardworld/otp";
+			} else {
+				model.addAttribute("error", "Passwords do not match.");
 			}
+		} else {
+			model.addAttribute("error", "Email already exists.");
 		}
 		model.addAttribute("views", "/WEB-INF/views/account/register.jsp");
 		return "index";

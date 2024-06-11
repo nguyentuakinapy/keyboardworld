@@ -102,7 +102,10 @@ html, body {
 		</div>
 		<div class="col">
 			<h5 class="fw-bold mt-2">Vận chuyển</h5>
-			<div class="form-control">
+			<div class="form-control" id="checkttgh"
+				style="background-color: #A7FCA5;">Vui lòng nhập thông tin
+				giao hàng!</div>
+			<div class="form-control d-none" id="vanchuyen">
 				<div class="form-check mt-2">
 					<input class="form-check-input" checked type="radio"
 						name="vanchuyen" id="flexRadioDefault1"> <label
@@ -160,15 +163,7 @@ html, body {
 					</div>
 				</c:forEach>
 			</div>
-			<hr>
-			<div class="form-floating mb-2 mx-2">
-				<select class="form-control" id="voucher" name="voucher" required>
-					<option value="" selected>Chọn Mã giảm giá</option>
-					<c:forEach var="v" items="${vouchers}">
-						<option value="${v.voucherID}">${v.name}</option>
-					</c:forEach>
-				</select> <label for="voucher">Mã giảm giá</label>
-			</div>
+
 			<hr>
 			<c:forEach var="c" items="${carts}">
 				<c:set var="totalPrice"
@@ -182,6 +177,12 @@ html, body {
 				</h6>
 				<input type="hidden" value="${totalPrice}" id="priceCart">
 			</div>
+			<div class="d-flex justify-content-between">
+				<h6 class="ms-2">Mã giảm giá</h6>
+				<h6>${voucher.voucherID != 0 ? voucher.name : 'Không có'}</h6>
+				<input type="hidden" value="${voucher.percentDecrease}"
+					id="percentDecrease">
+			</div>
 			<div class="d-flex justify-content-between d-none" id="pdt">
 				<h6 class="ms-2">Phí vận chuyển</h6>
 				<h6 class="" id="pricedistance">123</h6>
@@ -189,14 +190,19 @@ html, body {
 			<hr>
 			<div class="d-flex justify-content-between">
 				<h6 class="fw-bold ms-2">Tổng cộng</h6>
+				<c:set var="percentDecrease" value="${voucher.percentDecrease}" />
+				<c:set var="discountAmount"
+					value="${totalPrice * percentDecrease / 100}" />
+				<c:set var="totalPriceAfterDiscount"
+					value="${totalPrice - discountAmount}" />
 				<h6 class="" id="totalPrice">
-					<fmt:formatNumber value="${totalPrice}"></fmt:formatNumber>
+					<fmt:formatNumber value="${totalPriceAfterDiscount}"></fmt:formatNumber>
 					₫
 				</h6>
 			</div>
 			<div class="d-flex justify-content-between">
-				<button class="btn btn-outline-success p-2">Quay về giỏ
-					hàng</button>
+				<a class="btn btn-outline-success p-2"
+					href="/keyboardworld/viewcart">Quay về giỏ hàng</a>
 				<button formaction="/keyboardworld/newcheckout"
 					class="btn btn-primary p-2">Đặt hàng</button>
 			</div>
@@ -285,32 +291,46 @@ html, body {
 		                    
 		                    // Đặt giá trị cho detail address
 		                    $('#detailaddress').val(data.addRessDetail);
-		                    var distance = 80 * data.distance;
+		                    var distance = data.distance;
 		                    var priceCart = parseFloat($('#priceCart').val());
 
 		                    var totalPrice;
-		                    if (distance <= 15) {
-		                        $('#pricedistance').text(formatVND(10000));
-		                        totalPrice = priceCart + 10000;
+		                    
+		                    var percentDecrease = parseFloat($('#percentDecrease').val());
+		                     
+		                     var discountAmount = priceCart * percentDecrease / 100;
+		                     var totalPriceAfterDiscount = priceCart - discountAmount;
+		                     
+		                     
+		                    if (distance <= 30) {
+		                        $('#pricedistance').text(formatVND(16000));
+		                        totalPrice = totalPriceAfterDiscount + 16000;
 		                    } else {
 		                        $('#pricedistance').text(formatVND(80 * data.distance));
-		                        totalPrice = priceCart + (80 * data.distance);
+		                        totalPrice = totalPriceAfterDiscount + (80 * data.distance);
 		                    }
 		                    var pdt = document.getElementById('pdt');
-
 		                     // Loại bỏ lớp 'd-none' từ phần tử pdt (nếu có)
 		                     pdt.classList.remove('d-none');
-
 		                     // Thêm lớp 'd-block' cho phần tử pdt
 		                     pdt.classList.add('d-block');
-							
+						
 		                     
 		                     $('#phone').prop('readonly', true);
 		                     $('#city').prop('readonly', true);
 		                     $('#district').prop('readonly', true);
 		                     $('#ward').prop('readonly', true);
 		                     $('#detailaddress').prop('readonly', true);
-
+		                     
+		                     var vanchuyen = document.getElementById('vanchuyen');
+		                     vanchuyen.classList.remove('d-none');
+		                     vanchuyen.classList.add('d-block');
+		                     
+		                     var checkttgh = document.getElementById('checkttgh');
+		                     checkttgh.classList.add('d-none');
+		                     
+		                    
+		                  
 		                    $('#totalPrice').text(formatVND(totalPrice));
 		                },
 		                error: function(xhr, status, error) {
@@ -336,6 +356,7 @@ html, body {
                 setTimeout(function() {
     				hideLoading();
     			}, 1000);
+  
                 var districtCity = district + ", " + city;
                 $.ajax({
                     type: 'POST',
@@ -348,22 +369,36 @@ html, body {
                        
                         var price;
                         
+                        var percentDecrease = parseFloat($('#percentDecrease').val());
+	                     
+	                     var discountAmount = priceCart * percentDecrease / 100;
+	                     var totalPriceAfterDiscount = priceCart - discountAmount;
+                        
 	                    if (data <= 30) {
 	                    	 $('#pricedistance').text(formatVND(16000));
-	                    	 price = priceCart + 16000;
+	                    	 price = totalPriceAfterDiscount + 16000;
 	                    } else {
 	                        $('#pricedistance').text(formatVND(80 * data));
-	                        price = priceCart + (80 * data);
+	                        price = totalPriceAfterDiscount + (80 * data);
 	                    }
 	                    var pdt = document.getElementById('pdt');
 	                    $('#totalPrice').text(formatVND(totalPrice));
 	                     // Loại bỏ lớp 'd-none' từ phần tử pdt (nếu có)
 	                     pdt.classList.remove('d-none');
+	                     
+	                     
+	                     
 
 	                     // Thêm lớp 'd-block' cho phần tử pdt
 	                     pdt.classList.add('d-block');
 		                 $('#totalPrice').text(formatVND(price));
-
+		                 
+		                 var vanchuyen = document.getElementById('vanchuyen');
+	                     vanchuyen.classList.remove('d-none');
+	                     vanchuyen.classList.add('d-block');
+	                     
+	                     var checkttgh = document.getElementById('checkttgh');
+	                     checkttgh.classList.add('d-none');
                     },
                     error: function(xhr, status, error) {
                         console.error("Lỗi xảy ra: " + status + " " + error);

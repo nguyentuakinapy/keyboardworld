@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.asmkbw.dao.CartDAO;
 import com.asmkbw.dao.ProductDetailDAO;
+import com.asmkbw.dao.VoucherDAO;
 import com.asmkbw.entity.Cart;
 import com.asmkbw.entity.ProductDetail;
 import com.asmkbw.entity.User;
+import com.asmkbw.entity.Voucher;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
@@ -30,6 +33,9 @@ public class CartController {
 	@Autowired
 	HttpSession session;
 
+	@Autowired
+	private VoucherDAO voucherDAO;
+
 	@RequestMapping("/keyboardworld/viewcart")
 	public String viewCart(Model model) {
 		User user = (User) session.getAttribute("userS");
@@ -39,13 +45,17 @@ public class CartController {
 		List<Cart> listCarts = cartDAO.findByIDUser(user);
 		model.addAttribute("listCarts", listCarts);
 
+		List<Voucher> vouchers = voucherDAO.findAll();
+		model.addAttribute("vouchers", vouchers);
+
 		model.addAttribute("views", "/WEB-INF/views/cart/viewcart.jsp");
 		return "index";
 	}
 
 	@RequestMapping("/keyboardworld/addtocart/{x}")
 	@Transactional
-	public String addToCart(Model model, @PathVariable("x") Integer id, @RequestParam("quantity") Integer qty) {
+	public String addToCart(Model model, @PathVariable("x") Integer id, @RequestParam("quantity") Integer qty,
+			HttpServletRequest request) {
 		User user = (User) session.getAttribute("userS");
 		if (user != null) {
 			List<Cart> list = cartDAO.findByIDUser(user);
@@ -78,7 +88,6 @@ public class CartController {
 				cart.setUser(user);
 				cartDAO.save(cart);
 			}
-
 			return "redirect:/keyboardworld/viewcart";
 		}
 		return "redirect:/keyboardworld/login";
@@ -92,14 +101,21 @@ public class CartController {
 		}
 		return "redirect:/keyboardworld/viewcart";
 	}
-	
-	 @RequestMapping("/keyboardworld/updatecart")
-	    public String updateCart(@RequestParam("cartID") Integer cartID, @RequestParam("quantity") Integer quantity) {
-	        Cart cart = cartDAO.findById(cartID).orElse(null);
-	        if (cart != null && quantity > 0) {
-	            cart.setQuantity(quantity);
-	            cartDAO.save(cart);
-	        }
-	        return "redirect:/keyboardworld/viewcart";
-	    }
+
+	@RequestMapping("/keyboardworld/updatecart")
+	public String updateCart(@RequestParam("cartID") Integer cartID, @RequestParam("quantity") Integer quantity) {
+		Cart cart = cartDAO.findById(cartID).orElse(null);
+		if (cart != null && quantity > 0) {
+			cart.setQuantity(quantity);
+			cartDAO.save(cart);
+		}
+		return "redirect:/keyboardworld/viewcart";
+	}
+
+	@RequestMapping("/keyboardworld/viewcart/deleteall")
+	public String deleteALLCART() {
+		User user = (User) session.getAttribute("userS");
+		cartDAO.deleteByUser(user);
+		return "redirect:/keyboardworld/viewcart";
+	}
 }

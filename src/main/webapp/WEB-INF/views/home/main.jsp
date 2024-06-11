@@ -31,8 +31,63 @@
 				class="visually-hidden">Next</span>
 		</button>
 	</div>
+
 	<div class="container wow fadeIn">
-		<h2 class="text-center my-5" style="letter-spacing: 2px;">Bàn phím</h2>
+		<h2 class="text-center my-5" style="letter-spacing: 2px;">Sản
+			phẩm mới</h2>
+		<div class="row borderless product-items">
+			<c:forEach var="p" items="${products}">
+				<div class="col-lg-3 col-md-6 col-sm-12 col">
+					<div class="card card-product border-0 overflow-hidden">
+						<div class="image-container">
+							<a href="/keyboardworld/detailproduct/${p.productID}"> <c:forEach
+									var="detail" items="${p.productDetails}" varStatus="status">
+									<c:if test="${status.first}">
+										<img class="imagesProduct-hover"
+											src="/images/${detail.thumbNail}" alt="">
+									</c:if>
+								</c:forEach> <img class="imagesProduct"
+								src="/images/${p.galleries[0].thumbnail}" alt="">
+							</a>
+						</div>
+						<div class="card-body text-center product-content">
+							<span class="product-category fs-6 text-secondary">${p.category.name}</span>
+							<h6 class="product-name fw-bolder text-nowrap text-truncate">${p.name}
+								${p.property}</h6>
+							<div class="price">
+								<c:forEach var="detail" items="${p.productDetails}"
+									varStatus="status">
+									<c:if test="${status.first}">
+										<span class="price-new fs-5"> <fmt:formatNumber
+												value="${detail.price}"></fmt:formatNumber> ₫
+										</span>
+									</c:if>
+								</c:forEach>
+							</div>
+						</div>
+						<form class="product-btn d-grid gap-2 col-10 mx-auto">
+							<input type="hidden" name="quantity" id="quantity" value="1">
+							<button type="submit"
+								formaction="/keyboardworld/addtocart/${p.productDetails[0].productDetailID}"
+								formmethod="post" class="btn btn-outline-dark fw-bold">Thêm
+								vào giỏ hàng</button>
+						</form>
+					</div>
+					<hr class="m-0 p-0">
+				</div>
+			</c:forEach>
+		</div>
+
+		<form class="text-center mt-4">
+			<button type="submit" formaction="/keyboardworld/product"
+				formmethod="post" class="btn-product-all">Xem tất cả. Sản
+				phẩm mới!</button>
+		</form>
+	</div>
+
+	<div class="container wow fadeIn">
+		<h2 class="text-center my-5" style="letter-spacing: 2px;">Bàn
+			phím</h2>
 		<div class="row borderless product-items">
 			<c:forEach var="p" items="${keyboards}">
 				<div class="col-lg-3 col-md-6 col-sm-12 col">
@@ -57,7 +112,7 @@
 									varStatus="status">
 									<c:if test="${status.first}">
 										<span class="price-new fs-5"> <fmt:formatNumber
-												value="${detail.price}"></fmt:formatNumber> VNĐ
+												value="${detail.price}"></fmt:formatNumber> ₫
 										</span>
 									</c:if>
 								</c:forEach>
@@ -76,10 +131,11 @@
 			</c:forEach>
 		</div>
 
-		<div class="text-center mt-4">
-			<button type="submit" class="btn-product-all">Xem tất cả.
-				Sản phẩm mới!</button>
-		</div>
+		<form class="text-center mt-4">
+			<button type="submit" formaction="/keyboardworld/product/keyboard"
+				formmethod="post" class="btn-product-all">Xem tất cả. Bàn
+				phim!</button>
+		</form>
 	</div>
 
 	<div class="container wow fadeIn">
@@ -108,7 +164,7 @@
 									varStatus="status">
 									<c:if test="${status.first}">
 										<span class="price-new fs-5"> <fmt:formatNumber
-												value="${detail.price}" ></fmt:formatNumber> VNĐ
+												value="${detail.price}"></fmt:formatNumber> ₫
 										</span>
 									</c:if>
 								</c:forEach>
@@ -127,10 +183,11 @@
 			</c:forEach>
 		</div>
 
-		<div class="text-center mt-4">
-			<button type="submit" class="btn-product-all">Xem tất cả.
-				Sản phẩm mới!</button>
-		</div>
+		<form class="text-center mt-4">
+			<button type="submit" formaction="/keyboardworld/product/mouse"
+				formmethod="post" class="btn-product-all">Xem tất cả.
+				Chuột!</button>
+		</form>
 	</div>
 
 	<div class="container wow fadeIn">
@@ -159,7 +216,7 @@
 									varStatus="status">
 									<c:if test="${status.first}">
 										<span class="price-new fs-5"> <fmt:formatNumber
-												value="${detail.price}"></fmt:formatNumber> VNĐ
+												value="${detail.price}"></fmt:formatNumber> ₫
 										</span>
 									</c:if>
 								</c:forEach>
@@ -179,14 +236,15 @@
 		</div>
 	</div>
 
-	<div class="text-center mt-4">
-		<button type="submit" class="btn-product-all">Xem tất cả. Sản
-			phẩm mới!</button>
-	</div>
-	
+	<form class="text-center mt-4">
+		<button type="submit" formaction="/keyboardworld/product/keycap"
+			formmethod="post" class="btn-product-all">Xem tất cả.
+			Keycap!</button>
+	</form>
 
 	<div class="container wow fadeIn">
-			<h2 class="text-center my-5" style="letter-spacing: 2px;">Tai nghe</h2>
+		<h2 class="text-center my-5" style="letter-spacing: 2px;">Tai
+			nghe</h2>
 		<div class="row borderless product-items">
 			<c:forEach var="p" items="${headphone}">
 				<div class="col-lg-3 col-md-6 col-sm-12 col">
@@ -211,7 +269,7 @@
 									varStatus="status">
 									<c:if test="${status.first}">
 										<span class="price-new fs-5"> <fmt:formatNumber
-												value="${detail.price}" ></fmt:formatNumber> VNĐ
+												value="${detail.price}"></fmt:formatNumber> ₫
 										</span>
 									</c:if>
 								</c:forEach>
@@ -230,4 +288,9 @@
 			</c:forEach>
 		</div>
 	</div>
+	<form class="text-center mt-4">
+		<button type="submit" formaction="/keyboardworld/product/headphone"
+			formmethod="post" class="btn-product-all">Xem tất cả. Tai
+			nghe!</button>
+	</form>
 </main>
