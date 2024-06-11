@@ -93,13 +93,13 @@ a {
 					<div class="card mb-5">
 						<div class="card-header UDaMW3">
 							<a
-								href="/keyboardworld/detailproduct/${item.productDetail.productDetailID}"
+								href="/keyboardworld/detailproduct/${item.productDetail.product.productID}"
 								class="text-dark">${item.productDetail.product.name}</a>
 						</div>
 						<div class="card-body row">
 							<div class="col-xs-12 col-sm-6 col-lg-6 col-md-6">
 								<a
-									href="/keyboardworld/detailproduct/${item.productDetail.productDetailID}"><img
+									href="/keyboardworld/detailproduct/${item.productDetail.product.productID}"><img
 									src="/images/${item.productDetail.thumbNail}"
 									alt="${item.productDetail.color}" width="40%"></a>
 							</div>

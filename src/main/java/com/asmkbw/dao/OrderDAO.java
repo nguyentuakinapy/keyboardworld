@@ -9,6 +9,7 @@ import com.asmkbw.entity.Order;
 import com.asmkbw.entity.User;
 
 public interface OrderDAO extends JpaRepository<Order, Integer> {
+
 	@Query("SELECT o FROM Order o, User u WHERE u.email = ?1")
 	List<Order> findByEmail(String email);
 
@@ -19,4 +20,7 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 //	List<NewOD> findOrderDetail(String email, int odID);
 
 	Order findByUserAndOrderID(User user, Integer id);
+
+	List<Order> findByUser(User user);
+
 }

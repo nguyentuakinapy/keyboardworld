@@ -92,7 +92,7 @@ a {
 					</tr>
 					<c:forEach var="items" items="${list}">
 						<tr>
-							<td>${items.orderID}</td>
+							<td>#${items.orderID}</td>
 							<td><fmt:formatDate value="${items.date}" pattern="dd/MM/yyyy"></fmt:formatDate></td>
 							<td><fmt:formatNumber type="number" value="${items.totalPrice}" pattern="###,###,###đ"></fmt:formatNumber></td>
 							<td>${items.status}</td>
