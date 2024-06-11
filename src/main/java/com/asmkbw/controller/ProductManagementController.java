@@ -33,6 +33,7 @@ import com.asmkbw.entity.Category;
 import com.asmkbw.entity.Gallery;
 import com.asmkbw.entity.Product;
 import com.asmkbw.entity.ProductDetail;
+import com.asmkbw.service.GlobalInterceptor;
 import com.asmkbw.service.ParamService;
 import com.asmkbw.service.SessionService;
 
@@ -86,7 +87,6 @@ public class ProductManagementController {
 			paramService.deleteFile(app.getRealPath("/images/") + nameGallery);
 			nameGallery = "";
 		}
-
 		model.addAttribute("views", "listproduct.jsp");
 		return "admin/index";
 	}
@@ -138,7 +138,8 @@ public class ProductManagementController {
 
 		List<Brand> brands = brandDAO.findAll();
 		model.addAttribute("brands", brands);
-
+		String uri = (String) req.getAttribute("uri");
+		System.out.println(uri);
 		model.addAttribute("views", "editproduct.jsp");
 		return "admin/index";
 	}
@@ -220,31 +221,39 @@ public class ProductManagementController {
 			paramService.save(gallery, app.getRealPath("/images/"));
 		}
 		this.product.setBrand(brandDAO.findById(selectedBrandID).orElse(null));
+		System.out.println();
 		this.product.setCategory(categoryDAO.findById(selectedCategoryID).orElse(null));
 		return "redirect:/keyboardworld/admin/newproduct";
 	}
 
 	@PostMapping("/addcategory")
-	public String addCategory(Model model, @RequestParam("name") String name) {
-		name = name.replaceAll("^,+|,+$", "");
+	public String addCategory(Model model, @RequestParam("name") String name, @RequestParam("currentUrl") String currentUrl) {
 		Category newCategory = new Category();
 		newCategory.setName(name);
 		categoryDAO.save(newCategory);
-		return "redirect:/keyboardworld/admin/editproduct/" + idProduct;
+		if (currentUrl.contains("/newproduct")) {
+			return "redirect:/keyboardworld/admin/newproduct";
+		} else {
+			return "redirect:/keyboardworld/admin/editproduct/" + idProduct;
+		}
 	}
 
 	@PostMapping("/addbrand")
 	public String addBrand(Model model, @RequestParam("name") String name, @RequestParam("city") String city,
 			@RequestParam("district") String district, @RequestParam("ward") String ward,
 			@RequestParam("addRessDetail") String addRessDetail, @RequestParam("phone") String phone,
-			@RequestParam("email") String email) {
+			@RequestParam("email") String email, @RequestParam("currentUrl") String currentUrl) {
 		Brand newBrand = new Brand();
 		newBrand.setName(name);
 		newBrand.setAddRess(addRessDetail + ", " + ward + ", " + district + ", " + city);
 		newBrand.setEmail(email);
 		newBrand.setPhone(phone);
 		brandDAO.save(newBrand);
-		return "redirect:/keyboardworld/admin/editproduct/" + idProduct;
+		if (currentUrl.contains("/newproduct")) {
+			return "redirect:/keyboardworld/admin/newproduct";
+		} else {
+			return "redirect:/keyboardworld/admin/editproduct/" + idProduct;
+		}
 	}
 
 	@RequestMapping("/detailproduct/{x}")

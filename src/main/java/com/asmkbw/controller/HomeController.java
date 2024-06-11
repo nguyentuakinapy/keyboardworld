@@ -143,6 +143,8 @@ public class HomeController {
 						"Bạn vừa đâng ký tài khoản mới bên Keyboard World" + "\n" + "Mã xác nhận của bạn là: "
 								+ otpEmail);
 				user.setRole(roleDAO.findById(1).orElse(null));
+				user.setActive(1);
+				user.setImage("defaultAvatar.jpg");
 				this.user = user;
 				return "redirect:/keyboardworld/otp";
 			}

@@ -46,7 +46,10 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "RoleID")
 	Role role;
-
+	
+	@Column(name = "Active")
+	Integer active;
+	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	List<Cart> carts;
 
