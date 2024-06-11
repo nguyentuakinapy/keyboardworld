@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <div class="container" style="margin-top: 15px;">
-	<img alt="" class="w-100" style="height: 400px"
-		src="/images/bannerProduct.jpg">
+	<img alt="" class="w-100" 
+		src="/images/akinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-01.png">
 </div>
 <div class="container wow bounceInUp">
 	<div class="row ">
