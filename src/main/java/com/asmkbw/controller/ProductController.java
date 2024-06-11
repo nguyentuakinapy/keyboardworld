@@ -162,6 +162,12 @@ public class ProductController {
 	@RequestMapping("/searchproduct")
 	public String searchProduct(Model model, @RequestParam("keywords") Optional<String> kw,
 			@RequestParam("p") Optional<Integer> p) {
+
+		List<Category> categories = categoryDAO.findAll();
+		List<Brand> brands = brandDAO.findAll();
+
+		model.addAttribute("categories", categories);
+		model.addAttribute("brands", brands);
 		String kwords = kw.orElse(session.get("keywords", ""));
 		session.set("keywords", kwords);
 		Pageable pageable = PageRequest.of(p.orElse(0), 6);

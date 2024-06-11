@@ -28,7 +28,13 @@ public class AuthInterceptor implements HandlerInterceptor {
 		}
 		if (error.length() > 0) { // có lỗi
 			session.set("demo", uri);
-			response.sendRedirect("/keyboardworld?=error" + error);
+			if (error.equalsIgnoreCase("Access denied!")) {
+				response.sendRedirect("/keyboardworld/logout");
+			} else {
+//				response.sendRedirect("/keyboardworld?=error" + error);
+				response.sendRedirect("/keyboardworld/login");
+			}
+
 			return false;
 		}
 		return true;

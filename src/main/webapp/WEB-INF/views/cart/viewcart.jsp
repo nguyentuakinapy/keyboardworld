@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <form class="container" method="get">
 
 	<c:if test="${listCarts.size() == 0}">
@@ -15,39 +16,40 @@
 
 	<c:if test="${listCarts.size() != 0}">
 		<h3 class="mt-5 text-center fw-bold">
-			GIỎ HÀNG <span>(${listCarts.size() } sản phẩm)</span>
+			<s:message code="cart.head"></s:message>
+			<span>(${listCarts.size()})</span>
 		</h3>
 		<div class="row">
 			<article class="col-9">
-				<div class="card mb-2"
+				<div class="card"
 					style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
 					<div class="cart-item">
 						<div class="form-check ms-4 me-2">
 							<input type="checkbox" id="selectAll"
-								class="form-check-input checkcart border border-primary">
+								class="form-check-input checkcart border border-danger">
 						</div>
 						<div class="mt-2 ms-4">
-							<h6 class="fw-bold ">Hình ảnh</h6>
+							<h6 class="fw-bold ">
+								<s:message code="cart.image"></s:message>
+							</h6>
 						</div>
 						<div class="item-details mt-2 ms-5"
 							style="display: flex; flex-direction: column; flex: 1;">
-							<h6 class="fw-bold">Thông tin sản phẩm</h6>
+							<h6 class="fw-bold">
+								<s:message code="cart.productdetailname"></s:message>
+							</h6>
 						</div>
 						<div style="margin-right: 35px">
 							<a href="/keyboardworld/viewcart/deleteall"
-								class="nav-link fw-bold text-danger">Xóa tất cả</a>
+								class="nav-link fw-bold text-danger"><s:message
+									code="cart.deleteall"></s:message></a>
 						</div>
 					</div>
-				</div>
-
-
-				<div class="card"
-					style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
 					<c:forEach var="c" items="${listCarts}">
 						<div class="cart-item">
 							<div class="form-check ms-4">
 								<input type="checkbox" name="selectedItems" value="${c.cartID}"
-									class="form-check-input checkcart" id="cart-${c.cartID}">
+									class="form-check-input checkcart border-primary" id="cart-${c.cartID}">
 							</div>
 							<div class="m-3" style="border-radius: 2px;">
 								<img src="/images/${c.productDetail.thumbNail}"
@@ -65,11 +67,13 @@
 								<div class="item-actions me-3 mt-3">
 									<div class="row align-items-center mb-3">
 										<div class="col-auto">
-											<label class="col-form-label">Màu: <b>${c.productDetail.color }</b>
+											<label class="col-form-label"><s:message
+													code="cart.color"></s:message> <b>${c.productDetail.color}</b>
 											</label>
 										</div>
 										<div class="col-auto">
-											<label class="col-form-label">Số lượng:</label>
+											<label class="col-form-label"><s:message
+													code="cart.quantity"></s:message></label>
 										</div>
 										<div class="col-auto">
 											<div class="form-control d-flex align-items-center">
@@ -90,17 +94,18 @@
 											</div>
 										</div>
 										<div class="col-auto">
-											<label class="col-form-label">Giá: <fmt:formatNumber
+											<label class="col-form-label"><s:message
+													code="cart.price"></s:message> <fmt:formatNumber
 													value="${c.productDetail.price * c.quantity}"></fmt:formatNumber>
-												₫
-											</label>
+												₫ </label>
 										</div>
 									</div>
 								</div>
 
 							</div>
 							<a href="/keyboardworld/deletecart/${c.cartID}"
-								class="btn btn-outline-danger me-5 mt-4">Xóa</a>
+								class="btn btn-outline-danger me-5 mt-4"><i
+								class="bi bi-trash3"></i></a>
 						</div>
 						<c:set var="totalPrice"
 							value="${totalPrice + c.productDetail.price * c.quantity}" />
@@ -114,14 +119,18 @@
 					style="display: flex; flex-direction: column; text-align: center; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
 					<div class="d-flex m-4" style="justify-content: space-between;">
 
-						<p style="margin: 0;">Tạm tính:</p>
+						<p style="margin: 0;">
+							<s:message code="cart.provisional"></s:message>
+						</p>
 						<span class="fw-bold"> <fmt:formatNumber
 								value="${totalPrice }"></fmt:formatNumber> ₫
 						</span>
 					</div>
 					<hr class="w-100 m-0 p-0">
 					<div class="d-flex m-4" style="justify-content: space-between;">
-						<p style="margin: 0;">Thành tiền:</p>
+						<p style="margin: 0;">
+							<s:message code="cart.totalprice"></s:message>
+						</p>
 						<span><fmt:formatNumber value="${totalPrice }"></fmt:formatNumber>
 							₫</span>
 					</div>
@@ -131,12 +140,14 @@
 							formaction="/keyboardworld/checkout" formmethod="get"
 							id="myButton"
 							style="background-color: black; color: white; width: 100%; padding: 10px 0; border: none;"
-							disabled>THANH TOÁN NGAY</button>
+							disabled>
+							<s:message code="cart.buynow"></s:message>
+						</button>
 					</div>
 					<div class="mx-4 my-2">
 						<a href="/keyboardworld/product" class="btn btn-white"
-							style="width: 100%; padding: 10px 0; border: none;">TIẾP TỤC
-							MUA HÀNG</a>
+							style="width: 100%; padding: 10px 0; border: none;"><s:message
+								code="cart.continueshopping"></s:message></a>
 					</div>
 					<div class="form-floating m-2">
 						<select class="form-control" id="voucher" name="voucher" required>

@@ -14,4 +14,5 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 
 	@Query("SELECT u.email FROM User u")
 	List<String> listEmail();
+	
 }

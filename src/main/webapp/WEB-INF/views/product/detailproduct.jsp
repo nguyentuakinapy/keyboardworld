@@ -37,9 +37,8 @@
 			<p class="price product-price" id="product-price">
 				<c:forEach var="detail" items="${product.productDetails}"
 					varStatus="status">
-					<c:if test="${status.first}">
-						<fmt:formatNumber value="${detail.price}" type="currency"
-							currencySymbol="₫"></fmt:formatNumber>
+					<c:if test="${status.first}"> 
+						<fmt:formatNumber value="${detail.price}"></fmt:formatNumber> ₫
 					</c:if>
 				</c:forEach>
 			</p>
@@ -102,7 +101,8 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="confirmAddtoCartModalLabel">THÔNG BÁO </h5>
+							<h5 class="modal-title" id="confirmAddtoCartModalLabel">THÔNG
+								BÁO</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal"
 								aria-label="Close"></button>
 						</div>

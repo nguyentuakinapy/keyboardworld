@@ -34,7 +34,7 @@
             <div class="col-md-3 footer-section">
                 <h3>LIÊN KẾT MẠNG XÃ HỘI</h3>
                 <div class="d-flex gap-3">
-                    <a href="#" style="text-decoration: none" class="mr-2 text-light"><i class="bi bi-facebook"></i>Facebook</a>
+                    <a href="https://www.facebook.com/akinagi.1307" style="text-decoration: none" class="mr-2 text-light"><i class="bi bi-facebook"></i>Facebook</a>
                     <a href="#" style="text-decoration: none" class="mr-2 text-light"><i class="bi bi-youtube"></i>Youtube</a>
                     <a href="#" style="text-decoration: none" class="mr-2 text-light"><i class="bi bi-bag-check-fill"></i>Shop</a>
                 </div>
