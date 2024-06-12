@@ -37,7 +37,7 @@
 			phẩm mới</h2>
 		<div class="row borderless product-items">
 			<c:forEach var="p" items="${products}">
-				<div class="col-lg-3 col-md-6 col-sm-12 col">
+				<div class="col-lg-3 col-md-6 col-sm-12 col mt-2">
 					<div class="card card-product border-0 overflow-hidden">
 						<div class="image-container">
 							<a href="/keyboardworld/detailproduct/${p.productID}"> <c:forEach
@@ -58,19 +58,26 @@
 								<c:forEach var="detail" items="${p.productDetails}"
 									varStatus="status">
 									<c:if test="${status.first}">
-										<span class="price-new fs-5"> <fmt:formatNumber
-												value="${detail.price}"></fmt:formatNumber> ₫
-										</span>
+										<span class="price-new fs-5"><fmt:formatNumber
+												value="${detail.price}" type="currency" currencySymbol="VND"></fmt:formatNumber></span>
 									</c:if>
 								</c:forEach>
 							</div>
 						</div>
+						<c:set var="stopLoop" value="true" />
+
 						<form class="product-btn d-grid gap-2 col-10 mx-auto">
 							<input type="hidden" name="quantity" id="quantity" value="1">
-							<button type="submit"
-								formaction="/keyboardworld/addtocart/${p.productDetails[0].productDetailID}"
-								formmethod="post" class="btn btn-outline-dark fw-bold">Thêm
-								vào giỏ hàng</button>
+							<c:forEach var="dt" items="${p.productDetails}">
+								<c:if test="${stopLoop && dt.quantity > 0}">
+									<button type="submit" formmethod="post"
+										formaction="/keyboardworld/addtocart/${dt.productDetailID}"
+										class="btn btn-outline-dark fw-bold">Thêm vào giỏ
+										hàng</button>
+									<c:set var="stopLoop" value="false" />
+								</c:if>
+							</c:forEach>
+
 						</form>
 					</div>
 					<hr class="m-0 p-0">
@@ -111,19 +118,26 @@
 								<c:forEach var="detail" items="${p.productDetails}"
 									varStatus="status">
 									<c:if test="${status.first}">
-										<span class="price-new fs-5"> <fmt:formatNumber
-												value="${detail.price}"></fmt:formatNumber> ₫
-										</span>
+										<span class="price-new fs-5"><fmt:formatNumber
+												value="${detail.price}" type="currency" currencySymbol="VND"></fmt:formatNumber></span>
 									</c:if>
 								</c:forEach>
 							</div>
 						</div>
+						<c:set var="stopLoop" value="true" />
+
 						<form class="product-btn d-grid gap-2 col-10 mx-auto">
 							<input type="hidden" name="quantity" id="quantity" value="1">
-							<button type="submit"
-								formaction="/keyboardworld/addtocart/${p.productDetails[0].productDetailID}"
-								formmethod="post" class="btn btn-outline-dark fw-bold">Thêm
-								vào giỏ hàng</button>
+							<c:forEach var="dt" items="${p.productDetails}">
+								<c:if test="${stopLoop && dt.quantity > 0}">
+									<button type="submit" formmethod="post"
+										formaction="/keyboardworld/addtocart/${dt.productDetailID}"
+										class="btn btn-outline-dark fw-bold">Thêm vào giỏ
+										hàng</button>
+									<c:set var="stopLoop" value="false" />
+								</c:if>
+							</c:forEach>
+
 						</form>
 					</div>
 					<hr class="m-0 p-0">
@@ -163,19 +177,26 @@
 								<c:forEach var="detail" items="${p.productDetails}"
 									varStatus="status">
 									<c:if test="${status.first}">
-										<span class="price-new fs-5"> <fmt:formatNumber
-												value="${detail.price}"></fmt:formatNumber> ₫
-										</span>
+										<span class="price-new fs-5"><fmt:formatNumber
+												value="${detail.price}" type="currency" currencySymbol="VND"></fmt:formatNumber></span>
 									</c:if>
 								</c:forEach>
 							</div>
 						</div>
+						<c:set var="stopLoop" value="true" />
+
 						<form class="product-btn d-grid gap-2 col-10 mx-auto">
 							<input type="hidden" name="quantity" id="quantity" value="1">
-							<button type="submit"
-								formaction="/keyboardworld/addtocart/${p.productDetails[0].productDetailID}"
-								formmethod="post" class="btn btn-outline-dark fw-bold">Thêm
-								vào giỏ hàng</button>
+							<c:forEach var="dt" items="${p.productDetails}">
+								<c:if test="${stopLoop && dt.quantity > 0}">
+									<button type="submit" formmethod="post"
+										formaction="/keyboardworld/addtocart/${dt.productDetailID}"
+										class="btn btn-outline-dark fw-bold">Thêm vào giỏ
+										hàng</button>
+									<c:set var="stopLoop" value="false" />
+								</c:if>
+							</c:forEach>
+
 						</form>
 					</div>
 					<hr class="m-0 p-0">
@@ -215,19 +236,26 @@
 								<c:forEach var="detail" items="${p.productDetails}"
 									varStatus="status">
 									<c:if test="${status.first}">
-										<span class="price-new fs-5"> <fmt:formatNumber
-												value="${detail.price}"></fmt:formatNumber> ₫
-										</span>
+										<span class="price-new fs-5"><fmt:formatNumber
+												value="${detail.price}" type="currency" currencySymbol="VND"></fmt:formatNumber></span>
 									</c:if>
 								</c:forEach>
 							</div>
 						</div>
+						<c:set var="stopLoop" value="true" />
+
 						<form class="product-btn d-grid gap-2 col-10 mx-auto">
 							<input type="hidden" name="quantity" id="quantity" value="1">
-							<button type="submit"
-								formaction="/keyboardworld/addtocart/${p.productDetails[0].productDetailID}"
-								formmethod="post" class="btn btn-outline-dark fw-bold">Thêm
-								vào giỏ hàng</button>
+							<c:forEach var="dt" items="${p.productDetails}">
+								<c:if test="${stopLoop && dt.quantity > 0}">
+									<button type="submit" formmethod="post"
+										formaction="/keyboardworld/addtocart/${dt.productDetailID}"
+										class="btn btn-outline-dark fw-bold">Thêm vào giỏ
+										hàng</button>
+									<c:set var="stopLoop" value="false" />
+								</c:if>
+							</c:forEach>
+
 						</form>
 					</div>
 					<hr class="m-0 p-0">
@@ -268,19 +296,26 @@
 								<c:forEach var="detail" items="${p.productDetails}"
 									varStatus="status">
 									<c:if test="${status.first}">
-										<span class="price-new fs-5"> <fmt:formatNumber
-												value="${detail.price}"></fmt:formatNumber> ₫
-										</span>
+										<span class="price-new fs-5"><fmt:formatNumber
+												value="${detail.price}" type="currency" currencySymbol="VND"></fmt:formatNumber></span>
 									</c:if>
 								</c:forEach>
 							</div>
 						</div>
+						<c:set var="stopLoop" value="true" />
+
 						<form class="product-btn d-grid gap-2 col-10 mx-auto">
 							<input type="hidden" name="quantity" id="quantity" value="1">
-							<button type="submit"
-								formaction="/keyboardworld/addtocart/${p.productDetails[0].productDetailID}"
-								formmethod="post" class="btn btn-outline-dark fw-bold">Thêm
-								vào giỏ hàng</button>
+							<c:forEach var="dt" items="${p.productDetails}">
+								<c:if test="${stopLoop && dt.quantity > 0}">
+									<button type="submit" formmethod="post"
+										formaction="/keyboardworld/addtocart/${dt.productDetailID}"
+										class="btn btn-outline-dark fw-bold">Thêm vào giỏ
+										hàng</button>
+									<c:set var="stopLoop" value="false" />
+								</c:if>
+							</c:forEach>
+
 						</form>
 					</div>
 					<hr class="m-0 p-0">
