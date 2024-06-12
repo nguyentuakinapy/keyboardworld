@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-<%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
+<%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <style>
 .page_account {
 	margin-bottom: 30px;
@@ -93,10 +93,19 @@ a {
 					<c:forEach var="items" items="${list}">
 						<tr>
 							<td>#${items.orderID}</td>
-							<td><fmt:formatDate value="${items.date}" pattern="dd/MM/yyyy"></fmt:formatDate></td>
-							<td><fmt:formatNumber type="number" value="${items.totalPrice}" pattern="###,###,###đ"></fmt:formatNumber></td>
-							<td>${items.status}</td>
-							<td><a href="/keyboardworld/order/detail/${items.orderID}" class="action">Xem</a></td>
+							<td><fmt:formatDate value="${items.date}"
+									pattern="dd/MM/yyyy"></fmt:formatDate></td>
+							<td><fmt:formatNumber type="number"
+									value="${items.totalPrice}" pattern="###,###,###đ"></fmt:formatNumber></td>
+							<td><c:if test="${items.status == 0 }">
+								Đang chờ
+							</c:if> <c:if test="${items.status == 1 }">
+								Đã hủy
+							</c:if> <c:if test="${items.status == 2 }">
+								Đã hoàn thành
+							</c:if></td>
+							<td><a href="/keyboardworld/order/detail/${items.orderID}"
+								class="action">Xem</a></td>
 						</tr>
 					</c:forEach>
 				</table>

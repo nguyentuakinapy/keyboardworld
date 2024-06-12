@@ -155,6 +155,28 @@ public class AdminController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error: " + e.getMessage());
 		}
 	}
+	
+	@PostMapping("/updateStatus")
+	public ResponseEntity<?> updateStatus(@RequestBody Map<String, Object> payload) {
+		try {
+			// Convert userID from String to Integer
+			Integer orderID = Integer.parseInt(payload.get("orderID").toString());
+			Integer status = Integer.parseInt(payload.get("test").toString());
+			System.out.println("----------------------------------" +orderID);
+			Optional<Order> optionalOrder = orderDAO.findById(orderID);
+			if (!optionalOrder.isPresent()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order not found");
+			}
+
+			Order order = optionalOrder.get();
+
+			order.setStatus(status);
+			orderDAO.save(order);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error: " + e.getMessage());
+		}
+	}
 
 	@PostMapping("/createUser")
 	public String createUser(@RequestParam("email") String email, @RequestParam("fullName") String fullName,

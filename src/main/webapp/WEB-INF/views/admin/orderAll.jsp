@@ -42,13 +42,13 @@
 					<table class="table table-bordered" style="width: 100%;">
 						<thead>
 							<tr class="text-center">
-								<th style="width: 70px;" >Mã hóa đơn</th>
+								<th style="width: 75px;">Mã hóa đơn</th>
 								<th style="width: 130px;">Họ và tên</th>
-								<th style="width: 100px;">Ngày mua</th>
-								<th style="width: 130px;">Tổng tiền</th>
-								<th style="width: 240px;">Địa chỉ</th>
-								<th style="width: 70px;">Trạng thái</th>
-								<th style="width: 100px;">Số điện thoại</th>
+								<th style="width: 80px;">Ngày mua</th>
+								<th style="width: 100px;">Tổng tiền</th>
+								<th style="width: 200px;">Địa chỉ</th>
+								<th style="width: 100px;">Trạng thái</th>
+								<th style="width: 80px;">Số điện thoại</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -56,10 +56,19 @@
 								<tr class="text-center">
 									<td>#${o.orderID}</td>
 									<td>${o.user.fullName}</td>
-									<td>${o.date}</td>
-									<td>${o.totalPrice}</td>
-									<td>${o.addRess}</td>
-									<td>${o.status}</td>
+									<td><fmt:formatDate value="${o.date}" pattern="dd/MM/yyyy"></fmt:formatDate></td>
+									<td><fmt:formatNumber type="number"
+											value="${o.totalPrice}" pattern="###,###,###đ"></fmt:formatNumber></td>
+									<td class="text-truncate">${o.addRess}</td>
+									<td><select class="form-select status-select"
+										name="status_${o.orderID}" data-orderid="${o.orderID}" id="test">
+											<option ${o.status == 0 ? 'selected' : ''} value="0">Đang
+												chờ</option>
+											<option ${o.status == 1 ? 'selected' : ''} value="1">Đã
+												hủy</option>
+											<option ${o.status == 2 ? 'selected' : ''} value="2">Đã
+												hoàn thành</option>
+									</select></td>
 									<td>${o.phone}</td>
 								</tr>
 							</c:forEach>
@@ -93,3 +102,34 @@
 	border-radius: 0;
 }
 </style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const statusSelect = document.querySelectorAll('.status-select');
+
+    statusSelect.forEach(select => {
+    	select.addEventListener('change', function () {
+            const orderID = parseInt(this.getAttribute('data-orderid'));  // Convert to integer
+            const test = document.getElementById('test').value;
+            // Thực hiện AJAX call để cập nhật vai trò
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `/keyboardworld/admin/updateStatus`, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        alert('Cập nhật trạng thái thành công!');
+                        location.reload();
+                    } else {
+                        alert('Cập nhật trạng thái thất bại: ' + xhr.responseText);
+                        location.reload();
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({
+                orderID: orderID,
+                test: test
+            }));
+        });
+    });
+});
+</script>
