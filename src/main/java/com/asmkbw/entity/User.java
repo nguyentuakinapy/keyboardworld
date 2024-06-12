@@ -32,7 +32,7 @@ public class User {
 
 	@Column(name = "Email")
 	String email;
-	
+
 	@Column(name = "Image")
 	String image;
 
@@ -46,10 +46,10 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "RoleID")
 	Role role;
-	
+
 	@Column(name = "Active")
 	Integer active;
-	
+
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	List<Cart> carts;
 
