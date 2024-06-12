@@ -254,8 +254,10 @@ td.text-truncate {
 					</a></li>
 					<li><a href="/keyboardworld/admin/userlist"><i
 							class="bi bi-people"></i><span>Người Dùng</span> </a></li>
-					<li><a href="/keyboardworld/admin/orderAll"> <i class="bi bi-receipt"></i> <span>Hóa
+					<li><a href="/keyboardworld/admin/orderall"> <i class="bi bi-receipt"></i> <span>Hóa
 								Đơn</span>
+					</a></li>
+					<li><a href="/keyboardworld/admin/orderall"> <i class="bi bi-receipt"></i> <span>Mã giảm giá</span>
 					</a></li>
 					<li><a href="#"> <i class="bi bi-graph-up-arrow"></i> <span>Thống
 								Kê</span>

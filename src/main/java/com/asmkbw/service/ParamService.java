@@ -108,16 +108,38 @@ public class ParamService {
 	 * @throws IllegalStateException
 	 * @throws RuntimeException      lỗi lưu file
 	 */
-	public File save(MultipartFile file, String path) throws IllegalStateException, IOException {
-//		if (!file.isEmpty()) {
-		String fileName = file.getOriginalFilename();
-		File f = new File(path + fileName);
-		file.transferTo(f);
-		System.out.println(file);
-		return f;
-//		}
-//		return null;
+//	public File save(MultipartFile file, String path) throws IllegalStateException, IOException {
+////		if (!file.isEmpty()) {
+//		String fileName = file.getOriginalFilename();
+//		File f = new File(path + fileName);
+//		file.transferTo(f);
+//		System.out.println(file);
+//		return f;
+////		}
+////		return null;
+//
+//	}
 
+	public File save(MultipartFile file, String path) throws IllegalStateException, IOException {
+		// Kiểm tra nếu tệp không rỗng
+		if (!file.isEmpty()) {
+			String fileName = file.getOriginalFilename();
+			File f = new File(path + fileName);
+
+			// Kiểm tra nếu tệp đã tồn tại
+			if (!f.exists()) {
+				// Lưu tệp nếu nó chưa tồn tại
+				file.transferTo(f);
+				System.out.println("File saved: " + file);
+				return f;
+			} else {
+				// Không lưu tệp nếu nó đã tồn tại
+				System.out.println("File already exists: " + file);
+				return null;
+			}
+		}
+
+		return null;
 	}
 
 	public File deleteFile(String file) throws IllegalStateException, IOException {

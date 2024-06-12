@@ -19,14 +19,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.asmkbw.dao.CategoryDAO;
+import com.asmkbw.dao.OrderDAO;
 import com.asmkbw.dao.RoleDAO;
 import com.asmkbw.dao.UserDAO;
+import com.asmkbw.entity.Order;
 import com.asmkbw.entity.Product;
 import com.asmkbw.entity.Role;
 import com.asmkbw.entity.User;
@@ -53,6 +56,8 @@ public class AdminController {
 	ParamService paramService;
 	@Autowired
 	ServletContext app;
+	@Autowired
+	OrderDAO orderDAO;
 
 	@RequestMapping
 	public String index(Model model) {
@@ -116,7 +121,9 @@ public class AdminController {
 		if (item != null) {
 			item.setFullName(fullName);
 			item.setActive(active);
-			item.setImage(avatar.getOriginalFilename());
+			if (!avatar.getOriginalFilename().equals("")) {
+				item.setImage(avatar.getOriginalFilename());
+			}
 			paramService.save(avatar, app.getRealPath("/images/"));
 			userDAO.save(item);
 		}
@@ -168,10 +175,11 @@ public class AdminController {
 		userDAO.save(user);
 		return "redirect:/keyboardworld/admin/userlist";
 	}
-	
-	@RequestMapping("/orderAll")
+
+	@RequestMapping("/orderall")
 	public String orderAll(Model model) {
-		
+		List<Order> orders = orderDAO.findAll();
+		model.addAttribute("orders", orders);
 		model.addAttribute("views", "orderAll.jsp");
 		return "admin/index";
 	}

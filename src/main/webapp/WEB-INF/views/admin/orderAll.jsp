@@ -31,7 +31,7 @@
 				<div class="btn-group mb-5">
 					<a href="/keyboardworld/admin/userlist"
 						class="btn btn-outline-dark active" aria-current="page">Danh
-						sách hóa đơn</a> <a href="/keyboardworld/admin/adminlist"
+						sách hóa đơn</a> <a href="/keyboardworld/admin/orderall"
 						class="btn btn-outline-dark">Danh sách hóa đơn chưa xác nhận</a> <a
 						href="/keyboardworld/admin/edituser" class="btn btn-outline-dark">Danh
 						sách hóa đơn đã xác nhận</a> <a href="/keyboardworld/admin/edituser"
@@ -42,50 +42,25 @@
 					<table class="table table-bordered" style="width: 100%;">
 						<thead>
 							<tr class="text-center">
-								<th style="width: 200px;">Địa chỉ Email</th>
-								<th style="width: 200px;">Họ và tên</th>
-								<th style="width: 130px;">Trạng thái</th>
-								<th style="width: 240px;">Phân quyền</th>
-								<th style="width: 70px;">Hành động</th>
+								<th style="width: 70px;" >Mã hóa đơn</th>
+								<th style="width: 130px;">Họ và tên</th>
+								<th style="width: 100px;">Ngày mua</th>
+								<th style="width: 130px;">Tổng tiền</th>
+								<th style="width: 240px;">Địa chỉ</th>
+								<th style="width: 70px;">Trạng thái</th>
+								<th style="width: 100px;">Số điện thoại</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="customer" items="${page.content}">
-								<tr>
-									<td>${customer.email}</td>
-									<td>${customer.fullName}</td>
-									<td class="text-center"><c:choose>
-											<c:when test="${customer.active == 1}">
-												<span class="badge text-bg-primary">Hoạt động</span>
-											</c:when>
-											<c:otherwise>
-												<span class="badge text-bg-danger">Vô hiệu hóa</span>
-											</c:otherwise>
-										</c:choose></td>
-									<td class="text-center check"><input type="radio"
-										class="role-checkbox" name="role_${customer.userID}"
-										data-userid="${customer.userID}" data-role="Admin"
-										${customer.role.roleName == 'Admin' ? 'checked' : ''}>
-										Admin <input type="radio" class="role-checkbox"
-										name="role_${customer.userID}"
-										data-userid="${customer.userID}" data-role="User"
-										${customer.role.roleName != 'Admin' ? 'checked' : ''}>
-										Khách hàng</td>
-									<td class="text-center">
-										<div class="actions action-icon">
-											<div class="first-actions">
-												<i class="bi bi-gear" onclick="toggleActions(this)"></i>
-											</div>
-											<div class="second-actions">
-												<a href="/keyboardworld/admin/edit/${customer.userID}"><i
-													class="bi bi-pencil-square text-warning"></i></a> <a
-													href="/keyboardworld/admin/userlist/delete/${customer.userID}"><i
-													class="bi bi-trash text-danger"></i></a> <a><i
-													class="bi bi-arrow-right-circle right-arrow"
-													onclick="toggleActions(this)"></i></a>
-											</div>
-										</div>
-									</td>
+							<c:forEach var="o" items="${orders}">
+								<tr class="text-center">
+									<td>#${o.orderID}</td>
+									<td>${o.user.fullName}</td>
+									<td>${o.date}</td>
+									<td>${o.totalPrice}</td>
+									<td>${o.addRess}</td>
+									<td>${o.status}</td>
+									<td>${o.phone}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
