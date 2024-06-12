@@ -95,7 +95,7 @@ a {
 							<td>#${items.orderID}</td>
 							<td><fmt:formatDate value="${items.date}" pattern="dd/MM/yyyy"></fmt:formatDate></td>
 							<td><fmt:formatNumber type="number" value="${items.totalPrice}" pattern="###,###,###đ"></fmt:formatNumber></td>
-							<td>${items.status}</td>
+							<td>${items.status == 1 ? 'Thành công' : 'Đang chờ'}</td>
 							<td><a href="/keyboardworld/order/detail/${items.orderID}" class="action">Xem</a></td>
 						</tr>
 					</c:forEach>

@@ -42,7 +42,7 @@
 					<table class="table table-bordered" style="width: 100%;">
 						<thead>
 							<tr class="text-center">
-								<th style="width: 70px;" >Mã hóa đơn</th>
+								<th style="width: 70px;">Mã hóa đơn</th>
 								<th style="width: 130px;">Họ và tên</th>
 								<th style="width: 100px;">Ngày mua</th>
 								<th style="width: 130px;">Tổng tiền</th>
@@ -58,12 +58,12 @@
 									<td>${o.user.fullName}</td>
 									<td>${o.date}</td>
 									<td>${o.totalPrice}</td>
-									<td>${o.addRess}</td>
-									<td>${o.status}</td>
+									<td class="text-truncate">${o.addRess}</td>
+									<td>${items.status == 1 ? 'Thành công' : 'Đang chờ'}</td>
 									<td>${o.phone}</td>
 								</tr>
 							</c:forEach>
-						</tbody>
+						</tbody> 
 					</table>
 					<%-- <div class="d-flex justify-content-center mt-4">
 						<a
