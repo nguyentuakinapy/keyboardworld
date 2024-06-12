@@ -185,8 +185,7 @@ td.text-truncate {
 	margin-top: 25px;
 }
 
-#sidebar-menu>ul>li>a:hover
-	{
+#sidebar-menu>ul>li>a:hover {
 	color: #458bc4;
 	text-decoration: none;
 	background-color: #f5f5f5
@@ -250,17 +249,13 @@ td.text-truncate {
 					<li><a href="/keyboardworld"> <i class="bi bi-house"></i>
 							<span>Trang Chủ</span>
 					</a></li>
-					<li><a href="/keyboardworld/admin/product">
-							<i class="bi bi-boxes"></i> <span>Sản Phẩm</span>
+					<li><a href="/keyboardworld/admin/product"> <i
+							class="bi bi-boxes"></i> <span>Sản Phẩm</span>
 					</a></li>
-					<li><a href="#"> <i class="bi bi-people"></i> <span>Khách
-								Hàng</span>
-					</a></li>
-					<li><a href="#"> <i class="bi bi-receipt"></i> <span>Hóa
+					<li><a href="/keyboardworld/admin/userlist"><i
+							class="bi bi-people"></i><span>Người Dùng</span> </a></li>
+					<li><a href="/keyboardworld/admin/orderAll"> <i class="bi bi-receipt"></i> <span>Hóa
 								Đơn</span>
-					</a></li>
-					<li><a href="#"> <i class="bi bi-tags"></i> <span>Loại
-								Sản Phẩm</span>
 					</a></li>
 					<li><a href="#"> <i class="bi bi-graph-up-arrow"></i> <span>Thống
 								Kê</span>
@@ -301,7 +296,7 @@ td.text-truncate {
 			var minutes = now.getMinutes().toString().padStart(2, '0');
 			var seconds = now.getSeconds().toString().padStart(2, '0');
 			document.getElementById('currentDateTime').innerHTML = dayOfWeek
-					+ ", Ngày " + day + " " + month + " " + year + " - "
+					+ ", Ngày " + day + " " + month + " Năm " + year + " - "
 					+ hours + " Giờ " + minutes + " Phút " + seconds + " Giây ";
 		}
 

@@ -275,6 +275,8 @@
 							</div>
 						</div>
 					</div>
+					<input type="hidden" id="currentUrlCategory" name="currentUrl"
+						value="">
 				</div>
 				<div class="modal-footer">
 					<button type="submit" formaction="/keyboardworld/admin/addcategory"
@@ -284,7 +286,7 @@
 		</div>
 	</div>
 	<!-- End Modal Add Category -->
-	
+
 	<!-- Start Modal Add Brand -->
 	<div class="modal fade" id="addBrandModal" tabindex="-1"
 		aria-labelledby="addBrandModalLabel" aria-hidden="true">
@@ -349,6 +351,8 @@
 							<span style="color: red;">*</span>
 						</label>
 					</div>
+					<input type="hidden" id="currentUrlBrand" name="currentUrl"
+						value="">
 				</div>
 				<div class="modal-footer">
 					<button type="submit" formaction="/keyboardworld/admin/addbrand"
@@ -379,6 +383,23 @@
 					myModal.show();
 				}
 			});
+
+	document.addEventListener("DOMContentLoaded", function() {
+	    var addBrandModal = document.getElementById('addBrandModal');
+	    var addCategoryModal = document.getElementById('addCategoryModal');
+	    var currentUrlFieldBrand = document.getElementById('currentUrlBrand');
+	    var currentUrlFieldCategory = document.getElementById('currentUrlCategory');
+
+	    // Sự kiện khi modal Add Brand được mở
+	    addBrandModal.addEventListener('shown.bs.modal', function () {
+	        currentUrlFieldBrand.value = window.location.href;
+	    });
+
+	    // Sự kiện khi modal Add Category được mở
+	    addCategoryModal.addEventListener('shown.bs.modal', function () {
+	        currentUrlFieldCategory.value = window.location.href;
+	    });
+	});
 </script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
