@@ -5,9 +5,11 @@
 <div class="container">
 	<div class="row mt-5">
 		<div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
-			<c:forEach var="pd" items="${productDetails}" varStatus="status">
-				<c:if test="${status.first}">
-					<img id="product-image" src="/images/${pd.thumbNail}" width="100%">
+			<c:set var="stopLoop" value="true" />
+			<c:forEach var="dt" items="${productDetails}">
+				<c:if test="${stopLoop && dt.quantity > 0}">
+					<img id="product-image" src="/images/${dt.thumbNail}" width="100%">
+					<c:set var="stopLoop" value="false" />
 				</c:if>
 			</c:forEach>
 		</div>
@@ -22,11 +24,12 @@
 				<c:out value="${propertyUpper}" />
 			</h1>
 			<p>
-				Màu: <i class="fw-bold" id="product-name"> <c:forEach
-						varStatus="status" var="detailcolor"
+				Màu: <i class="fw-bold" id="product-name"> <c:set
+						var="stopLoop1" value="true" /> <c:forEach var="detailcolor"
 						items="${product.productDetails}">
-						<c:if test="${status.first}">
+						<c:if test="${stopLoop1 && detailcolor.quantity > 0}">
 							${detailcolor.color}
+							<c:set var="stopLoop1" value="false" />
 						</c:if>
 					</c:forEach>
 				</i>
@@ -35,16 +38,25 @@
 				Thương hiệu: <b class="text-danger">${product.brand.name}</b>
 			</p>
 			<p class="price product-price" id="product-price">
-				<c:forEach var="detail" items="${product.productDetails}"
-					varStatus="status">
-					<c:if test="${status.first}"> 
+				<c:set var="stopLoop2" value="true" />
+				<c:forEach var="detail" items="${product.productDetails}">
+					<c:if test="${stopLoop2 && detail.quantity > 0}">
 						<fmt:formatNumber value="${detail.price}"></fmt:formatNumber> ₫
+							<c:set var="stopLoop2" value="false" />
 					</c:if>
 				</c:forEach>
 			</p>
 			<p>
-				<b>Tình trạng: </b> <a class="text-danger text-decoration-none">Hàng
-					Đặt Trước</a>
+				<b>Số lượng: </b> <a
+					class="text-danger text-decoration-none fw-bold"
+					id="product-quantity"> <c:set var="stopLoop3" value="true" />
+					<c:forEach var="detail" items="${product.productDetails}">
+						<c:if test="${stopLoop3 && detail.quantity > 0}">
+						${detail.quantity}
+							<c:set var="stopLoop3" value="false" />
+						</c:if>
+					</c:forEach>
+				</a>
 			</p>
 			<div class="row align-items-center mb-2">
 				<div class="col-auto">
@@ -55,6 +67,7 @@
 						<c:forEach var="pd" items="${productDetails}" varStatus="status">
 							<c:if test="${status.first}">
 								<div class="color-button active" id="${pd.thumbNail}"
+									data-quantity="${pd.quantity}"
 									data-image="/images/${pd.thumbNail}" data-price="${pd.price}"
 									data-idproduct="${pd.productDetailID}" data-name="${pd.color}">
 									<img src="/images/${pd.thumbNail}" alt="A-Silver">${pd.color}
@@ -62,6 +75,7 @@
 							</c:if>
 							<c:if test="${!status.first}">
 								<div class="color-button" id="${pd.thumbNail}"
+									data-quantity="${pd.quantity}"
 									data-image="/images/${pd.thumbNail}" data-price="${pd.price}"
 									data-idproduct="${pd.productDetailID}" data-name="${pd.color}">
 									<img src="/images/${pd.thumbNail}" alt="A-Silver">${pd.color}
@@ -237,9 +251,12 @@ document.querySelectorAll('.color-button').forEach(button => {
         const newPrice = parseFloat(button.getAttribute('data-price'));
         const newName = button.getAttribute('data-name');
         const productDetailID = button.getAttribute('data-idproduct');
+        const quantity = button.getAttribute('data-quantity');
+
         document.getElementById('product-image').src = newImage;
         document.getElementById('product-price').innerText = newPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
         document.getElementById('product-name').innerText = newName;
+        document.getElementById('product-quantity').innerText = quantity;
 
         // Update form action
         document.getElementById('addtocart-form').action = '/keyboardworld/addtocart/' + productDetailID;

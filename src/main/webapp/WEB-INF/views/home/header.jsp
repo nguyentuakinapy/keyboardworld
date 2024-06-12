@@ -18,7 +18,7 @@
 			<!-- Hotline -->
 			<div class="contact hotline col text-center" style="font-size: 14px;">
 				<span><a href="?lang=vi"
-					class="text-decoration-none text-dark">VIETNAMEXE</a></span> <i
+					class="text-decoration-none text-dark">VIETNAMESE</a></span> <i
 					class="bi bi-align-center"></i> <span><a href="?lang=en"
 					class="text-decoration-none text-dark">ENGLISH</a></span>
 			</div>
