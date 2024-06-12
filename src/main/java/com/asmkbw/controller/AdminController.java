@@ -155,14 +155,13 @@ public class AdminController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error: " + e.getMessage());
 		}
 	}
-	
+
 	@PostMapping("/updateStatus")
 	public ResponseEntity<?> updateStatus(@RequestBody Map<String, Object> payload) {
 		try {
 			// Convert userID from String to Integer
 			Integer orderID = Integer.parseInt(payload.get("orderID").toString());
 			Integer status = Integer.parseInt(payload.get("test").toString());
-			System.out.println("----------------------------------" +orderID);
 			Optional<Order> optionalOrder = orderDAO.findById(orderID);
 			if (!optionalOrder.isPresent()) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order not found");
@@ -201,7 +200,10 @@ public class AdminController {
 	@RequestMapping("/orderall")
 	public String orderAll(Model model) {
 		List<Order> orders = orderDAO.findAll();
+		
 		model.addAttribute("orders", orders);
+		
+		
 		model.addAttribute("views", "orderAll.jsp");
 		return "admin/index";
 	}

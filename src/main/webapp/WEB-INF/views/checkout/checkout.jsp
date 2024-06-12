@@ -63,7 +63,8 @@ html, body {
 					name="category-selection">
 					<option value="none" selected>Địa chỉ khác</option>
 					<c:forEach var="address" items="${addresses}">
-						<option value="${address.addRessID}">${address.addRessDetail}</option>
+						<option value="${address.addRessID}">${address.ward},
+							${address.district}, ${address.city}</option>
 					</c:forEach>
 				</select> <label for="selectedAddressId">Số địa chỉ</label>
 			</div>
@@ -347,11 +348,11 @@ html, body {
             const city = document.getElementById('city').value;
             const district = document.getElementById('district').value;
             const ward = document.getElementById('ward').value;
-            const detailaddress = document.getElementById('detailaddress').value;
-            const phone = document.getElementById('phone').value;
+    /*         const detailaddress = document.getElementById('detailaddress').value;
+            const phone = document.getElementById('phone').value; */
             
             
-            if (city && district && ward && detailaddress && phone) {
+            if (city && district && ward) {
                 showLoading();
                 setTimeout(function() {
     				hideLoading();
@@ -410,8 +411,8 @@ html, body {
         }
 
         document.addEventListener('DOMContentLoaded', (event) => {
-            document.getElementById('detailaddress').addEventListener('input', validateForm);
-            document.getElementById('phone').addEventListener('input', validateForm);
+          /*   document.getElementById('detailaddress').addEventListener('input', validateForm); */
+          /*   document.getElementById('phone').addEventListener('input', validateForm); */
             document.getElementById('city').addEventListener('change', validateForm);
             document.getElementById('district').addEventListener('change', validateForm);
             document.getElementById('ward').addEventListener('change', validateForm);

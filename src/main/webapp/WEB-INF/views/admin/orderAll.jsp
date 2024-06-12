@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
@@ -61,18 +62,18 @@
 											value="${o.totalPrice}" pattern="###,###,###đ"></fmt:formatNumber></td>
 									<td class="text-truncate">${o.addRess}</td>
 									<td><select class="form-select status-select"
-										name="status_${o.orderID}" data-orderid="${o.orderID}" id="test">
-											<option ${o.status == 0 ? 'selected' : ''} value="0">Đang
-												chờ</option>
-											<option ${o.status == 1 ? 'selected' : ''} value="1">Đã
-												hủy</option>
-											<option ${o.status == 2 ? 'selected' : ''} value="2">Đã
-												hoàn thành</option>
+										name="status-order" data-orderid="${o.orderID}">
+											<option ${o.status == 0 ? 'selected' : ''} data-value="0"
+												value="0">Đang chờ</option>
+											<option ${o.status == 1 ? 'selected' : ''} data-value="1"
+												value="1">Đã hủy</option>
+											<option ${o.status == 2 ? 'selected' : ''} data-value="2"
+												value="2">Đã hoàn thành</option>
 									</select></td>
 									<td>${o.phone}</td>
 								</tr>
 							</c:forEach>
-						</tbody> 
+						</tbody>
 					</table>
 					<%-- <div class="d-flex justify-content-center mt-4">
 						<a
@@ -109,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
     statusSelect.forEach(select => {
     	select.addEventListener('change', function () {
             const orderID = parseInt(this.getAttribute('data-orderid'));  // Convert to integer
-            const test = document.getElementById('test').value;
+            const test = this.value;
             // Thực hiện AJAX call để cập nhật vai trò
             const xhr = new XMLHttpRequest();
             xhr.open('POST', `/keyboardworld/admin/updateStatus`, true);

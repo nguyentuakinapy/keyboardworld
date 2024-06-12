@@ -30,6 +30,4 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT p FROM Product p " + "WHERE (p.category, p.date) IN ("
 			+ "SELECT p2.category, MAX(p2.date) FROM Product p2 GROUP BY p2.category) " + "ORDER BY p.category")
 	Page<Product> findTopProductByCategory(Pageable pageable);
-
-
 }
