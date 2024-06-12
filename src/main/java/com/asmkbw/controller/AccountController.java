@@ -20,6 +20,7 @@ import com.asmkbw.entity.Order;
 import com.asmkbw.entity.OrderDetail;
 import com.asmkbw.entity.User;
 import com.asmkbw.service.GeocodingService;
+import com.asmkbw.utils.PasswordUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -63,7 +64,7 @@ public class AccountController {
 	@RequestMapping("/order")
 	public String order(Model model) {
 		User user = (User) req.getSession().getAttribute("userS");
-		List<Order> list = odao.findByEmail(user.getEmail());
+		List<Order> list = odao.findByUser(user);
 		model.addAttribute("list", list);
 		model.addAttribute("views", "/WEB-INF/views/account/orders.jsp");
 		return "index";
@@ -95,20 +96,53 @@ public class AccountController {
 		return "index";
 	}
 
+//	@PostMapping("/changepass")
+//	public String changepassUpdate(Model model, @RequestParam("currentPass") String currentPass,
+//			@RequestParam("newPass") String newPass, @RequestParam("confirmPass") String confirmPass) {
+//		User user = (User) req.getSession().getAttribute("userS");
+//		System.out.println(newPass);
+//		System.out.println(confirmPass);
+//		if (currentPass.equals(user.getPassword())) {
+//			if (newPass.length() < 6 || newPass.length() > 16) {
+//				model.addAttribute("message", "Mật khẩu phải từ 6 đến 16 ký tự!");
+//			} else {
+//				if (newPass.equals(confirmPass)) {
+//					user.setPassword(newPass);
+//					udao.save(user);
+//					model.addAttribute("message", "Đổi mật khẩu thành công!");
+//				} else {
+//					model.addAttribute("message", "Xác nhận mật khẩu không chính xác!");
+//				}
+//			}
+//		} else {
+//			model.addAttribute("message", "Mật khẩu hiện tại không đúng!");
+//		}
+//		model.addAttribute("views", "/WEB-INF/views/account/changepass.jsp");
+//		return "index";
+//	}
+
 	@PostMapping("/changepass")
 	public String changepassUpdate(Model model, @RequestParam("currentPass") String currentPass,
 			@RequestParam("newPass") String newPass, @RequestParam("confirmPass") String confirmPass) {
 		User user = (User) req.getSession().getAttribute("userS");
-		System.out.println(newPass);
-		System.out.println(confirmPass);
-		if (currentPass.equals(user.getPassword())) {
+
+		// Hash the entered current password
+		String hashedCurrentPass = PasswordUtils.hashPassword(currentPass);
+
+		if (hashedCurrentPass != null && hashedCurrentPass.equals(user.getPassword())) {
 			if (newPass.length() < 6 || newPass.length() > 16) {
 				model.addAttribute("message", "Mật khẩu phải từ 6 đến 16 ký tự!");
 			} else {
 				if (newPass.equals(confirmPass)) {
-					user.setPassword(newPass);
-					udao.save(user);
-					model.addAttribute("message", "Đổi mật khẩu thành công!");
+					// Hash the new password before saving
+					String hashedNewPass = PasswordUtils.hashPassword(newPass);
+					if (hashedNewPass == null) {
+						model.addAttribute("message", "Có lỗi xảy ra trong quá trình mã hóa mật khẩu mới.");
+					} else {
+						user.setPassword(hashedNewPass);
+						udao.save(user);
+						model.addAttribute("message", "Đổi mật khẩu thành công!");
+					}
 				} else {
 					model.addAttribute("message", "Xác nhận mật khẩu không chính xác!");
 				}

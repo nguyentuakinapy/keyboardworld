@@ -58,7 +58,8 @@ public class CheckoutController {
 	List<Integer> cartID = new ArrayList<Integer>();
 
 	@RequestMapping("/keyboardworld/checkout")
-	public String checkout(Model model, @RequestParam("selectedItems") List<Integer> cartID) {
+	public String checkout(Model model, @RequestParam("selectedItems") List<Integer> cartID,
+			@RequestParam("voucher") Integer idVoucher) {
 		User user = (User) session.getAttribute("userS");
 		if (user == null) {
 			return "redirect:/keyboardworld/login";
@@ -67,8 +68,8 @@ public class CheckoutController {
 		model.addAttribute("addresses", addresses);
 		List<Cart> carts = cartDAO.findByCartIDAndUser(cartID, user);
 		model.addAttribute("carts", carts);
-		List<Voucher> vouchers = voucherDAO.findAll();
-		model.addAttribute("vouchers", vouchers);
+		Voucher voucher = voucherDAO.findById(idVoucher).orElse(null);
+		model.addAttribute("voucher", voucher);
 		this.cartID = cartID;
 		model.addAttribute("views", "/WEB-INF/views/checkout/checkout.jsp");
 		return "index";
@@ -133,10 +134,10 @@ public class CheckoutController {
 //		System.out.println(address);
 		return new ResponseEntity<Address>(address, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/keyboardworld/getdistance")
-    public ResponseEntity<Double> getDistance(@RequestBody String address) {
-        double distance = GeocodingService.getDistance(address);
-        return new ResponseEntity<>(distance, HttpStatus.OK);
-    }
+	public ResponseEntity<Double> getDistance(@RequestBody String address) {
+		double distance = GeocodingService.getDistance(address);
+		return new ResponseEntity<>(distance, HttpStatus.OK);
+	}
 }

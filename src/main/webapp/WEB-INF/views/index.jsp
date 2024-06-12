@@ -42,7 +42,6 @@ html, body {
 	/* Hiển thị dấu ba chấm (...) khi văn bản vượt quá */
 }
 
-
 /* styles.css */
 .loading-overlay {
 	display: none;
@@ -75,6 +74,7 @@ html, body {
 	<jsp:include page="/WEB-INF/views/home/header.jsp"></jsp:include>
 	<jsp:include page="${views}"></jsp:include>
 	<jsp:include page="/WEB-INF/views/home/footer.jsp"></jsp:include>
+	
 </body>
 <script type="text/javascript" src="/js/index.js"></script>
 <script type="text/javascript" src="/js/detailproduct.js"></script>

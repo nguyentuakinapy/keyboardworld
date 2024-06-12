@@ -15,7 +15,8 @@ public class InterConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(auth)
-				.addPathPatterns("/keyboardworld/account", "/account/chgpwd", "/order/**", "/admin/**")
+				.addPathPatterns("/keyboardworld/account", "/keyboardworld/admin/**", "/keyboardworld/viewcart",
+						"/keyboardworld/order/**", "/keyboardworld/changepass", "/keyboardworld/address/index")
 				.excludePathPatterns("/assets/**", "/admin/home/index");
 	}
 }

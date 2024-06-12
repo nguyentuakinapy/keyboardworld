@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <div class="container" style="margin-top: 15px;">
-	<img alt="" class="w-100" style="height: 400px"
-		src="/images/bannerProduct.jpg">
+	<img alt="" class="w-100" 
+		src="/images/akinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-01.png">
 </div>
 <div class="container wow bounceInUp">
 	<div class="row ">
@@ -229,12 +229,12 @@
 												</c:forEach>
 											</div>
 										</div>
-										<form class="product-btn d-grid gap-2 col-10 mx-auto">
+										<form class="product-btn d-grid gap-2 col-10 mx-auto"
+											action="/keyboardworld/addtocart/${p.productDetails[0].productDetailID}">
 											<input type="hidden" name="quantity" id="quantity" value="1">
-											<button type="submit"
-												formaction="/keyboardworld/addtocart/${p.productDetails[0].productDetailID}"
-												formmethod="post" class="btn btn-outline-dark fw-bold">Thêm
-												vào giỏ hàng</button>
+											<button type="submit" formmethod="post"
+												class="btn btn-outline-dark fw-bold">Thêm vào giỏ
+												hàng</button>
 										</form>
 									</div>
 									<hr class="m-0 p-0">
@@ -295,4 +295,5 @@
 					}
 				});
 	}
+	
 </script>
