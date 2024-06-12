@@ -55,6 +55,9 @@ public class CheckoutController {
 	@Autowired
 	private HttpSession session;
 
+	@Autowired
+	private ProductDetailDAO productDetailDAO;
+
 	List<Integer> cartID = new ArrayList<Integer>();
 
 	@RequestMapping("/keyboardworld/checkout")
@@ -118,6 +121,9 @@ public class CheckoutController {
 			orderDetailDAO.save(detail);
 		}
 		for (Cart cart : carts) {
+			ProductDetail detail = productDetailDAO.findById(cart.getProductDetail().getProductDetailID()).orElse(null);
+			detail.setQuantity(detail.getQuantity() - cart.getQuantity());
+			productDetailDAO.save(detail);
 			cartDAO.delete(cart);
 		}
 

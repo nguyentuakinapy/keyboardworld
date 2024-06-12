@@ -151,8 +151,9 @@ public class ProductController {
 
 	@RequestMapping("/detailproduct/{id}")
 	public String detailProduct(Model model, @PathVariable("id") Integer productID) {
+
 		Product product = productDAO.findById(productID).orElse(null);
-		List<ProductDetail> productDetails = product.getProductDetails();
+		List<ProductDetail> productDetails = productDetailDAO.findByProductQuantity(product);
 		model.addAttribute("product", product);
 		model.addAttribute("productDetails", productDetails);
 		model.addAttribute("views", "/WEB-INF/views/product/detailproduct.jsp");
